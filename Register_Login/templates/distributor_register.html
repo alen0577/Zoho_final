@@ -54,29 +54,31 @@
 
 <body style="background-color: #000000;padding-bottom: 20px;">
     <div class="main m-5 p-5 pt-1 mt-1" style="padding-right: 20px;padding-bottom: 20px;">
-        <h1 class="text-center" id="h1"
+        <!-- <h1 class="text-center" id="h1"
             style="color: rgb(255, 255, 255);text-shadow: 2px 2px 4px #000000; margin-bottom: 40px;">DISTRIBUTOR REGISTERATION
         </h1>
-        
+         -->
         <div class="row "
-            style="border: 1px solid black;width: 100%; border-radius: 20px;background-color: white;box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);">
+            style="border: 1px solid black;width: 100%; border-radius: 20px;background-color: black;">
             <div class="col-lg-6 col-md-10 d-flex "
-                style="border-right:1px solid black ;border-bottom: 1px solid black;">
+                style="border-right:1px solid black ;border-bottom: 1px solid black;background-color: rgb(218, 164, 48);
+                border-radius: 20px;border-bottom-right-radius: 0px;border-top-right-radius: 0px;">
                 <div class="img mt-5">
-                    <center>
-                        <img src="{% static 'registration_login/images/log1.webp' %}" alt="" class="img-fluid">
-                        <button type="button" class="btn btn-outline-dark" id="btn1"
-                            style="width: 30%;padding: 10px;background-color: red;border-radius: 20px;margin-top: 60px;"><a
-                                href="{% url 'login_page' %}" class="text-white" style="text-decoration: none;"><b>Login
-                                    Now>>></b></a></button>
+                    <center> 
+                        <h1 class="text-center text-light pb-5">Zoho is even better with an account!</h2>
+                        <img src="{% static 'registration_login/images/pnglogin.png' %}" alt="" class="img-fluid">
+                        <button type="button" class="btn btn-outline-warning " id="btn1"
+                            style="width: 30%;padding: 10px;border-radius: 20px;margin-top: 60px;background-color: #363635"><a
+                                href="{% url 'login_page' %}" class="text-white" style="text-decoration: none;"><b>Login</b></a></button>
+                                
                     </center>
                 </div>
             </div>
             <div class="col-lg-6 col-md-9 col-sm-12 pb-5 pt-5 align-item-center" id="c2"
-                style="background-color: #ffb463;border-radius: 20px;border-bottom-left-radius: 0px;border-top-left-radius: 0px;">
+                style="background-color: #363635;border-radius: 20px;border-bottom-left-radius: 0px;border-top-left-radius: 0px;">
                 <div class="form-box px-2 py-2 align-item-center" >
                     <div class="container-fluid">
-                        <form id="form" class="mt-2" method="post" action=""
+                        <form id="form" class="" method="post" action=""
                             enctype="multipart/form-data" >
                             <!-- <h3 class="text-center mb-5" style="color: rgb(255, 255, 255);text-shadow: 2px 2px 4px #000000;font-weight: bold;">Basic information</h3> -->
                             {% if messages %}
@@ -88,7 +90,7 @@
 
                             <div class="form-group ">
                                 {% csrf_token %}
-
+                            <h3 class="text-center text-light mb-4">Basic Details</h3>
 
                                 <input type="text" id="fname" name="fname" class="form-control"
                                     placeholder="enter firstname" required><br>
@@ -114,7 +116,7 @@
 
                                 <input type="password" id="pass" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control"
                                     placeholder="enter password" required><br>
-                                    <p class="text-danger" style="font-size: 12px;margin-top: 0px;">*password must be at least 8 characters long and include uppercase , lowercase, special characters and numbers.</p>
+                                    <p class="text-warning" style="font-size: 12px;margin-top: 0px;">*password must be at least 8 characters long and include uppercase , lowercase, special characters and numbers.</p>
                                 <input type="password" id="cpass" name="cpass" class="form-control"
                                     placeholder="confirm password"  required>
                                 <span id='message' style="margin-top: 0px; padding-top: 0px;"></span><br>
@@ -136,8 +138,8 @@
 
 
                             </div>
-                            <center><input type="submit" id="s" value="SUBMIT" class="btn text-white btn-outline-dark"
-                                    style="margin-top: 20px;  width: 70%; padding: 10px; border-radius: 20px; background-image: linear-gradient(to right,rgb(4, 38, 82),#284293,#a2aee3); font-weight: bold;"><br><br>
+                            <center><input type="submit" id="s" value="SUBMIT" class="btn text-white "
+                                    style="margin-top: 20px;  width: 70%; padding: 10px; border-radius: 20px; background: rgb(218, 164, 48); font-weight: bold;"><br><br>
                             </center>
                             
 

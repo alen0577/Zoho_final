@@ -11,6 +11,10 @@ class LoginDetails(models.Model):
     username = models.CharField(max_length=100,null=True,blank=True) 
     password = models.CharField(max_length=100,null=True,blank=True) 
     user_type = models.CharField(max_length=100,null=True,blank=True) 
+    self_distributor = models.CharField(max_length=100,null=True,blank=True,default='self')
+    distributor_id = models.CharField(max_length=100,null=True,blank=True,default='')
+    company_id = models.CharField(max_length=100,null=True,blank=True,default='')
+
 
 
 class PaymentTerms(models.Model):
