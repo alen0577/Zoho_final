@@ -59,7 +59,7 @@
                     <center>
                         <h1 class="text-center text-light pb-5">Zoho is even better with an account!</h2>
                         <img src="{% static 'registration_login/images/pnglogin.png' %}" alt="" class="img-fluid">
-                        <button type="button" class="btn btn-outline-warning " id="btn1" style="width: 30%;padding: 10px;border-radius: 20px;margin-top: 60px;background-color: #363635">
+                        <button type="button" class="btn btn-outline-warning mb-5" id="btn1" style="width: 30%;padding: 10px;border-radius: 20px;margin-top: 60px;background-color: #363635">
                             <a href="{% url 'login_page' %}" class="text-white" style="text-decoration: none;">
                                 <b>Login</b>
                             </a>
@@ -71,7 +71,7 @@
                 style="background-color: #363635;border-radius: 20px;border-bottom-left-radius: 0px;border-top-left-radius: 0px;">
                 <div class="form-box px-2 py-2 align-item-center" >
                     <div class="container-fluid">
-                        <form id="form" class="mt-2" method="post" action="{% url 'company_register_save1' %}"
+                        <form id="form" class="mt-2" method="post" action="{% url 'company_registration_save1' %}"
                             enctype="multipart/form-data" >
                             <h3 class="text-center mb-5" style="color: rgb(255, 255, 255);text-shadow: 2px 2px 4px #000000;font-weight: bold;">Basic Details</h3>
                             {% if messages %}

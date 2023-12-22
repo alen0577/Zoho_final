@@ -13,8 +13,6 @@ class LoginDetails(models.Model):
     user_type = models.CharField(max_length=100,null=True,blank=True) 
     self_distributor = models.CharField(max_length=100,null=True,blank=True,default='self')
     distributor_id = models.CharField(max_length=100,null=True,blank=True,default='')
-    company_id = models.CharField(max_length=100,null=True,blank=True,default='')
-
 
 
 class PaymentTerms(models.Model):
@@ -46,7 +44,6 @@ class CompanyDetails(models.Model):
     city = models.CharField(max_length=100,null=True,blank=True)
     state = models.CharField(max_length=100,null=True,blank=True)
     country = models.CharField(max_length=100,null=True,blank=True)
-    contact = models.CharField(max_length=100,null=True,blank=True)
     pincode = models.IntegerField(null=True,blank=True)
     pan_number = models.CharField(max_length=255,null=True,blank=True)
     start_date = models.DateField(max_length=255,null=True,blank=True)
@@ -67,4 +64,66 @@ class StaffDetails(models.Model):
     company_approval = models.IntegerField(null=True,default=0)    
     position = models.CharField(max_length=255,null=True,blank=True,default='staff')
 
+
+class ZohoModules(models.Model):
+    company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE,null=True,blank=True) 
+
+    # ITEMS
+    items = models.IntegerField(null=True, default=0)
+    price_list = models.IntegerField(null=True, default=0)
+    stock_adjustment = models.IntegerField(null=True, default=0)
+    godown = models.IntegerField(null=True, default=0)
+
+    # CASH & BANK
+    cash_in_hand = models.IntegerField(null=True, default=0)
+    offline_banking = models.IntegerField(null=True, default=0)
+    upi = models.IntegerField(null=True, default=0)
+    bank_holders = models.IntegerField(null=True, default=0)
+    cheque = models.IntegerField(null=True, default=0)
+    reconciliation = models.IntegerField(null=True, default=0)
+    loan_account = models.IntegerField(null=True, default=0)
+
+    # SALES MODULE
+    customers = models.IntegerField(null=True, default=0)
+    invoice = models.IntegerField(null=True, default=0)
+    estimate = models.IntegerField(null=True, default=0)
+    sales_order = models.IntegerField(null=True, default=0)
+    recurring_invoice = models.IntegerField(null=True, default=0)
+    retainer_invoice = models.IntegerField(null=True, default=0)
+    credit_note = models.IntegerField(null=True, default=0)
+    payment_received = models.IntegerField(null=True, default=0)
+    delivery_challan = models.IntegerField(null=True, default=0)
+
+    # PURCHASE MODULE
+    vendors = models.IntegerField(null=True, default=0)
+    bills = models.IntegerField(null=True, default=0)
+    recurring_bills = models.IntegerField(null=True, default=0)
+    vendor_credit = models.IntegerField(null=True, default=0)
+    purchase_order = models.IntegerField(null=True, default=0)
+    expenses = models.IntegerField(null=True, default=0)
+    recurring_expenses = models.IntegerField(null=True, default=0)
+    payment_made = models.IntegerField(null=True, default=0)
+
+    # TIME TRACKING
+    projects = models.IntegerField(null=True, default=0)
+
+    # ACCOUNTS
+    chart_of_accounts = models.IntegerField(null=True, default=0)
+    manual_journal = models.IntegerField(null=True, default=0)
+
+    # E WAY BILL
+    eway_bill = models.IntegerField(null=True, default=0)
+
+    # PAYROLL
+    employees = models.IntegerField(null=True, default=0)
+    employees_loan = models.IntegerField(null=True, default=0)
+    holiday = models.IntegerField(null=True, default=0)
+    attendance = models.IntegerField(null=True, default=0)
+    salary_details = models.IntegerField(null=True, default=0)
+
+    # REPORTS
+    reports = models.IntegerField(null=True, default=0)
+
+    update_action = models.IntegerField(null=True,default=0) 
+    status = models.CharField(max_length=100,null=True,default='New')      
 

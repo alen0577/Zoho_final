@@ -78,7 +78,7 @@
                 style="background-color: #363635;border-radius: 20px;border-bottom-left-radius: 0px;border-top-left-radius: 0px;">
                 <div class="form-box px-2 py-2 align-item-center">
                     <div class="container-fluid">
-                        <form id="form" class="" method="post" action="" enctype="multipart/form-data">
+                        <form id="form" class="" method="post" action="{% url 'company_registration_save2' company_id %}" enctype="multipart/form-data">
                             <h3 class="text-center mb-5"
                                 style="color: rgb(255, 255, 255);text-shadow: 2px 2px 4px #000000;font-weight: bold;">
                                 Company Details
@@ -90,7 +90,8 @@
 
                                 <input type="text" id="cname" name="cname" class="form-control" placeholder="enter company name" required><br>
 
-                                <input type="text" id="email" name="email" class="form-control" placeholder="email id (same as Previous page)" required><br>
+                                
+                                <input type="text" id="phone" name="phone" class="form-control" placeholder="enter phone number" required><br>
 
 
                                 <input type="text" id="address" name="address" class="form-control" placeholder="enter address" required><br>
@@ -166,8 +167,8 @@
 
                                
                             </div>
-                            <center><input type="submit" id="s" value="REGISTER" class="btn text-white btn-outline-dark"
-                                style="margin-top: 20px;  width: 70%; padding: 10px; border-radius: 20px; background-image: linear-gradient(to right,rgb(4, 38, 82),#284293,#a2aee3); font-weight: bold;"><br><br>
+                            <center><input type="submit" id="s" value="REGISTER" class="btn text-white mt-5"
+                                style="margin-top: 30px;  width: 70%; padding: 10px; border-radius: 20px; background: rgb(218, 164, 48); font-weight: bold;"><br><br>
                             </center>
     
     
