@@ -304,3 +304,106 @@ def choose_modules(request, pk):
 
 def login_page(request):
   return render(request, 'login.html')
+
+def login(request):
+  if request.method == 'POST':
+    username = request.POST['username']
+    password = request.POST['password']
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None and user.is_staff:
+      auth.login(request, user)
+      return redirect('admindash')
+
+    try:
+      log_user = LoginDetails.objects.get(username=username, password=password)
+
+    except ObjectDoesNotExist:
+
+      messages.error(request, 'Invalid Username or Password. Try Again.')
+      return redirect('login_page')
+
+    
+    # distributor login session
+
+    if log_user.user_type == 'Distributor':
+      request.session["distribtor_id"] = log_user.id
+      if 'distributor_id' in request.session:
+        if request.session.has_key('distributor_id'):
+          distributor_id = request.session['distributor_id']
+        else:
+          return redirect('login_page')
+        try:
+                      
+          distributor = LoginDetails.objects.get(id=distributor_id)
+
+        except LoginDetails.DoesNotExist:
+          return redirect('login_page')
+
+        try:
+          dash_details = DistributorDetails.objects.get(login_details=distributor,superadmin_approval=1)
+          context = {'distributor_details': dash_details}
+          return render(request, 'distrubutor_dash.html', context)
+      
+        except  DistributorDetails.DoesNotExist:
+          messages.info(request, 'Approval is Pending..')
+          return redirect('login_page') 
+
+
+    # Company login session
+     
+    elif log_user.user_type == 'Company':
+      request.session["company_id"] = log_user.id
+      if 'company_id' in request.session:
+        if request.session.has_key('company_id'):
+          company_id = request.session['company_id']
+        else:
+          return redirect('login_page')
+        try:
+                      
+          company = LoginDetails.objects.get(id=company_id)
+
+        except LoginDetails.DoesNotExist:
+          return redirect('login_page')
+
+        try:
+          dash_details = CompanyDetails.objects.get(login_details=company,superadmin_approval=1,Distributor_approval=1)
+          context = {'company_details': dash_details}
+          return render(request, 'company_dash.html', context)
+      
+        except  CompanyDetails.DoesNotExist:
+          messages.info(request, 'Approval is Pending..')
+          return redirect('login_page') 
+
+
+    # Staff login session
+     
+    elif log_user.user_type == 'Staff':
+      request.session["staff_id"] = log_user.id
+      if 'staff_id' in request.session:
+        if request.session.has_key('staff_id'):
+          staff_id = request.session['staff_id']
+        else:
+          return redirect('login_page')
+        try:
+                      
+          staff = LoginDetails.objects.get(id=staff_id)
+
+        except LoginDetails.DoesNotExist:
+          return redirect('login_page')
+
+        try:
+          dash_details = StaffDetails.objects.get(login_details=staff,company_approval=1)
+          context = {'staff_details': dash_details}
+          return render(request, 'staff_dash.html', context)
+      
+        except  StaffDetails.DoesNotExist:
+          messages.info(request, 'Approval is Pending..')
+          return redirect('login_page')   
+    else:
+      return render(request,'error-404.html')
+  else:
+    return redirect('login_page')
+
+
+
