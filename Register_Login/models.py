@@ -54,6 +54,7 @@ class CompanyDetails(models.Model):
     superadmin_approval = models.IntegerField(null=True,default=0)  
     Distributor_approval = models.IntegerField(null=True,default=0) 
     reg_action = models.CharField(max_length=255,null=True,blank=True,default='self')
+    position = models.CharField(max_length=255,null=True,blank=True,default='company')
 
 
 class StaffDetails(models.Model):

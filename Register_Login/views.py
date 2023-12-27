@@ -4,9 +4,11 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from . models import *
+from Company_Staff import views
+from Distributor import views
 from django.contrib import messages
 from django.utils.crypto import get_random_string
-
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -319,91 +321,74 @@ def login(request):
       log_user = LoginDetails.objects.get(username=username, password=password)
 
     except ObjectDoesNotExist:
-
       messages.error(request, 'Invalid Username or Password. Try Again.')
       return redirect('login_page')
 
-    
     # distributor login session
-
     if log_user.user_type == 'Distributor':
-      request.session["distribtor_id"] = log_user.id
+      request.session["distributor_id"] = log_user.id
       if 'distributor_id' in request.session:
-        if request.session.has_key('distributor_id'):
-          distributor_id = request.session['distributor_id']
-        else:
-          return redirect('login_page')
-        try:
-                      
-          distributor = LoginDetails.objects.get(id=distributor_id)
-
-        except LoginDetails.DoesNotExist:
-          return redirect('login_page')
-
-        try:
-          dash_details = DistributorDetails.objects.get(login_details=distributor,superadmin_approval=1)
-          context = {'distributor_details': dash_details}
-          return render(request, 'distrubutor_dash.html', context)
+        distributor_id = request.session['distributor_id']
+      else:
+        return redirect('login_page')
       
-        except  DistributorDetails.DoesNotExist:
-          messages.info(request, 'Approval is Pending..')
-          return redirect('login_page') 
+      try:
+        distributor = LoginDetails.objects.get(id=distributor_id)
+      except LoginDetails.DoesNotExist:
+        return redirect('login_page')
 
+      try:
+        dash_details = DistributorDetails.objects.get(login_details=distributor, superadmin_approval=1)
+        return redirect('distributor_dashboard', dash_details.id)
+      except DistributorDetails.DoesNotExist:
+        messages.info(request, 'Approval is Pending..')
+        return redirect('login_page')
 
     # Company login session
-     
     elif log_user.user_type == 'Company':
       request.session["company_id"] = log_user.id
       if 'company_id' in request.session:
-        if request.session.has_key('company_id'):
-          company_id = request.session['company_id']
-        else:
-          return redirect('login_page')
-        try:
-                      
-          company = LoginDetails.objects.get(id=company_id)
-
-        except LoginDetails.DoesNotExist:
-          return redirect('login_page')
-
-        try:
-          dash_details = CompanyDetails.objects.get(login_details=company,superadmin_approval=1,Distributor_approval=1)
-          context = {'company_details': dash_details}
-          return render(request, 'company_dash.html', context)
+        company_id = request.session['company_id']
+      else:
+        return redirect('login_page')
       
-        except  CompanyDetails.DoesNotExist:
-          messages.info(request, 'Approval is Pending..')
-          return redirect('login_page') 
+      try:
+        company = LoginDetails.objects.get(id=company_id)
+      except LoginDetails.DoesNotExist:
+        return redirect('login_page')
 
+      try:
+        dash_details = CompanyDetails.objects.get(login_details=company, superadmin_approval=1, Distributor_approval=1)
+        return redirect('company_dashboard', dash_details.id)
+      except CompanyDetails.DoesNotExist:
+        messages.info(request, 'Approval is Pending..')
+        return redirect('login_page')
 
     # Staff login session
-     
     elif log_user.user_type == 'Staff':
       request.session["staff_id"] = log_user.id
       if 'staff_id' in request.session:
-        if request.session.has_key('staff_id'):
-          staff_id = request.session['staff_id']
-        else:
-          return redirect('login_page')
-        try:
-                      
-          staff = LoginDetails.objects.get(id=staff_id)
-
-        except LoginDetails.DoesNotExist:
-          return redirect('login_page')
-
-        try:
-          dash_details = StaffDetails.objects.get(login_details=staff,company_approval=1)
-          context = {'staff_details': dash_details}
-          return render(request, 'staff_dash.html', context)
+        staff_id = request.session['staff_id']
+      else:
+        return redirect('login_page')
       
-        except  StaffDetails.DoesNotExist:
-          messages.info(request, 'Approval is Pending..')
-          return redirect('login_page')   
+      try:
+        staff = LoginDetails.objects.get(id=staff_id)
+      except LoginDetails.DoesNotExist:
+        return redirect('login_page')
+
+      try:
+        dash_details = StaffDetails.objects.get(login_details=staff, company_approval=1)
+        return redirect('staff_dashboard', dash_details.id)
+      except StaffDetails.DoesNotExist:
+        messages.info(request, 'Approval is Pending..')
+        return redirect('login_page')
+
     else:
-      return render(request,'error-404.html')
+      return render(request, 'error-404.html')
+
+  # Handle GET requests
   else:
     return redirect('login_page')
-
 
 
