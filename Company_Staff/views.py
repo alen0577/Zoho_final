@@ -7,8 +7,10 @@ from Register_Login.models import *
 
 def company_dashboard(request,pk):
     dash_details = CompanyDetails.objects.get(id=pk,superadmin_approval=1,Distributor_approval=1)
+    allmodules= ZohoModules.objects.get(company=dash_details)
     context = {
-        'company_details': dash_details
+        'details': dash_details,
+        'allmodules': allmodules
     }
     return render(request, 'company/company_dash.html', context)
 
@@ -20,7 +22,9 @@ def company_dashboard(request,pk):
 
 def staff_dashboard(request,pk):
     dash_details = StaffDetails.objects.get(id=pk,company_approval=1)
+    allmodules= ZohoModules.objects.get(company=dash_details.company)
     context={
-        'staff_details':dash_details,
+        'details':dash_details,
+        'allmodules': allmodules,
     }
     return render(request,'staff/staff_dash.html',context)
