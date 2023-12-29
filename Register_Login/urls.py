@@ -28,5 +28,8 @@ urlpatterns = [
     path('Login_Page',views.login_page,name='login_page'),
     path('Login',views.login,name='login'),
 
+    # logout section
+    path('Logout-User',views.logout,name='logout'),
+
 
 ]

@@ -32,7 +32,7 @@
 
     }
     body{
-      background-color: rgb(98, 98, 98);
+      background-color: rgb(30, 30, 30)
     }
 
     /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
@@ -59,7 +59,24 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between p-4 mt-2">
           <a href="" class="text-nowrap logo-img mr-2 " style="display: flex;text-decoration: none;">
-            
+            {% if details.position == 'company' %}
+                  
+              {% if details.profile_pic %}
+                <img width="35" height="35" class="rounded-circle" src="{{ details.profile_pic.url }}" alt="">
+               
+              {% else %}
+                <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
+                class="rounded-circle">
+              {% endif %}
+            {% else %}  
+              {% if details.image %}
+                <img width="35" height="35" class="rounded-circle" src="{{ details.image.url }}" alt="">
+              {% else %}
+                <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
+                class="rounded-circle">
+              {% endif %}
+            {% endif %} 
+            <i class="fa fa-check-circle account-active-icon mt-4 text-warning" style="bottom: 0; right: 0;font-size: x-small;"></i> 
             <h3 style="font-family: 'Times New Roman', Times, serif; "><b class="p-3 text-white">ZOHO</b></h3>
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -73,15 +90,15 @@
 
             <li class="sidebar-item mt-3">
               {% if details.position == 'company' %}
-                <a class="sidebar-link " href="" aria-expanded="false"
-                style="text-decoration: none; color: black; background-color: rgb(210, 235, 241,0.5);">
+                <a class="sidebar-link " href="{% url 'company_dashboard' %}" aria-expanded="false"
+                style="text-decoration: none; color: rgb(254, 254, 254); background-color: rgb(30,30,30);">
                 <b style="margin-left: 7px;"><i class="fa fa-tachometer-alt"></i></b>
                 </span>
                 <span class="hide-menu"><b>Dashboard</b></span>
                 </a>
               {% else %}
-                <a class="sidebar-link " href="" aria-expanded="false"
-                style="text-decoration: none; color: black; background-color: rgb(210, 235, 241,0.5);">
+                <a class="sidebar-link " href="{% url 'staff_dashboard' %}" aria-expanded="false"
+                style="text-decoration: none; color: rgb(255, 255, 255); background-color: rgb(30, 30, 30)">
                 <b style="margin-left: 7px;"><i class="fa fa-tachometer-alt"></i></b>
                 </span>
                 <span class="hide-menu"><b>Dashboard</b></span>
@@ -90,7 +107,7 @@
             </li>
             {% if details.position == 'company' %}
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: rgb(255, 255, 255);background-color: rgb(30,30,30);width: 100%;text-align: left;">
                 <span>
                   <b><i class="fa fa-briefcase" style="font-size: 15px;margin-right: 10px;"></i></i></b>
                 </span>
@@ -98,7 +115,7 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 57%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center; color: white;">
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="fa fa-user-plus fs-6"></i> -->
                   <p class="mb-0 fs-3">Staff Requests</b>
@@ -119,59 +136,58 @@
 
            <!-- Items dropdown modules -->
             <li class="sidebar-item">
-                <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
-                  <span>
-                    <b><i class="fa fa-th" style="margin-right: 10px;"></i></i></b>
-                  </span>
-                  <span><b>Items</b></span>
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: rgb(255, 255, 255);background-color: rgb(30,30,30);width: 100%;text-align: left;">
+                <span>
+                  <b><i class="fa fa-th" style="margin-right: 10px;"></i></i></b>
+                </span>
+                <span><b>Items</b></span>
+                
+                <i class="fa fa-caret-down" style="margin-left: 56%;"></i>
+              </button>
+              <div class="dropdown-container" style="background-color: rgba(0, 0, 0, 0.863);padding: 20px;justify-content: center;color: white;">
+                {% if allmodules.items == 1 %}
+                <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Items</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                </a>
+                <hr>
+                {% endif %}
+                {% if allmodules.price_list == 1  %}
+                <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                  <!-- <i class="ti ti-mail fs-6"></i> -->
                   
-                  <i class="fa fa-caret-down" style="margin-left: 56%;"></i>
-                </button>
-                <div class="dropdown-container" style="background-color: rgba(0, 0, 0, 0.863);padding: 20px;justify-content: center;">
-                  {% if allmodules.items == 1 %}
-                  <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                    <!-- <i class="ti ti-mail fs-6"></i> -->
-                    <div class="d-flex">
-                      <p class="mb-0 fs-3">Items</p>
-                      <a href=""><i class="fa fa-plus text-dark" ></i></a>
-                    </div>
-                  </a>
-                  <hr>
-                    {% endif %}
-                    {% if allmodules.price_list == 1  %}
-                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                      <!-- <i class="ti ti-mail fs-6"></i> -->
-                      
-                      <div class="d-flex">
-                        <p class="mb-0 fs-3">Price List</p>
-                        <a href=""><i class="fa fa-plus text-dark" ></i></a>
-                      </div>
-                    </a>
-                    <hr>
-                    {% endif %}
-                    {% if allmodules.stock_adjustment == 1  %}
-                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                      <!-- <i class="ti ti-list-check fs-6"></i> -->
-                      <!-- <p class="mb-0 fs-3">Payment In</p> -->
-                      <div class="d-flex">
-                        <p class="mb-0 fs-3">Stock Adjustment</p>
-                        <a href=""><i class="fa fa-plus text-dark" ></i></a>
-                      </div>
-                    </a>
-                    <hr>
-                    {% endif %}
-                    {% if allmodules.godown == 1 %}
-                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                      <!-- <i class="ti ti-user fs-6"></i> -->
-                      <div class="d-flex">
-                        <p class="mb-0 fs-3">Godown</p>
-                        <a href=""><i class="fa fa-plus text-dark" ></i></a>
-                      </div>
-                    </a>
-                    <hr>
-                    {% endif %}
-                    
-                </div>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Price List</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                </a>
+                <hr>
+                {% endif %}
+                {% if allmodules.stock_adjustment == 1  %}
+                <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                  
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Stock Adjustment</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                </a>
+                <hr>
+                {% endif %}
+                {% if allmodules.godown == 1 %}
+                <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Godown</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                </a>
+                <hr>
+                {% endif %}
+                  
+              </div>
   
   
                 
@@ -179,7 +195,7 @@
 
             <!-- Cash and bank  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-tachometer-alt" style="margin-right: 10px;"></i></i></b>
                 </span>
@@ -187,13 +203,13 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 30%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.cash_in_hand == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Cash in Hand</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -204,7 +220,7 @@
                   
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Offline Banking</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -215,7 +231,7 @@
                   <!-- <p class="mb-0 fs-3">Payment In</p> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">UPI</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -225,7 +241,7 @@
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Bank Holders</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -235,7 +251,7 @@
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Cheque</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -243,14 +259,22 @@
                 {% if allmodules.reconciliation == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Reconciliation</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Reconciliation</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.loan_account == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Loan Account</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Loan Account</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
@@ -260,7 +284,7 @@
 
             <!-- Sales  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-tachometer-alt" style="margin-right: 10px;"></i></i></b>
                 </span>
@@ -268,13 +292,13 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 56%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.customers == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Customers</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -285,7 +309,7 @@
                   
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Invoice</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -296,7 +320,7 @@
                   <!-- <p class="mb-0 fs-3">Payment In</p> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Estimate</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -306,7 +330,7 @@
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Sales Order</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -316,7 +340,7 @@
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Recurring Invoice</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -324,28 +348,44 @@
                 {% if allmodules.retainer_invoice == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Retainer Invoice</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Retainer Invoice</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.credit_note == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Credit Note</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Credit Note</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.payment_received == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Payment Received</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Payment Received</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.delivery_challan == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <p class="mb-0 fs-3">Delivery Challan</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Delivery Challan</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
@@ -355,7 +395,7 @@
 
             <!-- Purchase  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-shopping-cart" style="margin-right: 10px;"></i></i></b>
                 </span>
@@ -363,13 +403,13 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 42%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.vendors == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Vendors</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <hr>
@@ -379,7 +419,7 @@
                   <!-- <i class="ti ti-mail fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Bills</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>  
                 </a>
                 <hr>
@@ -389,7 +429,7 @@
                   <!-- <i class="ti ti-list-check fs-6"></i> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Recurring Bills</p>
-                    <a href=""><i class="fa fa-plus text-dark" ></i></a>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
                   </div>
                 </a>
                 <br>
@@ -398,9 +438,9 @@
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
-                  <p class="mb-0 fs-3">Vendor Credit</p>
-                  <a href=""><i class="fa fa-plus text-dark"></i></a>
-                </div>
+                    <p class="mb-0 fs-3">Vendor Credit</p>
+                    <a href=""><i class="fa fa-plus text-white"></i></a>
+                  </div>
                 </a>
                 <hr>
                 {% endif %}
@@ -408,9 +448,9 @@
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
-                  <p class="mb-0 fs-3">Purchase Order</p>
-                  <a href=""><i class="fa fa-plus text-dark"></i></a>
-                </div>
+                    <p class="mb-0 fs-3">Purchase Order</p>
+                    <a href=""><i class="fa fa-plus text-white"></i></a>
+                  </div>
                 </a>
                 <hr>
                 {% endif %}
@@ -418,9 +458,9 @@
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
-                  <p class="mb-0 fs-3">Expenses</p>
-                  <a href=""><i class="fa fa-plus text-dark"></i></a>
-                </div>
+                    <p class="mb-0 fs-3">Expenses</p>
+                    <a href=""><i class="fa fa-plus text-white"></i></a>
+                  </div>
                 </a>
                 <hr>
                 {% endif %}
@@ -428,9 +468,9 @@
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
-                  <p class="mb-0 fs-3">Recurring Expenses</p>
-                  <a href=""><i class="fa fa-plus text-dark"></i></a>
-                </div>
+                    <p class="mb-0 fs-3">Recurring Expenses</p>
+                    <a href=""><i class="fa fa-plus text-white"></i></a>
+                  </div>
                 </a>
                 <hr>
                 {% endif %}
@@ -438,9 +478,9 @@
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-user fs-6"></i> -->
                   <div class="d-flex">
-                  <p class="mb-0 fs-3">Payment Made</p>
-                  <a href=""><i class="fa fa-plus text-dark"></i></a>
-                </div>
+                    <p class="mb-0 fs-3">Payment Made</p>
+                    <a href=""><i class="fa fa-plus text-white"></i></a>
+                  </div>
                 </a>
                 <hr>
                 {% endif %}
@@ -451,7 +491,7 @@
             
             <!-- Time Tracking  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-landmark" style="margin-right: 10px;"></i></b>
                 </span>
@@ -459,11 +499,15 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 27%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.projects == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Projects</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Projects</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
@@ -473,7 +517,7 @@
 
             <!-- Accounts  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-landmark" style="margin-right: 10px;"></i></b>
                 </span>
@@ -481,18 +525,26 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 41%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.chart_of_accounts == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Chart of Accounts</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Chart of Accounts</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.manual_journal == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Manual Journal</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Manual Journal</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                  
                 </a>
                 <hr>
                 {% endif %}
@@ -501,19 +553,22 @@
 
             <!-- E Way Bill  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-landmark" style="margin-right: 10px;"></i></b>
                 </span>
                 <span><b>E-Way Bill</b></span>
-                
                 <i class="fa fa-caret-down" style="margin-left: 39%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.eway_bill == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Eway Bills</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Eway Bills</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                 
                 </a>
                 <hr>
                 {% endif %}
@@ -523,7 +578,7 @@
 
             <!--  Payroll  dropdown modules -->
             <li class="sidebar-item">
-              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(210, 235, 241,0.5);width: 100%;text-align: left;">
+              <button class="btn dropdown-btn" style="margin-top: 10px; border: none;outline: none; color: black;background-color: rgb(30,30,30);width: 100%;text-align: left;color: white;">
                 <span>
                   <b><i class="fa fa-landmark" style="margin-right: 10px;"></i></b>
                 </span>
@@ -531,39 +586,59 @@
                 
                 <i class="fa fa-caret-down" style="margin-left: 51%;"></i>
               </button>
-              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;">
+              <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.employees == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Employees</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Employees</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                 
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.employees_loan == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Employees Loan</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Employees Loan</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.holiday == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Holiday</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Holiday</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                 
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.attendance == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Attendance</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Attendance</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                 
                 </a>
                 <hr>
                 {% endif %}
                 {% if allmodules.salary_details == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
                   <!-- <i class="ti ti-mail fs-6"></i> -->
-                  <p class="mb-0 fs-3">Salary Details</p>
+                  <div class="d-flex">
+                    <p class="mb-0 fs-3">Salary Details</p>
+                    <a href=""><i class="fa fa-plus text-white" ></i></a>
+                  </div>
+                 
                 </a>
                 <hr>
                 {% endif %}
@@ -574,7 +649,7 @@
             {% if allmodules.reports == 1  %}
             <li class="sidebar-item">
               <a class="sidebar-link mt-2" href="" aria-expanded="false"
-                style="color: black;background-color: rgb(210, 235, 241,0.5);">
+                style="color: black;background-color: rgb(30,30,30); color: white;">
                 <span>
                   <b style="margin-left: 10px;"><i class="fa fa-chart-line"></i></b>
                 </span>
@@ -595,24 +670,27 @@
     </aside>
     <!--  Sidebar End -->
     <!--  Main wrapper -->
-    <div class="body-wrapper ">
+    <div class="body-wrapper">
       <!--  Header Start -->
-      <header class="app-header bg-black" style="box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.325), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <header class="app-header bg-black" style="box-shadow: 0 4px 8px 0 rgba(255, 235, 192, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
         <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler text-white" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            
+          </ul>
           
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
 
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
 
-              <li class="nav-item d-block d-xl-none">
-                <a class="nav-link sidebartoggler " id="headerCollapse" href="">
-                  <i class="ti ti-menu-2"></i>
-                </a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link " href="">
-                  <i class="ti ti-bell-ringing text-primary"></i>
-                  <div class="notification bg-primary rounded-circle"></div>
+                  <i class="ti ti-bell-ringing text-warning"></i>
+                  <div class="notification bg-warning rounded-circle"></div>
                 </a>
               </li>
               <li class="nav-item dropdown">
@@ -620,15 +698,15 @@
                   aria-expanded="false">
                   {% if details.position == 'company' %}
                   
-                    {% if details.company.profile_pic %}
-                      <img width="35" height="35" class="rounded-circle" src="{{ details.company.profile_pic.url }}" alt="">
+                    {% if details.profile_pic %}
+                      <img width="35" height="35" class="rounded-circle" src="{{ details.profile_pic.url }}" alt="">
                     {% else %}
                       <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
                       class="rounded-circle">
                     {% endif %}
                   {% else %}  
-                    {% if staff.img %}
-                      <img width="35" height="35" class="rounded-circle" src="{{ staff.img.url }}" alt="">
+                    {% if details.image %}
+                      <img width="35" height="35" class="rounded-circle" src="{{ details.image.url }}" alt="">
                     {% else %}
                       <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
                       class="rounded-circle">
@@ -636,7 +714,7 @@
                   {% endif %}  
                  
                  
-                  <h5 class="h5 text-white ms-2" style="font-family: 'Times New Roman', Times, serif;padding-left: 5px;">
+                  <h6 class="text-white ms-1 mt-2" style="padding-left: 5px;">
                     <b>
                       {% if details.position == 'company' %}
 
@@ -644,27 +722,27 @@
 
                       {% else %}
 
-                        {{staff.first_name}}{{staff.last_name}}
+                        {{details.login_details.first_name}} {{details.login_details.last_name}}
 
                       {% endif %} 
-                    </b></h5>
+                    </b></h6>
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up bg-black" aria-labelledby="drop2">
                   <div class="message-body">
                     {% if details.position == 'company' %}
-                      <a href="" class="d-flex align-items-center gap-2 dropdown-item bg-black text-white">
+                      <a href="{% url 'company_profile' %}" class="d-flex align-items-center gap-2 dropdown-item bg-black text-white">
                       <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">Profile</p>
                       </a>
                     {% else %} 
-                      <a href="" class="d-flex align-items-center gap-2 dropdown-item bg-black">
+                      <a href="" class="d-flex align-items-center gap-2 dropdown-item bg-black text-white">
                       <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">Profile</p>
                       </a> 
                     {% endif %}  
                     
-                    <a href="" class="btn btn-outline-warning mx-3 mt-2 d-block">Logout</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-warning mx-3 mt-2 d-block mb-2">Logout</a>
                   </div>
                 </div>
               </li>
@@ -672,8 +750,6 @@
           </div>
         </nav>
       </header>
-
-
     </div>
     {% block content %}{% endblock content %}
 

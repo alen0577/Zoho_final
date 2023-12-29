@@ -1,11 +1,11 @@
 from datetime import date, timedelta
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, auth
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, logout, login as auth_login
 from . models import *
-from Company_Staff import views
-from Distributor import views
+from Company_Staff.views import company_dashboard
+from Distributor.views import distributor_dashboard
+from Admin.views import admindash
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 from django.core.exceptions import ObjectDoesNotExist
@@ -307,31 +307,32 @@ def choose_modules(request, pk):
 def login_page(request):
   return render(request, 'login.html')
 
+
+
 def login(request):
   if request.method == 'POST':
     username = request.POST['username']
     password = request.POST['password']
-    user = auth.authenticate(username=username, password=password)
+    user = authenticate(username=username, password=password)
 
     if user is not None and user.is_staff:
-      auth.login(request, user)
+      auth_login(request, user)
       return redirect('admindash')
 
     try:
       log_user = LoginDetails.objects.get(username=username, password=password)
-
     except ObjectDoesNotExist:
       messages.error(request, 'Invalid Username or Password. Try Again.')
       return redirect('login_page')
 
-    # distributor login session
+    # Distributor login session
     if log_user.user_type == 'Distributor':
-      request.session["distributor_id"] = log_user.id
-      if 'distributor_id' in request.session:
-        distributor_id = request.session['distributor_id']
+      request.session["login_id"] = log_user.id
+      if 'login_id' in request.session:
+        distributor_id = request.session['login_id']
       else:
         return redirect('login_page')
-      
+
       try:
         distributor = LoginDetails.objects.get(id=distributor_id)
       except LoginDetails.DoesNotExist:
@@ -339,39 +340,43 @@ def login(request):
 
       try:
         dash_details = DistributorDetails.objects.get(login_details=distributor, superadmin_approval=1)
-        return redirect('distributor_dashboard', dash_details.id)
+        return redirect('distributor_dashboard')
       except DistributorDetails.DoesNotExist:
         messages.info(request, 'Approval is Pending..')
         return redirect('login_page')
 
     # Company login session
     elif log_user.user_type == 'Company':
-      request.session["company_id"] = log_user.id
-      if 'company_id' in request.session:
-        company_id = request.session['company_id']
+      request.session["login_id"] = log_user.id
+      if 'login_id' in request.session:
+        company_id = request.session['login_id']
       else:
         return redirect('login_page')
-      
+
       try:
         company = LoginDetails.objects.get(id=company_id)
       except LoginDetails.DoesNotExist:
         return redirect('login_page')
 
       try:
-        dash_details = CompanyDetails.objects.get(login_details=company, superadmin_approval=1, Distributor_approval=1)
-        return redirect('company_dashboard', dash_details.id)
+        dash_details = CompanyDetails.objects.get(
+          login_details=company,
+          superadmin_approval=1,
+          Distributor_approval=1
+        )
+        return redirect('company_dashboard')
       except CompanyDetails.DoesNotExist:
-        messages.info(request, 'Approval is Pending..')
+        messages.warning(request, 'Approval is Pending..')
         return redirect('login_page')
 
     # Staff login session
     elif log_user.user_type == 'Staff':
-      request.session["staff_id"] = log_user.id
-      if 'staff_id' in request.session:
-        staff_id = request.session['staff_id']
+      request.session["login_id"] = log_user.id
+      if 'login_id' in request.session:
+        staff_id = request.session['login_id']
       else:
         return redirect('login_page')
-      
+
       try:
         staff = LoginDetails.objects.get(id=staff_id)
       except LoginDetails.DoesNotExist:
@@ -379,7 +384,7 @@ def login(request):
 
       try:
         dash_details = StaffDetails.objects.get(login_details=staff, company_approval=1)
-        return redirect('staff_dashboard', dash_details.id)
+        return redirect('staff_dashboard')
       except StaffDetails.DoesNotExist:
         messages.info(request, 'Approval is Pending..')
         return redirect('login_page')
@@ -392,3 +397,8 @@ def login(request):
     return redirect('login_page')
 
 
+#------------------ Logout Section-------------------------
+
+def logout(request):
+  request.session.pop('login_id', None)
+  return redirect('login_page')   

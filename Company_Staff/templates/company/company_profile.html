@@ -1,0 +1,153 @@
+<!-- create by athul -->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+   @media (max-width:768px) {
+        .h1{
+            font-size: 15px;
+            
+            
+        }
+        .img-thumbnail{
+            width: 100% !important;
+        }
+        .h5{
+            font-size: 10px ;
+        }
+        #label{
+            font-size: 8px;
+        }
+        #acol{
+            margin-top: 20px !important;
+            margin-left: 3px !important;
+            margin-bottom: 0px !important;
+            padding-bottom:0px !important ;
+            width: 100% !important;
+            margin-top: 50px !important;
+        }
+        #pcol{
+            margin-left: 3px !important;
+            margin-top: 30px !important;
+            padding-top: 0px !important;
+            width: 100% !important;
+            margin-right: 3px !important;
+        }
+        #scond_main_row{
+           height: 500px;
+        }
+    }
+</style> 
+<body>
+    <div class="body-wrapper">
+        <div class="container-fluid">
+
+            <div class="container p-5" >
+                <div class="row" style="height: 300px;" >
+                    <div class="col-md-4" >
+                        {% if details.profile_pic %}
+                        <img   class="img-fluid border rounded-5" src="{{ details.profile_pic.url }}" style="width: 100%;height: 90%;box-shadow: 0 4px 8px 0 rgba(255, 221, 134, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" alt="">
+                        {% else %}
+                        <img src="{% static 'assets/images/profile/user-1.jpg' %}"  style="width: 100%;height: 90%;box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+                          class="img-fluid border rounded-5">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8" >
+                        <div class="row rounded" style="background-color: rgb(255, 255, 255);">
+                            <h1 class="h1 text-center pt-3 pb-2" style="text-transform:uppercase; font-family: 'Times New Roman', Times, serif;padding-left: 5px;">
+                                <b>{{details.company_name}}</b>
+                            </h1>
+
+                        </div>
+                        <div class="row mt-3"  style="background-color: rgba(176, 199, 205, 0.4);"></div>
+                        <div class="row mt-2 pt-4 rounded-top"  style="background-color: white;">
+                            <div class="col" id="label">Owner</div>
+                            <div class="col"><h5 class="h5"> <b >: {{details.login_details.first_name}} {{details.login_details.last_name}}</b></h5></div>   
+                        </div>
+                        <div class="row" style="background-color: white;">
+                            <div class="col pt-3" id="label">Company Code</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.company_code}}</b></h5></div>
+                        </div>
+                        <div class="row" style="background-color: white;">
+                            <div class="col pt-3" id="label">Email</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.login_details.email}}</b></h5></div>
+                        </div>
+                        <div class="row rounded-bottom" style="background-color: white;">
+                            <div class="col pt-3 pb-3" id="label">Contact</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.contact}}</b></h5></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mt-5"  id="scond_main_row" >
+                    <div class="col-md-5 mt-2 m-3 rounded"  id="acol"   style="background-color: white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">Address</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.address}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">City</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.city}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">State</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.state}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">Country</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.country}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">Pincode</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.pincode}}</b></h5></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2 mb-3 m-4 rounded" id="pcol"  style="background-color: white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <div class="row"  >
+                            <div class="col pt-3 pb-3" id="label">Payment Term</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.payment_term.payment_terms_number}} {{details.payment_term.payment_terms_value}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">Start date</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.start_date}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">End date</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.End_date}}</b></h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">GST Type</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.gst_type}}</b></h5></div>
+                        </div>
+                        {% if details.gst_no != NULL and details.gst_no != ''  %}
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">GST No.</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.gst_no}}</b></h5></div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row">
+                            <div class="col pt-3 pb-3" id="label">Pan No.</div>
+                            <div class="col pt-3"><h5 class="h5"><b>: {{details.pan_number}}</b></h5></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mt-5 mt-lg-3">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"><a href="" class="btn btn-outline-warning m-3" style="width: 100%;font-weight: bold;">Edit Profile</a></div>
+                    <div class="col-md-3"><a href="" class="btn btn-outline-warning m-3" style="width: 100%;font-weight: bold;">Edit Modules</a></div>
+                    <div class="col-md-3"></div>
+                </div>
+
+              <center>
+                </center>
+               
+            
+            </div>
+        </div>
+    </div>        
+</body>
+
+{% endblock %}
