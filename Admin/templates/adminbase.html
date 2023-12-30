@@ -6,7 +6,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ZOHO BOOK</title>
-  <!-- <link rel="shortcut icon" type="image/png" href="{% static 'assets/images/logos/favicon.png' %}" /> -->
   <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}" />
     <!-- Font Awesome CSS CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -39,13 +38,19 @@
           <ul id="sidebarnav ">
            
             <li class="sidebar-item mt-3 ">
-              <a class="sidebar-link" href="{% url 'distributor_dashboard' %}" aria-expanded="false" >
+              <a class="sidebar-link" href="{% url 'admindash' %}" aria-expanded="false" >
                 <i class="ti ti-layout-dashboard text-info"></i>
               </span>
               <span class="hide-menu text-light"><b>Dashboard</b></span>
               </a>
             </li>
-           
+            <li class="sidebar-item mt-3">
+              <a class="sidebar-link" href="{% url 'payment_terms' %}" aria-expanded="false" >
+                <i class="text-danger ti ti-cash"></i>
+              </span>
+              <span class="hide-menu text-light"><b>Payment Terms</b></span>
+              </a>
+            </li>
       
           </ul>
           
@@ -80,25 +85,24 @@
               </li>
 
               <li class="nav-item dropdown">
-                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  {% if distributor_details.image %}
-                  <img width="35" height="35" class="rounded-circle" src="{{ distributor_details.image.url }}" alt="">
-                  {% else %}
+                 
                   <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
-                  {% endif %}
-                  <h5 class=" text-light" style="font-family: 'Times New Roman', Times, serif;padding-left: 5px;">
-                    <b>{{distributor_details.login_details.first_name}} {{distributor_details.login_details.last_name}}</b></h5>
+                  <h5 class="text-light" >Admin</h5>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
-                   
-                    <a href="{% url 'distributor_profile' %}" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-user fs-6 text-warning"></i>
+                    <!-- <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">Profile</p>
-                    </a>
-                    <a href="{% url 'logout' %}" class="d-flex align-items-center gap-2 dropdown-item">
+                    </a> -->
+                    <!-- <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a> -->
+                    <a href="{% url 'admin_logout' %}" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="fas fa-sign-out-alt text-warning fs-6"></i>
                       <p class="mb-0 fs-3">Logout</p>
                     </a>

@@ -354,15 +354,14 @@
                     </div>
                     
                 </div>
+
+              
                 <div class="row pb-5">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <a href="{% url 'dist_client_accept' company.id %}" class="btn btn-warning" style="width: 100%;">ACCEPT</a>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <a href="{% url 'dist_client_reject' company.id %}" class="btn text-light btn-warning"  style="width: 100%;">Cancel</a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'dist_client_reject' company.id %}" class="btn text-light"  style="background-color: #585757;width: 100%;">REJECT</a>
-                    </div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-4"></div>
                 </div>
 
 

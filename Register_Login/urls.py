@@ -5,9 +5,12 @@ urlpatterns = [
 
     # landing page
     path('',views.landing_page,name='landing_page'),
+    
 
     # distributor registration
     path('Distributor_Register',views.distributor_register_page,name='distributor_register_page'),
+    path('Register',views.register,name='register'),
+
 
     # company registration
     path('Company_Register/Basic_details',views.company_register_page1,name='company_register_page1'),
@@ -29,7 +32,8 @@ urlpatterns = [
     path('Login',views.login,name='login'),
 
     # logout section
-    path('Logout-User',views.logout,name='logout'),
+    path('Admin-Logout',views.admin_logout,name='admin_logout'),
+    path('User-Logout',views.logout,name='logout'),
 
 
 ]

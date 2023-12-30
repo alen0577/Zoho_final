@@ -81,7 +81,6 @@ class ZohoModules(models.Model):
     upi = models.IntegerField(null=True, default=0)
     bank_holders = models.IntegerField(null=True, default=0)
     cheque = models.IntegerField(null=True, default=0)
-    reconciliation = models.IntegerField(null=True, default=0)
     loan_account = models.IntegerField(null=True, default=0)
 
     # SALES MODULE

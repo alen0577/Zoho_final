@@ -1,4 +1,4 @@
-{% extends 'distributorbase.html' %}
+{% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
 <style>
@@ -24,8 +24,8 @@
  
              <div class="row">
                <div class="col-md-9 ">
-                 <a href="{% url 'dist_clients' %}">
-                 <h5 class="card-title mb-9 fw-semibold text-light"><b>CLIENTS</b></h5>
+                 <a class="stretched-link" href="{% url 'distributor_requests' %}">
+                 <h5 class="card-title mb-9 fw-semibold text-light"><b>REQUESTS</b></h5>
                </a>
                  
  
@@ -41,7 +41,28 @@
          </div>
        </div>      
        
-       
+       <div class="col-md-4">
+         <div class="card bg-black" >
+           <div class="card-body">
+             <div class="row">
+               <div class="col-md-9">
+                 <a class="stretched-link" href="{% url 'all_distributors' %}">
+                   
+                   <h5 class="card-title mb-9 fw-semibold text-light"><b>ALL  DISTRIBUTORS</b></h5>
+                 </a>
+                 
+ 
+               </div>
+               <div class="col">
+                 <a href="">
+                 <i class="fa fa-users text-warning" style="font-size: 2.3em;"></i>
+               </a>
+                 
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>   
      </div>
      
 </section>

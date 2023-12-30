@@ -1,4 +1,4 @@
-{% extends 'distributorbase.html' %}
+{% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
 <style>
@@ -6,155 +6,80 @@
     background-color:#20201f;
   }
 </style>
-<style>
-    @media (max-width:768px) {
-        .h3{
-            font-size: 20px;
-        }
-        .h4{
-            font-size: 15px;
-        }
-    }
-</style>
 
+<div class="body-wrapper">
+  <div class="container-fluid">
+      <div class="container mt-5 mr-5 " style="background-color: black;">
+          <h1 class="text-center h1 mb-5 pt-5 text-light" ><b>CLIENT
+                  DETAILS</b></h1>
+          <hr>
 
-    <div class="body-wrapper ">
-        <div class="container-fluid">
-            <div class="container mt-5 mr-5 " style="background-color: black;">
-                <h1 class="text-center h1 mb-5 pt-5 text-light"
-                    ><b>CLIENT
-                        DETAILS</b></h1>
-                <hr>
+          <center>
+              {% if data.image %}
+              <img class="img-thumbnail" width="30%" src="{{ data.image.url }}" alt="">
+              {% else %}
+              <img src="{% static 'registration_login/images/default.png' %}" width="20%" wi class="img-thumbnail">
+              {% endif %}
+          </center>
+          <h3 class="h3 text-center py-4 text-light"><b>{{data.login_details.first_name}} {{data.login_details.last_name}}</b></h3>
 
-                <center>
-                    {% if company.profile_pic %}
-                    <img class="img-thumbnail" width="30%" src="{{ company.profile_pic.url }}" alt="">
-                    {% else %}
-                    <img src="{% static 'registration_login/images/default.png' %}" width="20%" wi class="img-thumbnail">
-                    {% endif %}
-                </center>
-                <h3 class="h3 text-center py-3 text-light"><b>{{company.company_name}}</b></h3>
+          <hr>
+          
+          <div class="row p-5 pb-3 pt-3 ">
+              <div class="col-md-6">
+                  <h5 class="h5 text-light" style="margin-right: 10px;"> Company Code </h5>
+              </div>
+              <div class="col-md-6">
+                  <h5 class="h5 text-light ">: {{data.company_code}}</h5>
+              </div>
+          </div>
 
-                <hr>
-                <div class="row p-5 pb-3">
-                    <div class="col-md-6">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b>Company Owner </h5>
-                    </div>
-                    <div class="col-md-6">
-                        <h5 class="h5 text-light">: {{company.login_details.first_name}} {{company.login_details.last_name}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pb-3 pt-3">
-                    <div class="col-md-6">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b>Company Code </h5>
-                    </div>
-                    <div class="col-md-6">
-                        <h5 class="h5 text-light">: {{company.company_code}}</b></h5>
-                    </div>
-                </div>
-
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Email </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light">: {{company.login_details.email}}</b></h5>
-                    </div>
-                </div>
-
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Contact </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.contact}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Address </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.address}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> City</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.city}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> State </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.state}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b>Country</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light">  : {{company.country}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Pincode</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.pincode}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Pan Number</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light">  : {{company.pan_number}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> GST type </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.gst_type}}</b></h5>
-                    </div>
-                </div>
-                {% if company.gst_no != '' %}
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> GST Number</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.gst_no}}</b></h5>
-                    </div>
-                </div>
-                {% endif %}
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> Payment Terms </h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light"> : {{company.payment_term.payment_terms_number}}
-                                {{company.payment_term.payment_terms_value}}</b></h5>
-                    </div>
-                </div>
-                <div class="row p-5 pt-3 pb-3">
-                    <div class="col">
-                        <h5 class="h5 text-light" style="margin-right: 10px;"> </b> End Date</h5>
-                    </div>
-                    <div class="col">
-                        <h5 class="h5 text-light">  : {{company.End_date}}</b></h5>
-                    </div>
-                </div>
-                <hr>
-                <h3 class="h3 p-5 pb-3 pt-3 text-light"><b>Modules</b></h3>
+          <div class="row p-5 pt-3 pb-3 ">
+              <div class="col">
+                  <h5 class="h5 text-light"  style="margin-right: 10px;">  Email </h5>
+              </div>
+              <div class="col">
+                  <h5 class="h5 text-light">: {{data.login_details.email}}</h5>
+              </div>
+          </div>
+          <div class="row p-5 pt-3 pb-3 ">
+              <div class="col">
+                  <h5 class="h5 text-light"  style="margin-right: 10px;">  User Name</h5>
+              </div>
+              <div class="col">
+                  <h5 class="h5 text-light"> : {{data.login_details.username}}</h5>
+              </div>
+          </div>
+          <div class="row p-5 pt-3 pb-3 ">
+              <div class="col">
+                  <h5 class="h5 text-light"  style="margin-right: 10px;">  Contact </h5>
+              </div>
+              <div class="col">
+                  <h5 class="h5 text-light"> : {{data.contact}}</h5>
+              </div>
+          </div>
+          
+          
+          
+          <div class="row p-5 pt-3 pb-3 ">
+              <div class="col">
+                  <h5 class="h5 text-light"  style="margin-right: 10px;">  Payment Terms </h5>
+              </div>
+              <div class="col">
+                  <h5 class="h5 text-light" > : {{data.payment_term.payment_terms_number}}
+                          {{data.payment_term.payment_terms_value}}</h5>
+              </div>
+          </div>
+          <div class="row p-5 pt-3 pb-3 ">
+              <div class="col">
+                  <h5 class="h5 text-light"  style="margin-right: 10px;">  End Date</h5>
+              </div>
+              <div class="col">
+                  <h5 class="h5 text-light">  : {{data.End_date}}</h5>
+              </div>
+          </div>
+          <hr>
+          <h3 class="h3 p-5 pb-3 pt-3 text-light"><b>Modules</b></h3>
                 <div class="row p-3" style="margin-left: 20px;">
                     <div class="col">
                         <h5 class="text-light">Items</h5>
@@ -354,23 +279,25 @@
                     </div>
                     
                 </div>
-                <div class="row pb-5">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <a href="{% url 'dist_client_accept' company.id %}" class="btn btn-warning" style="width: 100%;">ACCEPT</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="{% url 'dist_client_reject' company.id %}" class="btn text-light"  style="background-color: #585757;width: 100%;">REJECT</a>
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-
-
-
+          <div class="row pb-5">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <a href="{% url 'admin_client_reject' data.id %}" class="btn btn-warning"  style="width: 100%;">CANCEL</a>
             </div>
-
-
-
+            <div class="col-md-4"></div>
         </div>
-    </div>
+          
+                  
+              
+          </div>
+
+
+
+      </div>
+
+
+
+  </div>
+</div>
+
 {% endblock %}

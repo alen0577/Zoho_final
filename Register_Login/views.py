@@ -9,6 +9,8 @@ from Admin.views import admindash
 from django.contrib import messages
 from django.utils.crypto import get_random_string
 from django.core.exceptions import ObjectDoesNotExist
+import random
+import string
 
 
 
@@ -19,8 +21,75 @@ def landing_page(request):
 
 # ------------------Distributor registration and save---------------------
 
+
 def distributor_register_page(request):
-  return render(request, 'distributor_register.html')
+  terms = PaymentTerms.objects.all()
+  return render(request, 'distributor_register.html',{'terms':terms})
+
+def register(request):
+  if request.method == 'POST':
+    fname = request.POST['fname']
+    lname = request.POST['lname']
+    email = request.POST['eid']
+    username = request.POST['uname']
+    phone = request.POST['ph']
+    password = request.POST['pass']
+    confirm_pass = request.POST['cpass']
+    pterm = request.POST['select']
+    pic = request.FILES.get('image')
+
+    terms=PaymentTerms.objects.get(id=pterm)
+    start_date=date.today()
+    days=int(terms.days)
+
+    
+    end= date.today() + timedelta(days=days)
+    End_date=end
+
+    code_length = 8  
+    characters = string.ascii_letters + string.digits  # Letters and numbers
+    while True:
+      unique_code = ''.join(random.choice(characters) for _ in range(code_length))
+        
+      # Check if the code already exists in the table
+      if not DistributorDetails.objects.filter(distributor_code=unique_code).exists():
+        break
+    
+    if password == confirm_pass:
+      if LoginDetails.objects.filter(username = username).exists():
+        messages.info(request, 'Sorry, Username already exists')
+        return redirect('distributor_register_page')
+      
+
+      elif not LoginDetails.objects.filter(email = email).exists():
+      
+        login_data =LoginDetails(
+          first_name = fname,
+          last_name = lname,
+          username = username,
+          email = email,
+          password = password,
+          user_type = 'Distributor'
+        )
+        login_data.save()
+        
+        data = LoginDetails.objects.get(id = login_data.id)
+        distributor_data = DistributorDetails(
+          login_details=data,
+          payment_term=terms,
+          contact=phone,
+          distributor_code=unique_code,
+          image=pic,
+          start_date=start_date,
+          End_date=End_date,
+        )
+        distributor_data.save()
+        
+        return redirect('login_page')
+      else:
+        messages.info(request, 'Sorry, Email already exists')
+        return redirect('distributor_register_page')
+    return redirect('distributor_register_page')
 
 
 # ------------------Company registration and save-------------------------
@@ -112,9 +181,15 @@ def company_registration_save2(request,pk):
     days=int(terms.days)
     end=date.today() + timedelta(days=days)
     e_date=end
-    code=get_random_string(length=6)
-    if CompanyDetails.objects.filter(company_code=code).exists():
-      code=get_random_string(length=6)
+    code_length = 8  
+    characters = string.ascii_letters + string.digits  # Letters and numbers
+
+    while True:
+      unique_code = ''.join(random.choice(characters) for _ in range(code_length))
+        
+      # Check if the code already exists in the table
+      if not CompanyDetails.objects.filter(company_code=unique_code).exists():
+        break
        
   
     # Create a new CompanyDetails instance and populate it with form data
@@ -135,7 +210,7 @@ def company_registration_save2(request,pk):
       payment_term=terms,
       start_date=s_date,
       End_date=e_date,
-      company_code=code,
+      company_code=unique_code,
       reg_action=register_action,
       Distributor_approval=distributor_approve
       # Add more fields as needed
@@ -238,7 +313,6 @@ def choose_modules(request, pk):
     upi = request.POST.get('upi', 0)
     bank_holders = request.POST.get('bank_holders', 0)
     cheque = request.POST.get('cheque', 0)
-    reconciliation = request.POST.get('reconciliation', 0)
     loan_account = request.POST.get('loan_account', 0)
 
     customers = request.POST.get('customers', 0)
@@ -281,7 +355,7 @@ def choose_modules(request, pk):
       company=company,
       items=items, price_list=price_list, stock_adjustment=stock_adjustment, godown=godown,
       cash_in_hand=cash_in_hand, offline_banking=offline_banking, upi=upi, bank_holders=bank_holders,
-      cheque=cheque, reconciliation=reconciliation, loan_account=loan_account,
+      cheque=cheque, loan_account=loan_account,
       customers=customers, invoice=invoice, estimate=estimate, sales_order=sales_order,
       recurring_invoice=recurring_invoice, retainer_invoice=retainer_invoice, credit_note=credit_note,
       payment_received=payment_received, delivery_challan=delivery_challan,
@@ -386,7 +460,7 @@ def login(request):
         dash_details = StaffDetails.objects.get(login_details=staff, company_approval=1)
         return redirect('staff_dashboard')
       except StaffDetails.DoesNotExist:
-        messages.info(request, 'Approval is Pending..')
+        messages.error(request, 'Approval is Pending..')
         return redirect('login_page')
 
     else:
@@ -398,6 +472,10 @@ def login(request):
 
 
 #------------------ Logout Section-------------------------
+
+def admin_logout(request):
+  auth.logout(request)
+  return redirect('login_page')
 
 def logout(request):
   request.session.pop('login_id', None)
