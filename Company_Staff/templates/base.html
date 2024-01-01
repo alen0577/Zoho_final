@@ -34,9 +34,7 @@
     body{
       background-color: rgb(30, 30, 30)
     }
-    a.sp:hover{
-      background-color: rgb(0, 0, 0);
-    }
+    
 
     /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
     .dropdown-container {
@@ -61,29 +59,11 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between p-4 mt-2">
-          <a href="" class="text-nowrap logo-img mr-2 " style="display: flex;text-decoration: none;">
-            {% if details.position == 'company' %}
-                  
-              {% if details.profile_pic %}
-                <img width="35" height="35" class="rounded-circle" src="{{ details.profile_pic.url }}" alt="">
-               
-              {% else %}
-                <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
-                class="rounded-circle">
-              {% endif %}
-            {% else %}  
-              {% if details.image %}
-                <img width="35" height="35" class="rounded-circle" src="{{ details.image.url }}" alt="">
-              {% else %}
-                <img src="{% static 'assets/images/profile/user-1.jpg' %}" alt="" width="35" height="35"
-                class="rounded-circle">
-              {% endif %}
-            {% endif %} 
-            <i class="fa fa-check-circle account-active-icon mt-4 text-warning" style="bottom: 0; right: 0;font-size: x-small;"></i> 
+          <a href="" class="text-nowrap logo-img" style="display: flex;text-decoration: none;">
             <h3 style="font-family: 'Times New Roman', Times, serif; "><b class="p-3 text-white">ZOHO BOOKS</b></h3>
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="ti ti-x fs-8"></i>
+            <i class="ti ti-x fs-6"></i>
           </div>
         </div>
         <!-- Sidebar navigation-->
