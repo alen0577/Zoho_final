@@ -4,6 +4,12 @@
 
 <div class="body-wrapper">
     <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'company_dashboard' %}" class="text-warning">Dashboard</a></li>
+              <li class="breadcrumb-item" aria-current="page">Profile</li>
+            </ol>
+        </nav>
         <div class="row mt-5">
             <div class="col-md-12">
                 <div class="card mb-3 bg-black shadow p-3 mb-5 rounded" style="max-width: 1200px;">
@@ -11,9 +17,9 @@
                         <h1 class="text-center text-white">
                             {{details.company_name}}
                             {% if details.profile_pic %}
-                                <img width="120" height="120" class="rounded-circle mt-lg-0 mt-3 ms-2" src="{{ details.profile_pic.url }}" alt="img" style="border: 2px rgb(199, 119, 0) solid;">
+                                <img width="150" height="150" class="rounded img-fluid mt-lg-0 mt-3 ms-2" src="{{ details.profile_pic.url }}" alt="img" style="border: 2px rgb(199, 119, 0) solid;">
                             {% else %}
-                                <img src="{% static 'registration_login/images/default.png' %}" alt="img" width="120" height="120" class="rounded-circle mt-lg-0 mt-3 ms-2" style="border: 2px rgb(199, 119, 0) solid;">
+                                <img src="{% static 'registration_login/images/default.png' %}" alt="img" width="120" height="120" class="rounded mt-lg-0 mt-3 ms-2" style="border: 2px rgb(199, 119, 0) solid;">
                             {% endif %}
                         </h1>
                         
@@ -29,7 +35,7 @@
                             <div class="card-body ">
                                 <div class="row mt-2">
                                     <div class="col-md-4">
-                                        <p class="text-white">Owner </p>
+                                        <p class="text-white">Owner</p>
 
                                     </div>
                                     <div class="col-md-8">
@@ -47,6 +53,15 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-4">
+                                        <p class="text-white">Username</p>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-white">: {{details.login_details.username}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
                                         <p class="text-white">Email</p>
 
                                     </div>
@@ -54,6 +69,7 @@
                                         <h5 class="text-white">: {{details.login_details.email}}</h5>
                                     </div>
                                 </div>
+                                
                                 <div class="row mt-2">
                                     <div class="col-md-4">
                                         <p class="text-white">Contact</p>
@@ -215,17 +231,17 @@
                     </div>
                     <div class="container">
                         <div class="row mb-4">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
                                 <div class="d-grid gap-2 d-md-block">
                                     <center>
-                                        <a href="{% url 'company_profile_editpage' %}" class="btn btn-outline-warning m-3" >Edit Profile</a>
-                                        <a href="" class="btn btn-outline-warning m-3" >Edit Modules</a>
+                                        <a href="{% url 'company_profile_editpage' %}" class="btn btn-outline-warning" style="width: 185px;">Edit Profile</a>
+                                        <a href="{% url 'company_module_editpage' %}" class="btn btn-outline-warning ms-2" style="width: 185px;">Edit Modules</a>
                                     </center>
                                 </div>
                                     
                             </div>
-                            <div class="col-md-4"></div>
+                            <div class="col-md-2"></div>
                             
                         </div>
                         

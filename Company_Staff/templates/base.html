@@ -684,17 +684,17 @@
                   {% if details.position == 'company' %}
                   
                     {% if details.profile_pic %}
-                      <img width="35" height="35" class="rounded-circle" src="{{ details.profile_pic.url }}" alt="">
+                      <img width="40" height="40" class="rounded-circle" src="{{ details.profile_pic.url }}" alt="" style="border: 2px rgb(199, 119, 0) solid;">
                     {% else %}
-                      <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35"
-                      class="rounded-circle">
+                      <img src="{% static 'registration_login/images/default.png' %}" alt="" width="40" height="40"
+                      class="rounded-circle" style="border: 2px rgb(199, 119, 0) solid;">
                     {% endif %}
                   {% else %}  
                     {% if details.image %}
-                      <img width="35" height="35" class="rounded-circle" src="{{ details.image.url }}" alt="">
+                      <img width="40" height="40" class="rounded-circle" src="{{ details.image.url }}" alt="" style="border: 2px rgb(199, 119, 0) solid;">
                     {% else %}
-                      <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35"
-                      class="rounded-circle">
+                      <img src="{% static 'registration_login/images/default.png' %}" alt="" width="40" height="40"
+                      class="rounded-circle" style="border: 2px rgb(199, 119, 0) solid;">
                     {% endif %}
                   {% endif %}  
                  

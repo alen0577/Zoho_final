@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from Register_Login.models import *
 from Register_Login.views import logout
 from django.contrib import messages
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
@@ -12,10 +14,8 @@ from django.contrib import messages
 # company dashboard
 def company_dashboard(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
@@ -32,10 +32,8 @@ def company_dashboard(request):
 # company staff request for login approval
 def company_staff_request(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
@@ -68,10 +66,8 @@ def staff_request_reject(request,pk):
 # All company staff view, cancel staff approval
 def company_all_staff(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
@@ -104,10 +100,8 @@ def staff_approval_cancel(request, pk):
 # company profile, profile edit
 def company_profile(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
@@ -122,10 +116,8 @@ def company_profile(request):
 
 def company_profile_editpage(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
@@ -140,10 +132,8 @@ def company_profile_editpage(request):
 
 def company_profile_basicdetails_edit(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
 
         log_details= LoginDetails.objects.get(id=log_id)
@@ -164,10 +154,8 @@ def company_profile_basicdetails_edit(request):
     
 def company_password_change(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
 
         log_details= LoginDetails.objects.get(id=log_id)
@@ -187,10 +175,61 @@ def company_password_change(request):
     else:
         return redirect('/')
        
+def company_profile_companydetails_edit(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
 
-    
+        log_details = LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
 
+        if request.method == 'POST':
+            # Get data from the form
+            gstno = request.POST.get('gstno')
+            profile_pic = request.FILES.get('image')
 
+            # Update the CompanyDetails object with form data
+            dash_details.company_name = request.POST.get('cname')
+            dash_details.contact = request.POST.get('phone')
+            dash_details.address = request.POST.get('address')
+            dash_details.city = request.POST.get('city')
+            dash_details.state = request.POST.get('state')
+            dash_details.country = request.POST.get('country')
+            dash_details.pincode = request.POST.get('pincode')
+            dash_details.pan_number = request.POST.get('pannumber')
+
+            if gstno:
+                dash_details.gst_no = gstno
+
+            if profile_pic:
+                dash_details.profile_pic = profile_pic
+
+            dash_details.save()
+
+            messages.success(request, 'Updated')
+            return redirect('company_profile_editpage')
+        else:
+            return redirect('company_profile_editpage')
+    else:
+        return redirect('/')    
+
+# company modules editpage
+def company_module_editpage(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+        allmodules= ZohoModules.objects.get(company=dash_details,status='New')
+        context = {
+            'details': dash_details,
+            'allmodules': allmodules
+        }
+        return render(request, 'company/company_module_editpage.html', context)
+    else:
+        return redirect('/')
 
 
 
@@ -199,10 +238,8 @@ def company_password_change(request):
 # staff dashboard
 def staff_dashboard(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = StaffDetails.objects.get(login_details=log_details,company_approval=1)
@@ -219,10 +256,8 @@ def staff_dashboard(request):
 # staff profile
 def staff_profile(request):
     if 'login_id' in request.session:
-        if request.session.has_key('login_id'):
-            log_id = request.session['login_id']
-           
-        else:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = StaffDetails.objects.get(login_details=log_details,company_approval=1)
@@ -236,9 +271,77 @@ def staff_profile(request):
         return redirect('/')
 
 
+def staff_profile_editpage(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = StaffDetails.objects.get(login_details=log_details,company_approval=1)
+        allmodules= ZohoModules.objects.get(company=dash_details.company,status='New')
+        context = {
+            'details': dash_details,
+            'allmodules': allmodules
+        }
+        return render(request, 'staff/staff_profile_editpage.html', context)
+    else:
+        return redirect('/')
 
+def staff_profile_details_edit(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
 
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = StaffDetails.objects.get(login_details=log_details,company_approval=1)
+        if request.method == 'POST':
+            # Get data from the form
+            log_details.first_name = request.POST.get('fname')
+            log_details.last_name = request.POST.get('lname')
+            log_details.email = request.POST.get('eid')
+            log_details.username = request.POST.get('uname')
+            log_details.save()
+            dash_details.contact = request.POST.get('phone')
+            old=dash_details.image
+            new=request.FILES.get('profile_pic')
+            print(new,old)
+            if old!=None and new==None:
+                dash_details.image=old
+            else:
+                print(new)
+                dash_details.image=new
+            dash_details.save()
+            messages.success(request,'Updated')
+            return redirect('staff_profile_editpage') 
+        else:
+            return redirect('staff_profile_editpage') 
 
+    else:
+        return redirect('/')
+
+def staff_password_change(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+
+        log_details= LoginDetails.objects.get(id=log_id)
+        if request.method == 'POST':
+            # Get data from the form
+            password = request.POST.get('pass')
+            cpassword = request.POST.get('cpass')
+            if password == cpassword:
+                log_details.password=password
+                log_details.save()
+
+            messages.success(request,'Password Changed')
+            return redirect('staff_profile_editpage') 
+        else:
+            return redirect('staff_profile_editpage') 
+
+    else:
+        return redirect('/')
 
 
 
