@@ -26,7 +26,24 @@
                     </div>
                     <div class="row mt-3">
                         <div class="container">
-                            <h4 class="text-white ms-4">Company Details</h4>
+                            <h4 class="text-white ms-4">
+                                Company Details
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p id="messageLabel" for="" class="badge text-warning">( {{message}} )</p>
+                                    {% endfor %}
+                                    <script>
+                                        // Add a script to hide the messages after a few seconds
+                                        setTimeout(function() {
+                                            var messageLabel = document.getElementById('messageLabel');
+                                            if (messageLabel) {
+                                                messageLabel.style.display = 'none';
+                                            }
+                                        }, 4000); // 4000 milliseconds = 4 seconds (adjust the time as needed)
+                                    </script>
+                                {% endif %}
+
+                            </h4>
                             <hr class="text-warning">
                         </div>
                     </div>
@@ -57,7 +74,7 @@
 
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{details.company_code}}</h5>
+                                        <h5 class="text-warning-emphasis"><span class="text-white">:</span> {{details.company_code}}</h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -182,7 +199,16 @@
                                         <h5 class="text-white">: {{details.End_date}}</h5>
                                     </div>
                                 </div>
-                                
+                                {% if renew_button %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="text-white mt-2">Renew Payment Terms</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="text-white">:</span> <a class="btn btn-warning text-black mt-2 ms-1" data-bs-toggle="modal" data-bs-target="#renewbutton"><i class="fas fa-sync-alt"></i> Renew</a>
+                                    </div>
+                                </div>
+                               {% endif %}
                                
                             </div>
                         </div>
@@ -252,6 +278,68 @@
 
     </div>
 </div>        
+
+
+<!-- Modal -->
+<div class="modal fade" id="renewbutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content shadow p-3  rounded border" style="background-color: rgb(30,30,30);">
+        <div class="modal-body">
+          <form action="{% url 'company_renew_terms' %}" method="post">
+            {% csrf_token %}
+            <div class="row mt-3">
+                <h5 class="text-white">Renew Payment Terms</h5>
+            </div>
+            <div class="row mt-3">
+                <p class="text-warning-emphasis">If you want to renew payment terms sent a request...</p>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <h6 class="text-white">Current Term</h6>
+                    
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-white">: {{details.payment_term.payment_terms_number}} {{details.payment_term.payment_terms_value}}</h6>
+                </div>
+                
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <h6 class="text-white">Ends on</h6>
+                    
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-white">: {{details.End_date}}</h6>
+                </div>
+                
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <h6 class="text-white mt-2">Select new payment terms*</h6>
+                    
+                </div>
+                <div class="col-md-6">
+                    <select name="select" id="select" class="form-select text-white" style="background-color: rgb(30,30,30);" required>
+                        <option value="" hidden>Choose Payment terms</option>
+    
+                        {% for t in terms %}
+                        <option value="{{t.id}}">{{t.payment_terms_number}}{{t.payment_terms_value}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer mt-3">
+                <button type="reset" class="btn btn-outline-warning" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-outline-warning">Send Request</button>
+            </div>
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+</div>
 
 
 {% endblock %}

@@ -8,7 +8,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'company_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="{% url 'company_profile' %}" class="text-warning-emphasis">Profile</a></li>
-              <li class="breadcrumb-item" aria-current="page">Profile Edit</li>
+              <li class="breadcrumb-item" aria-current="page">Edit Profile</li>
             </ol>
         </nav>
         <div class="row mt-5">
@@ -31,7 +31,7 @@
                                 Edit Profile
                                 {% if messages %}
                                 {% for message in messages %}
-                                    <p id="messageLabel" for="" class="badge text-success">( {{message}} )</p>
+                                    <p id="messageLabel" for="" class="badge text-warning">( {{message}} )</p>
                                 {% endfor %}
                                 <script>
                                     // Add a script to hide the messages after a few seconds
@@ -256,10 +256,13 @@
 <!-- Modal -->
 <div class="modal fade" id="passwordchange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content shadow p-3 mb-5 bg-black rounded border">
+      <div class="modal-content shadow p-3 mb-5 rounded border" style="background-color: rgb(30,30,30);">
         <div class="modal-body">
           <form action="{% url 'company_password_change' %}" method="post">
             {% csrf_token %}
+            <div class="row mt-3">
+                <h5 class="text-white">Change Password</h5>
+            </div>
             <div class="row mt-3">
                 <div class="col-md-8">
                     <input type="password" id="pass" name="pass" placeholder="Enter New Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control" title="*password must be at least 8 characters long and include uppercase, lowercase, special characters and numbers." required>                                      

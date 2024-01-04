@@ -65,6 +65,12 @@ class StaffDetails(models.Model):
     company_approval = models.IntegerField(null=True,default=0)    
     position = models.CharField(max_length=255,null=True,blank=True,default='staff')
 
+class PaymentTermsUpdates(models.Model):
+    company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE,null=True,blank=True) 
+    distributor = models.ForeignKey(DistributorDetails, on_delete=models.CASCADE,null=True,blank=True) 
+    payment_term = models.ForeignKey(PaymentTerms, on_delete=models.CASCADE,null=True,blank=True)
+    update_action = models.IntegerField(null=True,default=0) 
+    status = models.CharField(max_length=100,null=True,default='New')
 
 class ZohoModules(models.Model):
     company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE,null=True,blank=True) 

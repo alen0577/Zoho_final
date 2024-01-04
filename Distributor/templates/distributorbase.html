@@ -17,6 +17,11 @@
   
   
 </head>
+<style>
+  body{
+    background-color: rgb(30,30,30);
+  }
+</style>
 
 <body class="">
   <!--  Body Wrapper -->
@@ -73,9 +78,9 @@
             
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item">
-                <a class="nav-link nav-icon-hover" href="">
+                <a class="nav-link " href="{% url 'distributor_notification' %}">
                   <i class=" text-warning ti ti-bell-ringing"></i>
-                  <div class="notification bg-primary rounded-circle"></div>
+                  <div class="notification bg-warning rounded-circle"></div>
                 </a>
               </li>
 
@@ -83,7 +88,7 @@
                 <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   {% if distributor_details.image %}
-                  <img width="35" height="35" class="rounded-circle" src="{{ distributor_details.image.url }}" alt="">
+                  <img width="35" height="35" class="rounded-circle " src="{{ distributor_details.image.url }}" alt="" style="border: 2px solid rgb(241, 162, 15);">
                   {% else %}
                   <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
                   {% endif %}
@@ -91,7 +96,7 @@
                     <b>{{distributor_details.login_details.first_name}} {{distributor_details.login_details.last_name}}</b></h5>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up bg-black" aria-labelledby="drop2">
                   <div class="message-body">
                    
                     <a href="{% url 'distributor_profile' %}" class="d-flex align-items-center gap-2 dropdown-item">

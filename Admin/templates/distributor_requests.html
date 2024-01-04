@@ -1,15 +1,10 @@
 {% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
-<style>
-  body{
-    background-color:#20201f;
-  }
-</style>
 
 <style>
   table tr:hover {
-    background-color: rgb(55, 54, 54);
+    background-color: rgb(23, 22, 22);
     cursor: pointer;
 }
 </style>
@@ -19,14 +14,20 @@
 <div class="body-wrapper">
   <div class="container-fluid">
 
-    
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb pt-3">
+        <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_distributors' %}" class="text-warning">distributors</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'distributor_requests' %}" class="text-warning">Requests</a></li>
+      </ol>
+  </nav>
 
      <!-- <h3 class="text-center"><b style=" margin-bottom: 20px;">COMPANY REQUESTS</b></h3> -->
     
       <div style="overflow-x:auto;">  
         {% if distributors %}  
 
-        <table class="table mt-5 " style="background-color: black;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <table class="table mt-5 border-dark" style="background-color: black;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
           <thead>
               <tr>
                 <th scope="col" style="color: white;"><b>ID</b></th>
@@ -56,8 +57,8 @@
                 <td>{{a.contact}}</td>
                 <td>{{a.payment_term.payment_terms_number}} {{a.payment_term.payment_terms_value}}</td>
                 <td>{{a.End_date}}</td>
-                <td><a href="{% url 'admin_distributor_accept' a.id %}" class="btn btn-sm btn-warning m-1 text-light">Accept</a>
-                <a href="{% url 'admin_distributor_reject' a.id %}" class="btn btn-sm m-1 text-light" style="background-color: #585757;">Reject</a></td>
+                <td><a href="{% url 'admin_distributor_accept' a.id %}" class="btn btn-sm btn-outline-warning m-1 text-light ">Accept</a>
+                <a href="{% url 'admin_distributor_reject' a.id %}" class="btn btn-sm m-1 text-light btn-outline-warning " >Reject</a></td>
               </tr>
               {% endfor %}
             </tbody>

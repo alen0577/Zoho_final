@@ -14,6 +14,7 @@ import string
 
 
 
+
 # Create your views here.
 def landing_page(request):
     return render(request,'landpage.html')
@@ -84,12 +85,19 @@ def register(request):
           End_date=End_date,
         )
         distributor_data.save()
+
+        pterm_update = PaymentTermsUpdates(
+          distributor = distributor_data,
+          payment_term = terms
+        )
+        pterm_update.save()
         
         return redirect('login_page')
       else:
         messages.info(request, 'Sorry, Email already exists')
         return redirect('distributor_register_page')
     return redirect('distributor_register_page')
+
 
 
 # ------------------Company registration and save-------------------------
@@ -217,6 +225,14 @@ def company_registration_save2(request,pk):
     )
 
     company_details_instance.save()  # Save the instance to the database
+
+    # Create a new paymentterm instance and populate it with form data
+    active_plan=PaymentTermsUpdates(
+      company=company_details_instance,
+      payment_term=terms, 
+    )
+    active_plan.save() # Save the instance to the database
+
     messages.info=(request,'Company Details Saved')
     return redirect('modules_select_page', company_details_instance.id)
 
@@ -250,13 +266,14 @@ def staff_registration(request):
         messages.info(request, 'Sorry, company id does not exists')
         return redirect('staff_register_page')
 
-  
+    # Check if the username is unique within the same company
+    if StaffDetails.objects.filter(login_details__username=username, company=company).exists():
+      messages.warning(request, 'Username already exists for staff in the same company')
+      return redirect('staff_register_page')
+
     if password == cpassword:
       if LoginDetails.objects.filter(email=email).exists():
         messages.info(request,'Email id exists')
-        return redirect('staff_register_page')
-      elif LoginDetails.objects.filter(username=username).exists():
-        messages.info(request,'Username exists')
         return redirect('staff_register_page')
       else:
         # Save data to the database
@@ -420,6 +437,7 @@ def login(request):
         return redirect('login_page')
 
     # Company login session
+    
     elif log_user.user_type == 'Company':
       request.session["login_id"] = log_user.id
       if 'login_id' in request.session:
@@ -429,6 +447,7 @@ def login(request):
 
       try:
         company = LoginDetails.objects.get(id=company_id)
+        current_date=date.today()
       except LoginDetails.DoesNotExist:
         return redirect('login_page')
 
@@ -436,11 +455,15 @@ def login(request):
         dash_details = CompanyDetails.objects.get(
           login_details=company,
           superadmin_approval=1,
-          Distributor_approval=1
+          Distributor_approval=1,
         )
-        return redirect('company_dashboard')
+        if current_date > dash_details.End_date:
+          messages.success(request,'Payment Terms validity expired')
+          return redirect('login_page')
+        else:
+          return redirect('company_dashboard')
       except CompanyDetails.DoesNotExist:
-        messages.warning(request, 'Approval is Pending..')
+        messages.warning(request, 'Approval is Pending')
         return redirect('login_page')
 
     # Staff login session

@@ -1,11 +1,6 @@
 {% extends 'adminbase.html' %}
 {% load static %}
 {% block content %}
-<style>
-  body{
-    background-color:#20201f;
-  }
-</style>
 
 <style>
   table tr:hover {
@@ -19,14 +14,20 @@
 <div class="body-wrapper">
   <div class="container-fluid">
 
-    
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb pt-3">
+        <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning">Clients</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'client_requests' %}" class="text-warning">Requests</a></li>
+      </ol>
+  </nav>
 
      <!-- <h3 class="text-center"><b style=" margin-bottom: 20px;">COMPANY REQUESTS</b></h3> -->
     
       <div style="overflow-x:auto;">  
         {% if clients %}  
 
-        <table class="table mt-5 " style="background-color: black;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <table class="table mt-3 " style="background-color: black;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
           <thead>
               <tr>
                 <th scope="col" style="color: white;"><b>ID</b></th>
