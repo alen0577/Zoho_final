@@ -16,9 +16,15 @@
             <div class="col-md-12">
                 
                 <h5 id="alertMessage" class="text-danger">
-                    <i class="fa fa-exclamation-circle fa-lg"></i>  Your current payment term validity is about to expired.                   
+                    <i class="fa fa-exclamation-circle fa-lg"></i>  Your current payment term validity is about to expire in
+                    {% if days_left != 0 %} 
+                    <span class="fw-bold">{{days_left}} days</span>. 
+                    {% else %}
+                    <span class="fw-bold">Today</span>.
+                    {% endif %}
+
                 </h5>
-                <span class="text-warning-emphasis mt-1">Go to  profile page to renew the payment terms</span>
+                <span class="text-warning-emphasis mt-1">Go to  profile page to renew the payment terms.</span>
                 
             </div>
         </div>

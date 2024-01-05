@@ -6,7 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
 
-    path('Distributor_Dashboard>',views.distributor_dashboard,name='distributor_dashboard'),
+    path('Distributor_Dashboard',views.distributor_dashboard,name='distributor_dashboard'),
     path('Dist_clients',views.dist_clients,name='dist_clients'),
     path('Dist_Client_Requests',views.dist_client_requests,name='dist_client_requests'),
     path('Dist_Client_Accept\<int:id>',views.dist_client_accept,name='dist_client_accept'),

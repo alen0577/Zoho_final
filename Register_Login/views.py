@@ -273,7 +273,10 @@ def staff_registration(request):
 
     if password == cpassword:
       if LoginDetails.objects.filter(email=email).exists():
-        messages.info(request,'Email id exists')
+        messages.success(request,'Email id exists')
+        return redirect('staff_register_page')
+      if LoginDetails.objects.filter(password=password).exists():
+        messages.error(request,'Use another password')
         return redirect('staff_register_page')
       else:
         # Save data to the database
@@ -426,12 +429,17 @@ def login(request):
 
       try:
         distributor = LoginDetails.objects.get(id=distributor_id)
+        current_date=date.today()
       except LoginDetails.DoesNotExist:
         return redirect('login_page')
 
       try:
         dash_details = DistributorDetails.objects.get(login_details=distributor, superadmin_approval=1)
-        return redirect('distributor_dashboard')
+        if current_date > dash_details.End_date:
+          messages.success(request,'Payment Terms validity expired')
+          return redirect('login_page')
+        else:
+          return redirect('distributor_dashboard')
       except DistributorDetails.DoesNotExist:
         messages.info(request, 'Approval is Pending..')
         return redirect('login_page')

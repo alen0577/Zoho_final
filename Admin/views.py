@@ -32,7 +32,7 @@ def add_payment_terms(request):
       days=int(num*30)
       pt = PaymentTerms(payment_terms_number = num,payment_terms_value = select,days = days)
       pt.save()
-      messages.info(request, 'Payment term is added!')
+      messages.success(request, 'Payment term is added!')
       return redirect('payment_terms')
 
 
@@ -134,9 +134,16 @@ def admin_notification(request):
     c.days_remaining = (c.End_date - date.today()).days
     print(c.days_remaining)
 
+  distributor = DistributorDetails.objects.all()
+
+  for d in distributor:
+    d.days_remaining = (d.End_date - date.today()).days
+    print(d.days_remaining)
+
+
   pterm_updation = PaymentTermsUpdates.objects.filter(update_action=1,status='Pending')
   data= ZohoModules.objects.filter(update_action=1,status='Pending')
-  return render(request,'admin_notification.html',{'data':data,'pterm_updation':pterm_updation,'companies':companies})
+  return render(request,'admin_notification.html',{'data':data,'pterm_updation':pterm_updation,'companies':companies,'distributor':distributor})
 
 @login_required(login_url='login_page')
 def module_updation_details(request,mid):

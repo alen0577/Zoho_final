@@ -26,12 +26,14 @@ def company_dashboard(request):
         reminder_date = dash_details.End_date - timedelta(days=20)
         current_date = date.today()
         alert_message = current_date >= reminder_date
-        
-        message='.'
+
+        # Calculate the number of days between the reminder date and end date
+        days_left = (dash_details.End_date - current_date).days
         context = {
             'details': dash_details,
             'allmodules': allmodules,
-            'alert_message':alert_message
+            'alert_message':alert_message,
+            'days_left':days_left,
         }
         return render(request, 'company/company_dash.html', context)
     else:
@@ -121,8 +123,7 @@ def company_profile(request):
         reminder_date = dash_details.End_date - timedelta(days=20)
         current_date = date.today()
         renew_button = current_date >= reminder_date
-        
-        
+
         context = {
             'details': dash_details,
             'allmodules': allmodules,
@@ -330,7 +331,7 @@ def company_module_edit(request):
                 reports=reports,update_action=update_action,status=status    
             )
             data.save()
-            messages.info(request,'Request sent successfully, wait for approval...')
+            messages.info(request,"Request sent successfully. Please wait for approval.")
             return redirect('company_module_editpage')
         else:
             return redirect('company_module_editpage')  
@@ -357,7 +358,7 @@ def company_renew_terms(request):
                status=status 
             )
             newterms.save()
-            messages.info(request,'Successfully requested for extend payment terms, please wait for approval.')
+            messages.success(request,'Successfully requested an extension of payment terms. Please wait for approval.')
             return redirect('company_profile')
     else:
         return redirect('/')

@@ -27,11 +27,18 @@
             </nav>
 
             {% for c in companies %}
-            {% if c.days_remaining <= 20 %}
+            {% if c.days_remaining <= 20 and c.days_remaining > 0 %}
             <div class="row p-4 m-5" style="background-color: black;">
                 <h6 class="text-light">{{c.company_name}}</h6>
                 <hr class="text-warning">
                 <h6 class="h6 text-light" ><b style="margin-right: 10px;">Payment terms will overdue in <span class="text-warning">{{c.days_remaining}}</span>  days...</h6>
+            </div>
+            {% endif %}
+            {% if c.days_remaining <= 0 %}
+            <div class="row p-4 m-5" style="background-color: black;">
+                <h6 class="text-light">{{c.company_name}}</h6>
+                <hr class="text-warning">
+                <h6 class="h6 text-danger " ><b style="margin-right: 10px;">Payment terms Overdue..</h6>
             </div>
             {% endif %}
             {% endfor %}
