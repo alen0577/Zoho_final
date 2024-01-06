@@ -32,11 +32,20 @@ def add_payment_terms(request):
       days=int(num*30)
       pt = PaymentTerms(payment_terms_number = num,payment_terms_value = select,days = days)
       pt.save()
-      messages.success(request, 'Payment term is added!')
+      messages.success(request, 'Payment term is added !')
       return redirect('payment_terms')
 
 
   return redirect('payment_terms')
+
+@login_required(login_url='login_page')
+def remove_payment_terms(request,pk):
+  payment_term=PaymentTerms.objects.get(id=pk)
+  payment_term.delete()
+  messages.success(request, 'Payment term is removed !')
+  return redirect('payment_terms')
+
+
 
 #distributor approval section----------------------------
 
