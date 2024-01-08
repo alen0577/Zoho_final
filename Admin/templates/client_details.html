@@ -7,10 +7,10 @@
 
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb pt-3">
-              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning">Clients</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'all_clients' %}" class="text-warning">All Clients</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'client_details' company.id %}" class="text-warning">Details</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning-emphasis">Clients</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'all_clients' %}" class="text-warning-emphasis">All Clients</a></li>
+              <li class="breadcrumb-item" area-current="page">Details</li>
             </ol>
         </nav>
         <div class="row mt-3">
@@ -267,9 +267,6 @@
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Cheques <br>
                             {% endif %}
     
-                            <!-- {% if allmodules.reconciliation == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Reconciliation <br>
-                            {% endif %} -->
     
                             {% if allmodules.Loan_account == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Loan Accounts <br>

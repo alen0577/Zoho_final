@@ -10,10 +10,10 @@
 
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb pt-3">
-              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'admin_distributors' %}" class="text-warning"> Distributors</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'all_distributors' %}" class="text-warning"> All Distributors</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'distributor_details' distributor_details.id  %}" class="text-warning">Overview</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admin_distributors' %}" class="text-warning-emphasis"> Distributors</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'all_distributors' %}" class="text-warning-emphasis"> All Distributors</a></li>
+              <li class="breadcrumb-item" area-current="page">Overview</li>
             </ol>
         </nav> 
         <div class="row mt-5">
@@ -152,11 +152,11 @@
                     <hr class="text-warning">
                  
                     <div class="container">
-                        <div class="row mb-4">
+                        <div class="row mt-4 mb-4">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 
-                               <center> <a href="{% url 'admin_distributor_cancel' distributor_details.id %}" class="btn btn-outline-warning w-75" >Cancel Contract</a></center>
+                               <center> <a href="{% url 'admin_distributor_cancel' distributor_details.id %}" class="btn btn-outline-warning w-50" >Cancel Contract</a></center>
                                     
                                
                             </div>

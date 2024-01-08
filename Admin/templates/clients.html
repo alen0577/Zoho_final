@@ -9,63 +9,58 @@
  
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning">Clients</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Clients</li>
          
         </ol>
-    </nav>
+      </nav>
  
-     <div class="row mt-3">
-       <div class="col-md-4">
-         <div class="card bg-black"  >
-           <div class="card-body">
- 
- 
-             
- 
-             <div class="row">
-               <div class="col-md-9 ">
-                 <a class="stretched-link" href="{% url 'client_requests' %}">
-                 <h5 class="card-title mb-9 fw-semibold text-light"><b>REQUESTS</b></h5>
-               </a>
-                 
- 
-               </div>
-               <div class="col">
-                 <a href="">
-                 <i class="fa fa-users text-warning" style="font-size: 2em;"></i>
-               </a>
-                 
-               </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="card bg-black"  >
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-9 ">
+                  <a class="stretched-link" href="{% url 'client_requests' %}">
+                  <h5 class="card-title mb-9 text-light">Requests</h5>
+                </a>
+              </div>
+              <div class="col">
+                  <a href="">
+                    <i class="fa fa-users text-warning" style="font-size: 2em;"></i>
+                  </a>
+                
+              </div>
              </div>
            </div>
          </div>
-       </div>      
+        </div>      
        
-       <div class="col-md-4">
+        <div class="col-md-4">
          <div class="card bg-black" >
-           <div class="card-body">
-             <div class="row">
-               <div class="col-md-9">
-                 <a class="stretched-link" href="{% url 'all_clients' %}">
-                   
-                   <h5 class="card-title mb-9 fw-semibold text-light"><b>ALL CLIENTS</b></h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-9">
+                  <a class="stretched-link" href="{% url 'all_clients' %}">
+                    
+                    <h5 class="card-title mb-9 text-light">All Clients</h5>
+                  </a>
+                 
+ 
+                </div>
+                <div class="col">
+                 <a href="">
+                   <i class="fa fa-users text-warning" style="font-size: 2.3em;"></i>
                  </a>
                  
- 
-               </div>
-               <div class="col">
-                 <a href="">
-                 <i class="fa fa-users text-warning" style="font-size: 2.3em;"></i>
-               </a>
-                 
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>   
-     </div>
-     
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div> 
 </section>
 
 

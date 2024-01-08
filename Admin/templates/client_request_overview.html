@@ -6,10 +6,10 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb pt-3">
-              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning">Dashboard</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning">Clients</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'client_requests' %}" class="text-warning">Requests</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'client_request_overview' company.id %}" class="text-warning">Overview</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admin_clients' %}" class="text-warning-emphasis">Clients</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'client_requests' %}" class="text-warning-emphasis">Requests</a></li>
+              <li class="breadcrumb-item" aria-current="page">Overview</li>
             </ol>
         </nav>
         <div class="row mt-5">
