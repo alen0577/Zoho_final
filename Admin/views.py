@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from Register_Login.models import *
 from django.contrib import messages
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -87,6 +88,67 @@ def distributor_details(request,id):
 def admin_distributor_cancel(request,id):
   data=DistributorDetails.objects.filter(id=id).update(superadmin_approval=0)
   return redirect('all_distributors')
+
+@login_required(login_url='login_page')
+def clients_under_distributor(request):
+  distributors=DistributorDetails.objects.filter(superadmin_approval=1)
+  context={
+    'distributors':distributors
+  }
+  return render(request,'clients_Under_distributor.html',context)
+
+# distributor  wise client details---------------------------------
+
+def get_clients_under_distributor(request):
+  if request.method == 'GET':
+    distributor_id = request.GET.get('distributor_id')
+    
+
+    # Query your database to fetch employee details based on the employee_id.
+
+    company = CompanyDetails.objects.filter(distributor=distributor_id,superadmin_approval=1,Distributor_approval=1).order_by('-id')
+    company_details=[]
+
+    for i in company:
+      cmp_id=i.id
+      name=i.company_name
+      email=i.login_details.email
+      contact=i.contact
+      pterm_no=i.payment_term.payment_terms_number
+      pterm_value=i.payment_term.payment_terms_value
+      sdate=i.start_date
+      edate=i.End_date
+
+      company_details.append({
+        'id':cmp_id,
+        'name':name,
+        'email':email,
+        'contact':contact,
+        'pterm_no':pterm_no,
+        'pterm_value':pterm_value,
+        'sdate':sdate,
+        'edate':edate
+      })
+    
+    print(company_details)
+    # You might want to serialize the 'company_details' to a JSON format.
+    return JsonResponse({'details': company_details})
+
+  else:
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+@login_required(login_url='login_page')
+def distributor_client_profile_details(request,pk):
+  company = CompanyDetails.objects.get(id=pk)
+
+  context={
+    'company':company
+  }
+
+  return render(request,'distributor_client_profile_details.html',context)
+
+
+
 
 #client approval section----------------------------
 

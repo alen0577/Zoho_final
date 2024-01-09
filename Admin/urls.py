@@ -23,7 +23,12 @@ urlpatterns = [
     path('All_Distributors',views.all_distributors,name='all_distributors'),
     path('Distributor_Details/<int:id>',views.distributor_details,name='distributor_details'),
     path('Admin/Distributor_Cancel/<int:id>',views.admin_distributor_cancel,name='admin_distributor_cancel'),
-    
+    path('Clients_Under_Distributor',views.clients_under_distributor,name='clients_under_distributor'),
+    path('getClients_Under_Distributor',views.get_clients_under_distributor,name='get_clients_under_distributor'),
+    path('Distributor/client/profile_details/<int:pk>',views.distributor_client_profile_details,name='distributor_client_profile_details'),
+
+
+
     # client approval section----------------------------
 
     path('Admin/clients',views.admin_clients,name='admin_clients'),
