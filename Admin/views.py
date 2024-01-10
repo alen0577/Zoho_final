@@ -120,7 +120,7 @@ def get_clients_under_distributor(request):
       edate=i.End_date
 
       company_details.append({
-        'id':cmp_id,
+        'cmp_id':cmp_id,
         'name':name,
         'email':email,
         'contact':contact,
@@ -130,7 +130,6 @@ def get_clients_under_distributor(request):
         'edate':edate
       })
     
-    print(company_details)
     # You might want to serialize the 'company_details' to a JSON format.
     return JsonResponse({'details': company_details})
 
@@ -140,9 +139,12 @@ def get_clients_under_distributor(request):
 @login_required(login_url='login_page')
 def distributor_client_profile_details(request,pk):
   company = CompanyDetails.objects.get(id=pk)
+  allmodules=ZohoModules.objects.get(company=company,status='New')
+ 
 
   context={
-    'company':company
+    'details':company,
+    'allmodules':allmodules
   }
 
   return render(request,'distributor_client_profile_details.html',context)
@@ -216,13 +218,38 @@ def admin_notification(request):
   data= ZohoModules.objects.filter(update_action=1,status='Pending')
   return render(request,'admin_notification.html',{'data':data,'pterm_updation':pterm_updation,'companies':companies,'distributor':distributor})
 
-@login_required(login_url='login_page')
-def module_updation_details(request,mid):
-  data= ZohoModules.objects.get(id=mid)
-  allmodules= ZohoModules.objects.get(company=data.company,status='Pending')
-  old_modules = ZohoModules.objects.get(company=data.company,status='New')
+# @login_required(login_url='login_page')
+# def module_updation_details(request,mid):
+#   data= ZohoModules.objects.get(id=mid)
+#   allmodules= ZohoModules.objects.get(company=data.company,status='Pending')
+#   old_modules = ZohoModules.objects.get(company=data.company,status='New')
 
-  return render(request,'module_updation_details.html',{'data':data,'allmodules':allmodules,'old_modules':old_modules})
+#   return render(request,'module_updation_details.html',{'data':data,'allmodules':allmodules,'old_modules':old_modules})
+
+@login_required(login_url='login_page')
+def module_updation_details(request, mid):
+  data = ZohoModules.objects.get(id=mid)
+  all_modules_pending = ZohoModules.objects.filter(company=data.company, status='Pending').first()
+  old_modules = ZohoModules.objects.filter(company=data.company, status='New').first()
+
+  added_modules = []
+  removed_modules = []
+
+  if all_modules_pending:
+      # Compare with old modules if there are pending modules
+      added_modules = [field for field in all_modules_pending._meta.get_fields() if
+                        isinstance(field, models.IntegerField) and getattr(all_modules_pending, field.name) > 0]
+      removed_modules = [field for field in old_modules._meta.get_fields() if
+                          isinstance(field, models.IntegerField) and getattr(old_modules, field.name) > 0]
+
+  return render(request, 'module_updation_details.html', {
+    'data': data,
+    'all_modules_pending': all_modules_pending,
+    'old_modules': old_modules,
+    'added_modules': added_modules,
+    'removed_modules': removed_modules,
+  })
+
 
 def module_updation_ok(request,mid):
   

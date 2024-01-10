@@ -263,12 +263,12 @@
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Bank Holders <br>
                             {% endif %}
     
-                            {% if allmodules.cheques == 1 %}
+                            {% if allmodules.cheque == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Cheques <br>
                             {% endif %}
     
     
-                            {% if allmodules.Loan_account == 1 %}
+                            {% if allmodules.loan_account == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Loan Accounts <br>
                             {% endif %}
     
@@ -279,9 +279,21 @@
                     <div class="row p-3" style="margin-left: 20px;">
                         <div class="col">
                             <h5 class="text-light">Sales</h5>
-    
+                            
+                            {% if allmodules.customers == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Customers <br>
+                            {% endif %}
+
                             {% if allmodules.invoice == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Invoice <br>
+                            {% endif %}
+
+                            {% if allmodules.estimate == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Estimate <br>
+                            {% endif %}
+
+                            {% if allmodules.sales_order == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Sale Order <br>
                             {% endif %}
     
                             {% if allmodules.recurring_invoice == 1 %}
@@ -291,35 +303,33 @@
                             {% if allmodules.retainer_invoice == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Retainer Invoice <br>
                             {% endif %}
-    
-    
-                            {% if allmodules.Estimate == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Estimate/ Quotation <br>
-                            {% endif %}
-    
-                            {% if allmodules.Payment_in == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Payment In <br>
-                            {% endif %}
-    
-                            {% if allmodules.sales_order == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Sale Order <br>
-                            {% endif %}
-    
-                            {% if allmodules.Delivery_challan == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Delivery Challan <br>
-                            {% endif %}
-    
+                            
+
                             {% if allmodules.credit_note == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Credit Note <br>
                             {% endif %}
     
+
                             {% if allmodules.payment_received == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Payment Received <br>
                             {% endif %}
+                        
+    
+                            {% if allmodules.delivery_challan == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Delivery Challan <br>
+                            {% endif %}
+    
+                            
+    
+                            
     
                         </div>
                         <div class="col">
                             <h5 class="text-light">Purchase</h5>
+
+                            {% if allmodules.vendors == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Vendors<br>
+                            {% endif %}
                             {% if allmodules.bills == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Bills <br>
                             {% endif %}
@@ -332,17 +342,20 @@
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp; Vendor Credit<br>
                             {% endif %}
     
-                            {% if allmodules.Purchase_order == 1 %}
+                            {% if allmodules.purchase_order == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Purchase Order <br>
                             {% endif %}
+
+                            {% if allmodules.expenses == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Expenses <br>
+                            {% endif %}
     
+
                             {% if allmodules.recurring_expenses == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Recurring Expenses <br>
                             {% endif %}
     
-                            {% if allmodules.expenses == 1 %}
-                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Expenses <br>
-                            {% endif %}
+                            
     
                             {% if allmodules.payment_made == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Payment Made <br>
@@ -356,6 +369,10 @@
                             <h5 class="text-light">Pay Roll</h5>
                             {% if allmodules.employees == 1 %}
                              <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Employees <br>
+                            {% endif %}
+
+                            {% if allmodules.employees_loan == 1 %}
+                             <i class="fa fa-check-circle fa-sm text-warning"></i>&nbsp;Employees Loan<br>
                             {% endif %}
     
                             {% if allmodules.holiday == 1 %}
@@ -421,6 +438,7 @@
                         </div>
                         
                     </div>
+
 
                     <div class="container">
                         <div class="row mb-4">

@@ -551,6 +551,21 @@
 
                       
                     </div>
+                    <!-- Display added modules -->
+                    <h3>Added Modules:</h3>
+                    <ul>
+                    {% for field in added_modules %}
+                        <li>{{ field.name }}</li>
+                    {% endfor %}
+                    </ul>
+
+                    <!-- Display removed modules -->
+                    <h3>Removed Modules:</h3>
+                    <ul>
+                    {% for field in removed_modules %}
+                        <li>{{ field.name }}</li>
+                    {% endfor %}
+                    </ul>
                  
 
                     <div class="container">
