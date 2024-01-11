@@ -9,8 +9,8 @@
  
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'dist_clients' %}" class="text-warning">Clients</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
+          <li class="breadcrumb-item" area-current="page">Clients</li>
          
         </ol>
     </nav>
@@ -26,7 +26,7 @@
              <div class="row">
                <div class="col-md-9 ">
                  <a class="stretched-link" href="{% url 'dist_client_requests' %}">
-                 <h5 class="card-title mb-9 fw-semibold text-light"><b>REQUESTS</b></h5>
+                 <h5 class="card-title mb-9  text-light">Requests</h5>
                </a>
                  
  
@@ -49,7 +49,7 @@
                <div class="col-md-9">
                  <a class="stretched-link" href="{% url 'dist_all_clients' %}">
                    
-                   <h5 class="card-title mb-9 fw-semibold text-light"><b>ALL CLIENTS</b></h5>
+                   <h5 class="card-title mb-9 text-light">All Clients</h5>
                  </a>
                  
  

@@ -25,7 +25,6 @@ Welcome to Zoho Books
 						{% if messages %}
 							{% for message in messages %}
 								<label id="messageLabel" for="" class="text-center mt-4 mb-3 rounded-3 mx-3" style="background-color: rgb(255, 0, 0,0.5); width: 92%;color:white;">{{message}}</label>
-								<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
 							{% endfor %}
 							<script>
 								// Add a script to hide the messages after a few seconds

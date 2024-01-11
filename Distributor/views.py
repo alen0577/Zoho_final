@@ -13,7 +13,7 @@ def distributor_dashboard(request):
             return redirect('/') 
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
-    # dash_details = DistributorDetails.objects.get(id=pk,superadmin_approval=1)
+    
     context = {
         'distributor_details': distributor_det
     }
@@ -89,14 +89,14 @@ def distributor_profile(request):
         log_det = LoginDetails.objects.get(id=login_id)
         distributor= DistributorDetails.objects.get(login_details=log_det)
         terms=PaymentTerms.objects.all()
-   print(terms)
+  
    return render(request,'distributor_profile.html',{'distributor_details':distributor,'terms':terms})
 
 def dist_edit_profilePage(request,id):
   
   distributor = DistributorDetails.objects.get(id=id)
   terms=PaymentTerms.objects.all()
-  print(terms)
+ 
   return render(request,'edit_distributor_profile.html',{'terms':terms,'distributor_details':distributor})
 
 def update_distributor_profile(request,id):
@@ -137,8 +137,7 @@ def distributor_notification(request):
 
         end_date = distributor_det.End_date
         dist_days_remaining = (end_date - date.today()).days
-        print('d',dist_days_remaining)
-
+        
         companies = CompanyDetails.objects.filter(reg_action='distributor')
 
         for c in companies:
@@ -194,10 +193,7 @@ def dist_pterm_updation_details(request,pid):
         end_date = term.company.End_date 
         current_date = date.today()
         difference_in_days = (end_date - current_date).days
-        print(term)
-        print(new_term)
-        print(old_term)
-
+        
         context = {
             'new_term':new_term,
             'old_term':old_term,
@@ -241,15 +237,16 @@ def dist_term_update_request(request):
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
 
-        tid = request.GET['term_id']
-        new_payment_term = PaymentTerms.objects.get(id=tid)
-        pterm_update = PaymentTermsUpdates(
-            distributor = distributor_det,
-            payment_term = new_payment_term,
-            update_action = 1,
-            status = 'Pending'
-        )
-        pterm_update.save()
+        if request.method == 'POST':
+            select=request.POST['select']
+            terms=PaymentTerms.objects.get(id=select)
+            pterm_update = PaymentTermsUpdates(
+                distributor = distributor_det,
+                payment_term = terms,
+                update_action = 1,
+                status = 'Pending'
+            )
+            pterm_update.save()
         
         terms=PaymentTerms.objects.all()
         messages.success(request, 'Request has been sent successfully.')

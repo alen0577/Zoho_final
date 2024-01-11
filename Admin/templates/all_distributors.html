@@ -32,6 +32,7 @@
             <th scope="col" style="color: white;"><b>Email</b></th>
             <th scope="col" style="color: white;"><b>Contact</b></th>
             <th scope="col" style="color: white;"><b>Payment Terms</b></th>
+            <th scope="col" style="color: white;"><b>Start Date</b></th>
             <th scope="col" style="color: white;"><b>End Date</b></th>
             <th scope="col" style="color: white;"><b>Action</b></th>
 
@@ -52,6 +53,7 @@
             <td class="text-light">{{a.login_details.email}}</td>
             <td class="text-light">{{a.contact}}</td>
             <td class="text-light">{{a.payment_term.payment_terms_number}} {{a.payment_term.payment_terms_value}}</td>
+            <td class="text-light">{{a.start_date}}</td>
             <td class="text-light">{{a.End_date}}</td>
             <td>
             <a href="{% url 'admin_distributor_cancel' a.id %}" class="btn btn-outline-warning btn-sm" >Cancel</a></td>

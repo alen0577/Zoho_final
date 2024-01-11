@@ -218,37 +218,50 @@ def admin_notification(request):
   data= ZohoModules.objects.filter(update_action=1,status='Pending')
   return render(request,'admin_notification.html',{'data':data,'pterm_updation':pterm_updation,'companies':companies,'distributor':distributor})
 
-# @login_required(login_url='login_page')
-# def module_updation_details(request,mid):
-#   data= ZohoModules.objects.get(id=mid)
-#   allmodules= ZohoModules.objects.get(company=data.company,status='Pending')
-#   old_modules = ZohoModules.objects.get(company=data.company,status='New')
 
-#   return render(request,'module_updation_details.html',{'data':data,'allmodules':allmodules,'old_modules':old_modules})
 
 @login_required(login_url='login_page')
 def module_updation_details(request, mid):
   data = ZohoModules.objects.get(id=mid)
-  all_modules_pending = ZohoModules.objects.filter(company=data.company, status='Pending').first()
-  old_modules = ZohoModules.objects.filter(company=data.company, status='New').first()
+  allmodules = ZohoModules.objects.filter(company=data.company,update_action=1, status='Pending')
+  old_modules = ZohoModules.objects.filter(company=data.company,update_action=0, status='New')
 
-  added_modules = []
-  removed_modules = []
+  # Extract the field names related to modules
+  module_fields = [field.name for field in ZohoModules._meta.fields if field.name not in ['id', 'company', 'status', 'update_action']]
 
-  if all_modules_pending:
-      # Compare with old modules if there are pending modules
-      added_modules = [field for field in all_modules_pending._meta.get_fields() if
-                        isinstance(field, models.IntegerField) and getattr(all_modules_pending, field.name) > 0]
-      removed_modules = [field for field in old_modules._meta.get_fields() if
-                          isinstance(field, models.IntegerField) and getattr(old_modules, field.name) > 0]
+  # Get the previous and new values for the selected modules
+  previous_values = old_modules.values(*module_fields).first()
+  new_values = data.__dict__
 
-  return render(request, 'module_updation_details.html', {
+  # Identify added and deducted modules
+  added_modules = {}
+  deducted_modules = {}
+
+  for field in module_fields:
+    if new_values[field] > previous_values[field]:
+      added_modules[field] = new_values[field] - previous_values[field]
+    elif new_values[field] < previous_values[field]:
+      deducted_modules[field] = previous_values[field] - new_values[field]
+  
+  new = ZohoModules.objects.filter(company=data.company,update_action=1, status='Pending')
+  old = ZohoModules.objects.filter(company=data.company,update_action=0, status='New')
+
+  context = {
     'data': data,
-    'all_modules_pending': all_modules_pending,
+    'allmodules': allmodules,
     'old_modules': old_modules,
+    'previous_values': previous_values,
+    'new_values': new_values,
     'added_modules': added_modules,
-    'removed_modules': removed_modules,
-  })
+    'deducted_modules': deducted_modules,
+    'new':new,
+    'old':old,
+  }
+  
+  print(new,old)
+  print(added_modules,deducted_modules)
+
+  return render(request, 'module_updation_details.html',context)
 
 
 def module_updation_ok(request,mid):

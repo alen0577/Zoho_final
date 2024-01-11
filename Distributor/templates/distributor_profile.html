@@ -9,8 +9,8 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning">Dashboard</a></li>
-              <li class="breadcrumb-item">Profile</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
+              <li class="breadcrumb-item" area-current="page">Profile</li>
             </ol>
         </nav>
         <div class="row mt-5">
@@ -109,7 +109,7 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-warning">: {{distributor_details.distributor_code}} </h5>
+                                        <h5 class="text-warning-emphasis">: {{distributor_details.distributor_code}} </h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -151,7 +151,7 @@
                     <hr class="text-warning">
                  
                     <div class="container">
-                        <div class="row mb-4">
+                        <div class="row mb-4 mt-3">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 
@@ -184,48 +184,53 @@
                 </button>
             </div>
             <hr style="color: orange;">
-            <div class="modal-body">
-                <p class="text-warning pb-4">If you want to extend your payment terms, you can request here...</p>
-
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <p class="text-white">Existing Term</p>
+            <form action="{% url 'dist_term_update_request' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <p class="text-warning pb-4">If you want to extend your payment terms, you can request here...</p>
+    
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <p class="text-white">Existing Term</p>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="text-light">: {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}  </h6>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <h6 class="text-light">: {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}  </h6>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <p class="text-white">End Date</p>
+    
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="text-light">: {{distributor_details.End_date}} </h6>
+                        </div>
                     </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <p class="text-white">Select New Payment Terms</p>
+    
+                        </div>
+                        <div class="col-md-8">
+                            <select name="select" id="select" class="form-control" required>
+                                <option value="" hidden>Choose Payment terms</option>
+    
+                                {% for t in terms %}
+                                <option class="bg-black text-light" value="{{t.id}}">{{t.payment_terms_number}}
+                                    {{t.payment_terms_value}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+    
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <p class="text-white">End Date</p>
-
-                    </div>
-                    <div class="col-md-8">
-                        <h6 class="text-light">: {{distributor_details.End_date}} </h6>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-warning" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-warning" >Send Request</button>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-4">
-                        <p class="text-white">Select New Payment Terms</p>
-
-                    </div>
-                    <div class="col-md-8">
-                        <select name="select" id="select" class="form-control" required>
-                            <option value="">Choose Payment terms</option>
-
-                            {% for t in terms %}
-                            <option class="bg-black text-light" value="{{t.id}}">{{t.payment_terms_number}}
-                                {{t.payment_terms_value}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-outline-warning" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-sm btn-outline-warning" onclick="sendRequest()">Send Request</button>
-            </div>
+    
+            </form>
+            
         </div>
     </div>
 </div>
