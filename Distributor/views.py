@@ -156,18 +156,56 @@ def distributor_notification(request):
         return render(request,'distributor_notification.html',context)
 
 def dist_module_updation_details(request,mid):
-   if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
-        data= ZohoModules.objects.get(id=mid)
-        allmodules= ZohoModules.objects.get(company=data.company,status='Pending')
-        old_modules = ZohoModules.objects.get(company=data.company,status='New')
+        data = ZohoModules.objects.get(id=mid)
+        modules_pending = ZohoModules.objects.filter(company=data.company, status='Pending')
+        current_modules = ZohoModules.objects.filter(company=data.company, status='New')
 
-        return render(request,'module_updation_details.html',{'data':data,'allmodules':allmodules,'old_modules':old_modules,'distributor_details':distributor_det})
+        # Extract the field names related to modules
+        module_fields = [field.name for field in ZohoModules._meta.fields if field.name not in ['id', 'company', 'status', 'update_action']]
 
+        # Get the previous and new values for the selected modules
+        previous_values = current_modules.values(*module_fields).first()
+        new_values = data.__dict__
+
+        # Identify added and deducted modules
+        added_modules = {}
+        deducted_modules = {}
+
+        for field in module_fields:
+            if new_values[field] > previous_values[field]:
+                added_modules[field] = new_values[field] - previous_values[field]
+            elif new_values[field] < previous_values[field]:
+                deducted_modules[field] = previous_values[field] - new_values[field]
+        
+
+        allmodules = ZohoModules.objects.get(company=data.company, status='Pending')
+        old_modules = ZohoModules.objects.get(company=data.company, status='New')
+        print(added_modules)
+        for i in added_modules:
+            print(i)
+
+        context = {
+            'data': data,
+            'current_modules': current_modules,
+            'modules_pending': modules_pending,
+            'previous_values': previous_values,
+            'new_values': new_values,
+            'added_modules': added_modules,
+            'deducted_modules': deducted_modules,
+            'newmodules':allmodules,
+            'allmodules':old_modules,
+
+        }
+
+        return render(request,'dist_module_updation_details.html', context)
+    else:
+        return redirect('login')
 def dist_module_updation_ok(request,mid):
   
   old=ZohoModules.objects.get(company=mid,status='New')

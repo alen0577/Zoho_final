@@ -223,14 +223,14 @@ def admin_notification(request):
 @login_required(login_url='login_page')
 def module_updation_details(request, mid):
   data = ZohoModules.objects.get(id=mid)
-  allmodules = ZohoModules.objects.filter(company=data.company,update_action=1, status='Pending')
-  old_modules = ZohoModules.objects.filter(company=data.company,update_action=0, status='New')
+  modules_pending = ZohoModules.objects.filter(company=data.company, status='Pending')
+  current_modules = ZohoModules.objects.filter(company=data.company, status='New')
 
   # Extract the field names related to modules
   module_fields = [field.name for field in ZohoModules._meta.fields if field.name not in ['id', 'company', 'status', 'update_action']]
 
   # Get the previous and new values for the selected modules
-  previous_values = old_modules.values(*module_fields).first()
+  previous_values = current_modules.values(*module_fields).first()
   new_values = data.__dict__
 
   # Identify added and deducted modules
@@ -243,23 +243,25 @@ def module_updation_details(request, mid):
     elif new_values[field] < previous_values[field]:
       deducted_modules[field] = previous_values[field] - new_values[field]
   
-  new = ZohoModules.objects.filter(company=data.company,update_action=1, status='Pending')
-  old = ZohoModules.objects.filter(company=data.company,update_action=0, status='New')
+
+  allmodules = ZohoModules.objects.get(company=data.company, status='Pending')
+  old_modules = ZohoModules.objects.get(company=data.company, status='New')
+  print(added_modules)
+  for i in added_modules:
+    print(i)
 
   context = {
     'data': data,
-    'allmodules': allmodules,
-    'old_modules': old_modules,
+    'current_modules': current_modules,
+    'modules_pending': modules_pending,
     'previous_values': previous_values,
     'new_values': new_values,
     'added_modules': added_modules,
     'deducted_modules': deducted_modules,
-    'new':new,
-    'old':old,
+    'newmodules':allmodules,
+    'allmodules':old_modules,
+
   }
-  
-  print(new,old)
-  print(added_modules,deducted_modules)
 
   return render(request, 'module_updation_details.html',context)
 

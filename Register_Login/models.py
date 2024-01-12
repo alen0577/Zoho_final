@@ -133,3 +133,21 @@ class ZohoModules(models.Model):
     update_action = models.IntegerField(null=True,default=0) 
     status = models.CharField(max_length=100,null=True,default='New')      
 
+class Notifications(models.Model):
+    distributor = models.ForeignKey(DistributorDetails, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
+    company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    is_read = models.BooleanField(default=0)
+
+
+class TrialPeriod(models.Model):
+    company = models.OneToOneField(CompanyDetails, on_delete=models.CASCADE)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField()
+    interested_in_buying = models.BooleanField(default=0)
+    feedback = models.TextField(blank=True, null=True)
+
+    def is_active(self):
+        return self.end_date >= timezone.now().date()
