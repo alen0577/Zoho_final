@@ -154,7 +154,11 @@
     
                                     </div>
                                     <div class="col-md-8">
+                                        {% if company.payment_term %}
                                         <h5 class="text-white">: {{company.payment_term.payment_terms_number}} {{company.payment_term.payment_terms_value}}</h5>
+                                        {% else %}
+                                        <h5 class="text-white">: Trial Period</h5>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="row mt-2">

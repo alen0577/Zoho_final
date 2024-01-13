@@ -171,12 +171,22 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $('#pass, #cpass').on('keyup', function () {
-        if ($('#pass').val() == $('#cpass').val()) {
-            $('#message').html('Password is Matching').css('color', 'green');
-        } else
-            $('#message').html('Password is Not Matching').css('color', 'red');
-    });
+   $('#pass, #cpass').on('keyup', function () {
+    var passValue = $('#pass').val();
+    var cpassValue = $('#cpass').val();
+
+    if (passValue === '' || cpassValue === '') {
+      // If either password field is empty, show no message
+      $('#message').html('');
+    } else if (passValue === cpassValue) {
+      // If passwords match, show a matching message in green
+      $('#message').html('Password Is Matching').css('color', 'green');
+    } else {
+      // If passwords don't match, show a non-matching message in red
+      $('#message').html('Password Is Not Matching').css('color', 'red');
+    }
+  });
+
 </script>
 
 {% endblock %}

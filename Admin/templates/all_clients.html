@@ -54,7 +54,11 @@
             </td>
             <td class="text-light">{{a.login_details.email}}</td>
             <td class="text-light">{{a.contact}}</td>
+            {% if a.payment_term %}
             <td class="text-light">{{a.payment_term.payment_terms_number}} {{a.payment_term.payment_terms_value}}</td>
+            {% else %}
+            <td class="text-light">Trial Period</td>
+            {% endif %}
             <td class="text-light">{{a.start_date}}</td>
             <td class="text-light">{{a.End_date}}</td>
             <td>

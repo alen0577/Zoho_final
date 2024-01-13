@@ -114,8 +114,8 @@ def get_clients_under_distributor(request):
       name=i.company_name
       email=i.login_details.email
       contact=i.contact
-      pterm_no=i.payment_term.payment_terms_number
-      pterm_value=i.payment_term.payment_terms_value
+      pterm_no=i.payment_term.payment_terms_number if i.payment_term else 'Trial'
+      pterm_value=i.payment_term.payment_terms_value if i.payment_term else 'Period'
       sdate=i.start_date
       edate=i.End_date
 

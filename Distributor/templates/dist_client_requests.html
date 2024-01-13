@@ -53,7 +53,11 @@
             </td>
             <td>{{a.login_details.email}}</td>
             <td>{{a.contact}}</td>
-            <td>{{a.payment_term.payment_terms_number}} {{a.payment_term.payment_terms_value}}</td>
+            {% if a.payment_term %}
+            <td class="text-light">{{a.payment_term.payment_terms_number}} {{a.payment_term.payment_terms_value}}</td>
+            {% else %}
+            <td class="text-light">Trial Period</td>
+            {% endif %}
             <td>{{a.start_date}}</td>
             <td>{{a.End_date}}</td>
             <td><a href="{% url 'dist_client_accept' a.id %}" class="btn btn-sm btn-outline-warning p-1" style="width: 50px;">Accept </a>

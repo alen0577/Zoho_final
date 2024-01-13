@@ -360,6 +360,8 @@ def company_renew_terms(request):
             newterms.save()
             messages.success(request,'Successfully requested an extension of payment terms. Please wait for approval.')
             return redirect('company_profile')
+        else:
+            return redirect('company_profile')
     else:
         return redirect('/')
 

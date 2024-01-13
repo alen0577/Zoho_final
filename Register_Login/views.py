@@ -170,7 +170,6 @@ def company_registration_save2(request,pk):
     distributor_details = DistributorDetails.objects.get(distributor_code=user.distributor_id) if user.self_distributor == 'distributor' else None
 
 
-
     # Retrieve data from the POST request
     company_name = request.POST.get('cname')
     phone = request.POST.get('phone')
@@ -183,10 +182,8 @@ def company_registration_save2(request,pk):
     gsttype = request.POST.get('gsttype')
     gstno = request.POST.get('gstno')
     profile_pic=  request.FILES.get('image')
-    select=request.POST['select']
-    terms=PaymentTerms.objects.get(id=select)
     s_date=date.today()
-    days=int(terms.days)
+    days=int(30)
     end=date.today() + timedelta(days=days)
     e_date=end
     code_length = 8  
@@ -215,7 +212,6 @@ def company_registration_save2(request,pk):
       gst_type=gsttype,
       gst_no=gstno,
       profile_pic=profile_pic,
-      payment_term=terms,
       start_date=s_date,
       End_date=e_date,
       company_code=unique_code,
@@ -228,11 +224,18 @@ def company_registration_save2(request,pk):
 
     # Create a new paymentterm instance and populate it with form data
     active_plan=PaymentTermsUpdates(
-      company=company_details_instance,
-      payment_term=terms, 
+      company=company_details_instance, 
     )
     active_plan.save() # Save the instance to the database
 
+    # Create a Trial period instance and populate it with form data
+    trial_period=TrialPeriod(
+      company=company_details_instance,
+      start_date=s_date,
+      end_date=e_date
+    )
+    trial_period.save() # Save the instance to the database
+    
     messages.info=(request,'Company Details Saved')
     return redirect('modules_select_page', company_details_instance.id)
 
