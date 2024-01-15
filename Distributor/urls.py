@@ -17,6 +17,8 @@ urlpatterns = [
     path('Distributor_Profile',views.distributor_profile,name='distributor_profile'),
     path('Dist_Edit_ProfilePage/<int:id>',views.dist_edit_profilePage,name='dist_edit_profilePage'),
     path('Update_Distributor_Profile/<int:id>',views.update_distributor_profile,name='update_distributor_profile'),
+    path('Distributor/Password_Change',views.distributor_password_change,name='distributor_password_change'),
+
 
     # notifications------------------------------------
 

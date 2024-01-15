@@ -1,4 +1,4 @@
-{% extends 'distributorbase.html' %}
+{% extends 'adminbase.html' %}
 {% block content %}
 {% load static %}
 
@@ -7,17 +7,33 @@
 
 <div class="body-wrapper">
     <div class="container-fluid">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
-              <li class="breadcrumb-item" area-current="page">Profile</li>
+
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb pt-3">
+              <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'admin_distributors' %}" class="text-warning-emphasis"> Distributors</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'all_distributors' %}" class="text-warning-emphasis"> All Distributors</a></li>
+              <li class="breadcrumb-item" area-current="page">Overview</li>
             </ol>
-        </nav>
+        </nav> 
         <div class="row mt-5">
             <div class="col-md-12">
                 <div class="card mb-3 bg-black shadow p-3 mb-5 rounded" style="max-width: 1200px;">
                     <div class="row mt-5">
-                        
+                        {% if messages %}
+                                {% for message in messages %}
+                                    <p id="messageLabel" for="" class="badge text-success"> {{message}} </p>
+                                {% endfor %}
+                                <script>
+                                    // Add a script to hide the messages after a few seconds
+                                    setTimeout(function() {
+                                        var messageLabel = document.getElementById('messageLabel');
+                                        if (messageLabel) {
+                                            messageLabel.style.display = 'none';
+                                        }
+                                    }, 3000); // 3000 milliseconds = 3 seconds (adjust the time as needed)
+                                </script>
+                        {% endif %}
                         <h1 class="text-center text-white">
                             {{distributor_details.login_details.first_name}} {{distributor_details.login_details.last_name}}
                             {% if distributor_details.image %}
@@ -30,24 +46,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="container">
-                            <h4 class="text-white ms-4">
-                                Personal Details
-                                {% if messages %}
-                                {% for message in messages %}
-                                    <p id="messageLabel" for="" class="badge text-warning"> ({{message}}) </p>
-                                {% endfor %}
-                                <script>
-                                    // Add a script to hide the messages after a few seconds
-                                    setTimeout(function() {
-                                        var messageLabel = document.getElementById('messageLabel');
-                                        if (messageLabel) {
-                                            messageLabel.style.display = 'none';
-                                        }
-                                    }, 5000); // 3000 milliseconds = 3 seconds (adjust the time as needed)
-                                </script>
-                                {% endif %}
-
-                            </h4>
+                            <h4 class="text-white ms-4">Personal Details</h4>
                             <hr class="text-warning">
                         </div>
                     </div>
@@ -124,9 +123,7 @@
                                     <div class="col-md-8">
                                         <h5 class="text-light">
                                             {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}} &nbsp;
-                                            <button type="button" class="btn btn-sm btn-warning text-dark" data-toggle="modal" data-target="#editPaymentModal">
-                                                Renew <i class="fas fa-sync-alt"></i>
-                                            </button>
+                                           
                                         </h5>
                                     </div>
                                 </div>
@@ -155,11 +152,11 @@
                     <hr class="text-warning">
                  
                     <div class="container">
-                        <div class="row mb-4 mt-3">
+                        <div class="row mt-4 mb-4">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 
-                               <center> <a href="{% url 'dist_edit_profilePage' distributor_details.id %}" class="btn btn-outline-warning w-75" >Edit Profile</a></center>
+                               <center> <a href="{% url 'admin_distributor_cancel' distributor_details.id %}" class="btn btn-outline-warning w-50" >Cancel Contract</a></center>
                                     
                                
                             </div>
@@ -176,92 +173,4 @@
     </div>
 </div>        
 
-<!-- Modal for editing payment terms -->
-<div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="editPaymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: rgb(30,30,30);">
-            <!-- Add your modal content here, e.g., form for editing payment terms -->
-            <div class="modal-header">
-                <h5 class="modal-title text-light" id="editPaymentModalLabel">Payment Terms</h5>
-                <button type="button" class="close text-warning bg-black" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&nbsp;&nbsp;&times;&nbsp;&nbsp;</span>
-                </button>
-            </div>
-            <hr style="color: orange;">
-            <form action="{% url 'dist_term_update_request' %}" method="post">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <p class="text-warning pb-4">If you want to extend your payment terms, you can request here...</p>
-    
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <p class="text-white">Existing Term</p>
-                        </div>
-                        <div class="col-md-8">
-                            <h6 class="text-light">: {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}  </h6>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <p class="text-white">End Date</p>
-    
-                        </div>
-                        <div class="col-md-8">
-                            <h6 class="text-light">: {{distributor_details.End_date}} </h6>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <p class="text-white">Select New Payment Terms</p>
-    
-                        </div>
-                        <div class="col-md-8">
-                            <select name="select" id="select" class="form-control" required>
-                                <option value="" hidden>Choose Payment terms</option>
-    
-                                {% for t in terms %}
-                                <option class="bg-black text-light" value="{{t.id}}">{{t.payment_terms_number}}
-                                    {{t.payment_terms_value}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-warning" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-sm btn-outline-warning" >Send Request</button>
-                </div>
-    
-            </form>
-            
-        </div>
-    </div>
-</div>
-
-<script>
-    function sendRequest() {
-        // Get the selected payment term value from the dropdown
-        var selectedTermId = $("#select").val();
-        
-        // Construct the URL for your Django view with the selected term ID
-        var url = "{% url 'dist_term_update_request' %}?term_id=" + selectedTermId;
-
-        // Navigate to the Django view URL
-        window.location.href = url;
-    }
-</script>
-
-<script>
-    $(document).ready(function () {
-        // Handle form submission
-        $("#sendRequestForm").submit(function (event) {
-            event.preventDefault();  // Prevent default form submission
-            // Optionally, perform any client-side validation here
-            
-            // Submit the form using JavaScript
-            this.submit();
-        });
-    });
-</script>
 {% endblock %}

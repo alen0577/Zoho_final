@@ -40,7 +40,7 @@
                                         if (messageLabel) {
                                             messageLabel.style.display = 'none';
                                         }
-                                    }, 3000); // 3000 milliseconds = 3 seconds (adjust the time as needed)
+                                    }, 5000); // 3000 milliseconds = 3 seconds (adjust the time as needed)
                                 </script>
                                 {% endif %}
 
@@ -137,7 +137,7 @@
 <!-- Modal -->
 <div class="modal fade" id="passwordchange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
     <div class="modal-dialog" >
-      <div class="modal-content shadow p-3 mb-5 rounded border" style="background-color: rgb(30,30,30);">
+      <div class="modal-content shadow p-3 mb-5 rounded " style="background-color: rgb(30,30,30);border: 1px solid rgba(255, 255, 255, 0.3);">
         <div class="modal-body">
           <form action="{% url 'staff_password_change' %}" method="post">
             {% csrf_token %}

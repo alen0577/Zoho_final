@@ -184,8 +184,12 @@ def company_password_change(request):
             password = request.POST.get('pass')
             cpassword = request.POST.get('cpass')
             if password == cpassword:
-                log_details.password=password
-                log_details.save()
+                if LoginDetails.objects.filter(password=password).exists():
+                    messages.error(request,'Use another password')
+                    return redirect('company_profile_editpage')
+                else:
+                    log_details.password=password
+                    log_details.save()
 
             messages.success(request,'Password Changed')
             return redirect('company_profile_editpage') 
@@ -472,8 +476,12 @@ def staff_password_change(request):
             password = request.POST.get('pass')
             cpassword = request.POST.get('cpass')
             if password == cpassword:
-                log_details.password=password
-                log_details.save()
+                if LoginDetails.objects.filter(password=password).exists():
+                    messages.error(request,'Use another password')
+                    return redirect('staff_profile_editpage')
+                else:
+                    log_details.password=password
+                    log_details.save()
 
             messages.success(request,'Password Changed')
             return redirect('staff_profile_editpage') 

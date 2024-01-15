@@ -122,8 +122,38 @@ def update_distributor_profile(request,id):
         if pic:
             distributor.image = pic
         distributor.save()
+        messages.success(request,'Profile Updated')
 
     return redirect('distributor_profile')
+
+def distributor_password_change(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+
+        log_details= LoginDetails.objects.get(id=log_id)
+        if request.method == 'POST':
+            # Get data from the form
+            password = request.POST.get('pass')
+            cpassword = request.POST.get('cpass')
+            if password == cpassword:
+                if LoginDetails.objects.filter(password=password).exists():
+                    messages.error(request,'Use another password')
+                    return redirect('distributor_profile')
+                else:
+                    log_details.password=password
+                    log_details.save()
+
+            messages.success(request,'Password Changed')
+            return redirect('distributor_profile') 
+        else:
+            return redirect('distributor_profile') 
+
+    else:
+        return redirect('/')
+
+
 
 # notifications------------------------------------
 
