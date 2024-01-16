@@ -335,8 +335,8 @@ def company_module_edit(request):
                 reports=reports,update_action=update_action,status=status    
             )
             data.save()
-            messages.info(request,"Request sent successfully. Please wait for approval.")
-            return redirect('company_module_editpage')
+            messages.success(request,"Request sent successfully. Please wait for approval.")
+            return redirect('company_profile')
         else:
             return redirect('company_module_editpage')  
     else:

@@ -52,6 +52,11 @@ urlpatterns = [
     path('Dist/Pterm_Updation_Details/<int:pid>',views.dist_pterm_updation_details,name='dist_pterm_updation_details'),
     path('Dist/Pterm_Updation_Ok/<int:cid>',views.dist_pterm_updation_ok,name='dist_pterm_updation_ok'),
    
+    # Trial period sections------------------------------------
+    path('Admin/Trial_Period/Section',views.trial_period_section,name='trial_period_section'),
+    path('Admin/Trial_Period/Clients',views.trial_period_clients,name='trial_period_clients'),
+    path('Admin/Trial_Period/Distributor-Clients',views.trial_period_distributor_clients,name='trial_period_distributor_clients'),
+
 
    
     

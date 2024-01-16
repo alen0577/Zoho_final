@@ -371,4 +371,26 @@ def dist_pterm_updation_ok(request,cid):
 
 
   
-  
+# ----Trial period section------
+@login_required(login_url='login_page')
+def trial_period_section(request):
+  return render(request,'trial_period_section.html')
+
+
+@login_required(login_url='login_page')
+def trial_period_clients(request):
+  clients=TrialPeriod.objects.filter(company__reg_action='self').order_by('-id')
+  context={
+    'clients':clients,
+  }
+  return render(request,'trial_period_clients.html', context)
+
+@login_required(login_url='login_page')
+def trial_period_distributor_clients(request):
+  distributors=DistributorDetails.objects.filter(superadmin_approval=1)
+  clients=TrialPeriod.objects.filter(company__reg_action='distributor').order_by('-id')
+  context={
+    'clients':clients,
+    'distributors':distributors
+  }
+  return render(request,'trial_period_distributor_clients.html', context)
