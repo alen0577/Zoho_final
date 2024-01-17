@@ -34,36 +34,71 @@
         </nav>
         
 
-        <!-- module edit notifications -->
-        {% for d in data %}
-        {% if d.company.reg_action == 'self' %}
+        <!-- All notifications -->
+       
         <div class="row mt-4">
-            <h5 class="text-white">Module Change<span class="text-warning-emphasis fw-bolder"> (Clients)</span></h5>
-            <div class="row row-cols-1 row-cols-md-4 g-3">
-                
-                
+            
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                {% for p in pterm_updation %}
+
+                {% if p.distributor %}
                 <div class="col">
-                  <div class="card h-100 bg-black">
+                    <div class="card h-100 bg-black rounded-4">
+                      <div class="card-body">
+                          <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
+                          <h4 class="text-white mt-3">{{ p.distributor.login_details.first_name }} {{ p.distributor.login_details.last_name }}</h4>
+                          <p class="text-white-50">want to update current modules ...</p>
+                          <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
+                      </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if p.company %}
+                {% if p.company.reg_action == 'self' %}
+                <div class="col">
+                    <div class="card h-100 bg-black rounded-4">
+                      <div class="card-body">
+                          <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
+                          <h4 class="text-white mt-3">{{ p.company.login_details.first_name }} {{ p.company.login_details.last_name }}</h4>
+                          <p class="text-white-50">want to update current modules ...</p>
+                          <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
+                      </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+
+                {% endfor %}
+
+                
+                {% for d in data %}
+                {% if d.company.reg_action == 'self' %}
+                <div class="col">
+                  <div class="card h-100 bg-black rounded-4">
                     <div class="card-body">
-                        <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i></h3>
-                        <h3 class="text-white">{{ d.company.company_name }}</h3>
-                        <p class="text-white-50">is requesting a module change...</p>
+                        <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
+                        <h4 class="text-white mt-3">{{ d.company.company_name }}</h4>
+                        <p class="text-white-50">want to update current modules ...</p>
                         <a class="text-warning-emphasis" href="{% url 'module_updation_details' d.id %}">View More</a>
                     </div>
                   </div>
                 </div>
+                {% endif %}
+                {% endfor %}
+                
+                
                 
             </div>
     
         </div>
         <hr class="text-warning mt-3">
-        {% endif %}
-        {% endfor %}
+        
 
 
 
         <!-- payment term edit notifications -->
-        {% for p in pterm_updation %}
+        <!-- {% for p in pterm_updation %}
         {% if p.distributor %}
         <div class="row mt-4">
             <h5 class="text-white">Payment Term Update<span class="text-warning-emphasis fw-bolder"> (Distributors)</span></h5>
@@ -119,7 +154,7 @@
 
 
 
-        {% endfor %}
+        {% endfor %} -->
         
 
         

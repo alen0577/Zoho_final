@@ -24,7 +24,7 @@ Welcome to Zoho Books
 						</h2>
 						{% if messages %}
 							{% for message in messages %}
-								<label id="messageLabel" for="" class="text-center mt-4 mb-3 rounded-3 mx-3" style="background-color: rgb(255, 0, 0,0.5); width: 92%;color:white;">{{message}}</label>
+								<label id="messageLabel" for="" class="text-center mt-2 mb-2 rounded-3 mx-3" style="background-color: rgb(255, 0, 0,0.5); width: 92%;color:white;">{{message}}</label>
 							{% endfor %}
 							<script>
 								// Add a script to hide the messages after a few seconds
@@ -37,7 +37,7 @@ Welcome to Zoho Books
 							</script>
 						{% endif %}
 					</div>
-					<div class="row mt-3">
+					<div class="row mt-2">
 						<form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
 							{% csrf_token %}
 
