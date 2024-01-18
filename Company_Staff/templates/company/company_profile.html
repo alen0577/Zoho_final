@@ -30,7 +30,7 @@
                                 Company Details
                                 {% if messages %}
                                     {% for message in messages %}
-                                        <p id="messageLabel" for="" class="badge text-warning">( {{message}} )</p>
+                                        <p id="messageLabel" for="" class="badge text-warning-emphasis">( {{message}} )</p>
                                     {% endfor %}
                                     <script>
                                         // Add a script to hide the messages after a few seconds
@@ -39,7 +39,7 @@
                                             if (messageLabel) {
                                                 messageLabel.style.display = 'none';
                                             }
-                                        }, 4000); // 4000 milliseconds = 4 seconds (adjust the time as needed)
+                                        }, 7000); // 7000 milliseconds = 4 seconds (adjust the time as needed)
                                     </script>
                                 {% endif %}
 

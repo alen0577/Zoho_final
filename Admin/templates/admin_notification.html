@@ -37,19 +37,33 @@
         <!-- All notifications -->
        
         <div class="row mt-4">
+
+            <div class="row row-cols-1 row-cols-md-1 g-4">
+                {% for c in companies %}
+                <div class="col">
+                  <div class="card h-100 bg-black rounded-4">
+                    <div class="card-body">
+                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-4 text-white-50">Payment Term Overdue in</span></h4>
+                      
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
             
             <div class="row row-cols-1 row-cols-md-3 g-3">
+                <!-- payment term extension notifications of distributor and direct clients -->
                 {% for p in pterm_updation %}
 
                 {% if p.distributor %}
                 <div class="col">
                     <div class="card h-100 bg-black rounded-4">
-                      <div class="card-body">
-                          <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
-                          <h4 class="text-white mt-3">{{ p.distributor.login_details.first_name }} {{ p.distributor.login_details.last_name }}</h4>
-                          <p class="text-white-50">want to update current modules ...</p>
-                          <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
-                      </div>
+                        <div class="card-body">
+                            <h4><i class="fa fa-rupee-sign fa-lg text-warning  ms-1"></i> <span class="h5 ms-4 text-white-50">Payment Term Extension</span></h4>
+                            <h4 class="text-white mt-3">{{ p.distributor.login_details.first_name }} {{ p.distributor.login_details.last_name }}</h4>
+                            <p class="text-white-50">want to subscribe a new plan ...</p>
+                            <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
+                        </div>
                     </div>
                 </div>
                 {% endif %}
@@ -58,12 +72,12 @@
                 {% if p.company.reg_action == 'self' %}
                 <div class="col">
                     <div class="card h-100 bg-black rounded-4">
-                      <div class="card-body">
-                          <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
-                          <h4 class="text-white mt-3">{{ p.company.login_details.first_name }} {{ p.company.login_details.last_name }}</h4>
-                          <p class="text-white-50">want to update current modules ...</p>
-                          <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
-                      </div>
+                        <div class="card-body">
+                            <h4><i class="fa fa-rupee-sign fa-lg text-warning  ms-1"></i> <span class="h5 ms-4 text-white-50">Payment Term Extension</span></h4>
+                            <h4 class="text-white mt-3">{{ p.company.login_details.first_name }} {{ p.company.login_details.last_name }}</h4>
+                            <p class="text-white-50">want to subscribe a new plan ...</p>
+                            <a class="text-warning-emphasis" href="{% url 'dist_pterm_updation_details' p.id %}">View More</a>
+                        </div>
                     </div>
                 </div>
                 {% endif %}
@@ -71,18 +85,18 @@
 
                 {% endfor %}
 
-                
+                <!-- module updations notifications of direct clients-->
                 {% for d in data %}
                 {% if d.company.reg_action == 'self' %}
                 <div class="col">
-                  <div class="card h-100 bg-black rounded-4">
+                <div class="card h-100 bg-black rounded-4">
                     <div class="card-body">
-                        <h3><i class="fa fa-bell fa-lg text-warning notification-icon ms-1"></i> <span class="h4 ms-4 text-white-50">Module Updation</span></h3>
+                        <h4><i class="fas fa-cogs fa-lg text-warning ms-1"></i> <span class="h5 ms-4 text-white-50">Module Updation</span></h4>
                         <h4 class="text-white mt-3">{{ d.company.company_name }}</h4>
                         <p class="text-white-50">want to update current modules ...</p>
                         <a class="text-warning-emphasis" href="{% url 'module_updation_details' d.id %}">View More</a>
                     </div>
-                  </div>
+                </div>
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -92,7 +106,7 @@
             </div>
     
         </div>
-        <hr class="text-warning mt-3">
+        
         
 
 

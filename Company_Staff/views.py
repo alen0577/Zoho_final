@@ -264,6 +264,10 @@ def company_module_edit(request):
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
         allmodules= ZohoModules.objects.get(company=dash_details,status='New')
 
+        # Check for any previous module update request
+        if ZohoModules.objects.filter(company=dash_details,status='Pending').exists():
+            messages.warning(request,'You have a pending update request, wait for approval or contact our support team for any help..?')
+            return redirect('company_profile')
         if request.method == 'POST':
             # Retrieve values
             items = request.POST.get('items', 0)

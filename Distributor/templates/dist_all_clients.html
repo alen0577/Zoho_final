@@ -51,7 +51,7 @@
               {% else %}
               <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
               {% endif %}
-              <a href="{% url 'dist_client_details' a.id %}" class="text-light">{{a.login_details.first_name}} </a>
+              <a href="{% url 'dist_client_details' a.id %}" class="text-light">{{a.login_details.first_name}} {{a.login_details.last_name}}</a>
             </td>
             <td>{{a.login_details.email}}</td>
             <td>{{a.contact}}</td>

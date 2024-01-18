@@ -54,7 +54,7 @@
            
             <li class="sidebar-item mt-3 ">
               <a class="sidebar-link" href="{% url 'distributor_dashboard' %}" aria-expanded="false" >
-                <i class="ti ti-layout-dashboard text-info"></i>
+                <i class="ti ti-layout-dashboard text-secondary"></i>
               </span>
               <span class="hide-menu text-light">Dashboard</span>
               </a>
@@ -111,13 +111,10 @@
                   <div class="message-body">
                    
                     <a href="{% url 'distributor_profile' %}" class="d-flex align-items-center gap-2 dropdown-item bg-black text-white">
-                      <i class="ti ti-user fs-6 text-warning"></i>
+                      <i class="fa fa-user-circle fs-8"></i>
                       <p class="mb-0 fs-3">Profile</p>
                     </a>
-                    <a href="{% url 'logout' %}" class="d-flex align-items-center gap-2 dropdown-item bg-black text-white">
-                      <i class="fas fa-sign-out-alt text-warning fs-6"></i>
-                      <p class="mb-0 fs-3">Logout</p>
-                    </a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-warning mx-3 mt-2 d-block mb-2">Logout <i class="fa fa-power-off fs-4 ms-1"></i></a>
 
                    
                   </div>

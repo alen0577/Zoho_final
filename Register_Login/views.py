@@ -266,7 +266,7 @@ def staff_registration(request):
       if CompanyDetails.objects.filter(company_code=code).exists():
         company=CompanyDetails.objects.get(company_code=code)
       else :
-        messages.info(request, 'Sorry, company id does not exists')
+        messages.warning(request, 'Sorry, company id does not exists')
         return redirect('staff_register_page')
 
     # Check if the username is unique within the same company

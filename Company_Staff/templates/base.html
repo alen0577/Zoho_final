@@ -81,14 +81,14 @@
               {% if details.position == 'company' %}
                 <a class="sidebar-link" href="{% url 'company_dashboard' %}" aria-expanded="false"
                 style="text-decoration: none; color: rgb(254, 254, 254);">
-                <label style="margin-left: 3px;"><i class="fa fa-tachometer-alt text-primary"></i></label>
+                <label style="margin-left: 3px;"><i class="fa fa-tachometer-alt text-secondary"></i></label>
                 </span>
                 <span class="hide-menu"><label>Dashboard</label></span>
                 </a>
               {% else %}
                 <a class="sidebar-link" href="{% url 'staff_dashboard' %}" aria-expanded="false"
                 style="text-decoration: none; color: rgb(255, 255, 255);">
-                <label style="margin-left: 3px;"><i class="fa fa-tachometer-alt text-primary"></i></label>
+                <label style="margin-left: 3px;"><i class="fa fa-tachometer-alt text-secondary"></i></label>
                 </span>
                 <span class="hide-menu"><label>Dashboard</label></span>
                 </a>
@@ -106,12 +106,12 @@
               </button>
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center; color: white;">
                 <a href="{% url 'company_staff_request' %}" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="fa fa-user-plus fs-6"></i> -->
+                  
                   <p class="mb-0 fs-3">Staff Requests</b>
                 </a>
                 <hr>
                 <a href="{% url 'company_all_staff' %}" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="fa fa-briefcase fs-6"></i> -->
+                 
                   <p class="mb-0 fs-3">All Staffs</p>
                 </a>
                 <hr>
@@ -136,7 +136,7 @@
               <div class="dropdown-container" style="background-color: rgba(0, 0, 0, 0.863);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.items == 1 %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Items</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -146,7 +146,7 @@
                 {% endif %}
                 {% if allmodules.price_list == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                 
                   
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Price List</p>
@@ -167,7 +167,7 @@
                 {% endif %}
                 {% if allmodules.godown == 1 %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Godown</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -195,7 +195,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.cash_in_hand == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Cash in Hand</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -205,7 +205,7 @@
                 {% endif %}
                 {% if allmodules.offline_banking == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                 
                   
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Offline Banking</p>
@@ -216,8 +216,7 @@
                 {% endif %}
                 {% if allmodules.upi  == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <!-- <p class="mb-0 fs-3">Payment In</p> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">UPI</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -227,7 +226,7 @@
                 {% endif %}
                 {% if allmodules.bank_holders == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Bank Holders</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -237,7 +236,7 @@
                 {% endif %}
                 {% if allmodules.cheque == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Cheque</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -248,7 +247,7 @@
 
                 {% if allmodules.loan_account == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Loan Account</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -274,7 +273,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.customers == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Customers</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -284,8 +283,6 @@
                 {% endif %}
                 {% if allmodules.invoice == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
-                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Invoice</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -295,8 +292,6 @@
                 {% endif %}
                 {% if allmodules.estimate == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
-                  <!-- <p class="mb-0 fs-3">Payment In</p> -->
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Estimate</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -306,7 +301,7 @@
                 {% endif %}
                 {% if allmodules.sales_order == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Sales Order</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -316,7 +311,7 @@
                 {% endif %}
                 {% if allmodules.recurring_invoice == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Recurring Invoice</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -326,7 +321,7 @@
                 {% endif %}
                 {% if allmodules.retainer_invoice == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Retainer Invoice</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -337,7 +332,7 @@
                 {% endif %}
                 {% if allmodules.credit_note == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Credit Note</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -348,7 +343,7 @@
                 {% endif %}
                 {% if allmodules.payment_received == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Payment Received</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -359,7 +354,7 @@
                 {% endif %}
                 {% if allmodules.delivery_challan == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Delivery Challan</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -385,7 +380,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.vendors == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Vendors</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -395,7 +390,7 @@
                 {% endif %}
                 {% if allmodules.bills == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Bills</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -405,7 +400,7 @@
                 {% endif %}
                 {% if allmodules.recurring_bills == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-list-check fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Recurring Bills</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -415,7 +410,7 @@
                 {% endif %}
                 {% if allmodules.vendor_credit == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Vendor Credit</p>
                     <a href=""><i class="fa fa-plus text-white"></i></a>
@@ -425,7 +420,7 @@
                 {% endif %}
                 {% if allmodules.purchase_order == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Purchase Order</p>
                     <a href=""><i class="fa fa-plus text-white"></i></a>
@@ -435,7 +430,7 @@
                 {% endif %}
                 {% if allmodules.expenses == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Expenses</p>
                     <a href=""><i class="fa fa-plus text-white"></i></a>
@@ -445,7 +440,7 @@
                 {% endif %}
                 {% if allmodules.recurring_expenses == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Recurring Expenses</p>
                     <a href=""><i class="fa fa-plus text-white"></i></a>
@@ -455,7 +450,7 @@
                 {% endif %}
                 {% if allmodules.payment_made == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-user fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Payment Made</p>
                     <a href=""><i class="fa fa-plus text-white"></i></a>
@@ -481,7 +476,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.projects == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Projects</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -507,7 +502,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.chart_of_accounts == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Chart of Accounts</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -518,7 +513,7 @@
                 {% endif %}
                 {% if allmodules.manual_journal == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Manual Journal</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -542,7 +537,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.eway_bill == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Eway Bills</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -568,7 +563,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.employees == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Employees</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -579,7 +574,7 @@
                 {% endif %}
                 {% if allmodules.employees_loan == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Employees Loan</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -590,7 +585,7 @@
                 {% endif %}
                 {% if allmodules.holiday == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                 
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Holiday</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -601,7 +596,7 @@
                 {% endif %}
                 {% if allmodules.attendance == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Attendance</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -612,7 +607,7 @@
                 {% endif %}
                 {% if allmodules.salary_details == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Salary Details</p>
                     <a href=""><i class="fa fa-plus text-white" ></i></a>
@@ -636,7 +631,7 @@
               <div class="dropdown-container" style="background-color: rgb(0, 0, 0);padding: 20px;justify-content: center;color: white;">
                 {% if allmodules.reports == 1  %}
                 <a href="" class="d-flex align-items-center gap-2 dropdown-item">
-                  <!-- <i class="ti ti-mail fs-6"></i> -->
+                  
                   <div class="d-flex">
                     <p class="mb-0 fs-3">Reports</p>
                     
@@ -737,7 +732,7 @@
                       </a> 
                     {% endif %}  
                     
-                    <a href="{% url 'logout' %}" class="btn btn-outline-warning mx-3 mt-2 d-block mb-2">Logout</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-warning mx-3 mt-2 d-block mb-2">Logout <i class="fa fa-power-off fs-4 ms-1"></i></a>
                   </div>
                 </div>
               </li>
