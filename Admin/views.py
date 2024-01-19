@@ -201,17 +201,17 @@ def admin_client_cancel(request,id):
 @login_required(login_url='login_page')
 def admin_notification(request):
 
-  companies = CompanyDetails.objects.filter(reg_action='self')
+  companies = CompanyDetails.objects.filter(reg_action='self',superadmin_approval=1,Distributor_approval=1)
 
   for c in companies:
     c.days_remaining = (c.End_date - date.today()).days
-    print(c.days_remaining)
+    
 
-  distributor = DistributorDetails.objects.all()
+  distributor = DistributorDetails.objects.filter(superadmin_approval=1)
 
   for d in distributor:
     d.days_remaining = (d.End_date - date.today()).days
-    print(d.days_remaining)
+    
 
 
   pterm_updation = PaymentTermsUpdates.objects.filter(update_action=1,status='Pending')
@@ -278,8 +278,8 @@ def module_updation_ok(request,mid):
   return redirect('admin_notification')
 
 @login_required(login_url='login_page')
-def pterm_updation_details(request,pid):
-  term= PaymentTermsUpdates.objects.get(id=pid)
+def client_paymentterm_updation_details(request,pk):
+  term= PaymentTermsUpdates.objects.get(id=pk)
   new_term= PaymentTermsUpdates.objects.get(company=term.company,status='Pending')
   old_term = PaymentTermsUpdates.objects.get(company=term.company,status='New')
   start_date = term.company.start_date
@@ -295,7 +295,7 @@ def pterm_updation_details(request,pid):
     'old_term':old_term,
     'term':term,
     'difference_in_days':difference_in_days
-    }
+  }
   return render(request,'pterm_updation_details.html',context)
 
 def pterm_updation_ok(request,cid):
@@ -324,10 +324,10 @@ def pterm_updation_ok(request,cid):
   return redirect('admin_notification')
 
 @login_required(login_url='login_page')
-def dist_pterm_updation_details(request,pid):
-  term= PaymentTermsUpdates.objects.get(id=pid)
-  new_term= PaymentTermsUpdates.objects.get(company=term.company,status='Pending')
-  old_term = PaymentTermsUpdates.objects.get(company=term.company,status='New')
+def distribtor_paymentterm_updation_details(request,pk):
+  term= PaymentTermsUpdates.objects.get(id=pk)
+  new_term= PaymentTermsUpdates.objects.get(distributor=term.distributor,status='Pending')
+  old_term = PaymentTermsUpdates.objects.get(distributor=term.distributor,status='New')
   start_date = term.distributor.start_date
   end_date = term.distributor.End_date 
   current_date = date.today()
@@ -341,8 +341,12 @@ def dist_pterm_updation_details(request,pid):
     'old_term':old_term,
     'term':term,
     'difference_in_days':difference_in_days
-    }
-  return render(request,'dist_pterm_updation_details.html',context)
+  }
+  return render(request,'pterm_updation_details.html',context)
+    
+
+
+        
 
 def dist_pterm_updation_ok(request,cid):
   

@@ -26,8 +26,8 @@ urlpatterns = [
     path('Dist_Module_Updation_Details/<int:mid>',views.dist_module_updation_details,name='dist_module_updation_details'),
     path('Dist_Module_Updation_Ok/<int:mid>',views.dist_module_updation_ok,name='dist_module_updation_ok'),
 
-    path('Dist_Pterm_Updation_Details/<int:pid>',views.dist_pterm_updation_details,name='dist_pterm_updation_details'),
-    path('Dist_Pterm_Updation_Ok/<int:cid>',views.dist_pterm_updation_ok,name='dist_pterm_updation_ok'),
+    # path('Dist_Pterm_Updation_Details/<int:pid>',views.dist_pterm_updation_details,name='dist_pterm_updation_details'),
+    # path('Dist_Pterm_Updation_Ok/<int:cid>',views.dist_pterm_updation_ok,name='dist_pterm_updation_ok'),
 
     path('Dist_Term_Update_Request',views.dist_term_update_request,name='dist_term_update_request'),
 

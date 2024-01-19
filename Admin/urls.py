@@ -46,10 +46,10 @@ urlpatterns = [
     path('Module/Updation_Details/<int:mid>',views.module_updation_details,name='module_updation_details'),
     path('Module/Updation_Ok/<int:mid>',views.module_updation_ok,name='module_updation_ok'),
 
-    path('Pterm/Updation_Details/<int:pid>',views.pterm_updation_details,name='pterm_updation_details'),
+    path('clients/Paymentterm/Updation_Details/<int:pk>',views.client_paymentterm_updation_details,name='client_paymentterm_updation_details'),
     path('Pterm/Updation_Ok/<int:cid>',views.pterm_updation_ok,name='pterm_updation_ok'),
 
-    path('Dist/Pterm_Updation_Details/<int:pid>',views.dist_pterm_updation_details,name='dist_pterm_updation_details'),
+    path('Distributor/Paymentterm_Updation/Details/<int:pk>',views.distribtor_paymentterm_updation_details,name='distribtor_paymentterm_updation_details'),
     path('Dist/Pterm_Updation_Ok/<int:cid>',views.dist_pterm_updation_ok,name='dist_pterm_updation_ok'),
    
     # Trial period sections------------------------------------

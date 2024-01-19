@@ -247,54 +247,54 @@ def dist_module_updation_ok(request,mid):
   data1=ZohoModules.objects.filter(company=mid).update(update_action=0)
   return redirect('distributor_notification')
 
-def dist_pterm_updation_details(request,pid):
-   if 'login_id' in request.session:
-        login_id = request.session['login_id']
-        if 'login_id' not in request.session:
-            return redirect('/') 
-        log_det = LoginDetails.objects.get(id=login_id)
-        distributor_det = DistributorDetails.objects.get(login_details=log_det)
-        term= PaymentTermsUpdates.objects.get(id=pid)
-        new_term= PaymentTermsUpdates.objects.get(company=term.company,status='Pending')
-        old_term = PaymentTermsUpdates.objects.get(company=term.company,status='New')
-        start_date = term.company.start_date
-        end_date = term.company.End_date 
-        current_date = date.today()
-        difference_in_days = (end_date - current_date).days
+# def dist_pterm_updation_details(request,pid):
+#    if 'login_id' in request.session:
+#         login_id = request.session['login_id']
+#         if 'login_id' not in request.session:
+#             return redirect('/') 
+#         log_det = LoginDetails.objects.get(id=login_id)
+#         distributor_det = DistributorDetails.objects.get(login_details=log_det)
+#         term= PaymentTermsUpdates.objects.get(id=pid)
+#         new_term= PaymentTermsUpdates.objects.get(company=term.company,status='Pending')
+#         old_term = PaymentTermsUpdates.objects.get(company=term.company,status='New')
+#         start_date = term.company.start_date
+#         end_date = term.company.End_date 
+#         current_date = date.today()
+#         difference_in_days = (end_date - current_date).days
         
-        context = {
-            'new_term':new_term,
-            'old_term':old_term,
-            'term':term,
-            'difference_in_days':difference_in_days,
-            'distributor_details':distributor_det
-            }
-        return render(request,'dist_pterm_updation_details.html',context)
+#         context = {
+#             'new_term':new_term,
+#             'old_term':old_term,
+#             'term':term,
+#             'difference_in_days':difference_in_days,
+#             'distributor_details':distributor_det
+#             }
+#         return render(request,'dist_pterm_updation_details.html',context)
 
-def dist_pterm_updation_ok(request,cid):
+# def dist_pterm_updation_ok(request,cid):
   
-  old_term=PaymentTermsUpdates.objects.get(company=cid,status='New')
-  old_term.delete()
+#   old_term=PaymentTermsUpdates.objects.get(company=cid,status='New')
+#   old_term.delete()
 
-  new_term=PaymentTermsUpdates.objects.get(company=cid,status='Pending')  
-  new_term.status='New'
-  new_term.update_action=0
-  new_term.save()
+#   new_term=PaymentTermsUpdates.objects.get(company=cid,status='Pending')  
+#   new_term.status='New'
+#   new_term.update_action=0
+#   new_term.save()
 
-  terms = new_term.payment_term
+#   terms = new_term.payment_term
 
-  start_date=date.today()
-  days=int(terms.days)
+#   start_date=date.today()
+#   days=int(terms.days)
     
-  end= date.today() + timedelta(days=days)
-  End_date=end
+#   end= date.today() + timedelta(days=days)
+#   End_date=end
   
-  company = CompanyDetails.objects.get(id=cid)
-  company.payment_term=terms
-  company.start_date=start_date
-  company.End_date=End_date
-  company.save()
-  return redirect('distributor_notification')
+#   company = CompanyDetails.objects.get(id=cid)
+#   company.payment_term=terms
+#   company.start_date=start_date
+#   company.End_date=End_date
+#   company.save()
+#   return redirect('distributor_notification')
 
 
 def dist_term_update_request(request):
