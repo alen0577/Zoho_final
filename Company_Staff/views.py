@@ -354,6 +354,11 @@ def company_renew_terms(request):
             return redirect('/')
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+
+        # Check for any previous  extension request
+        if PaymentTermsUpdates.objects.filter(company=dash_details,update_action=1,status='Pending').exists():
+            messages.warning(request,'You have a pending request, wait for approval or contact our support team for any help..?')
+            return redirect('company_profile')
         if request.method == 'POST':
             select=request.POST['select']
             terms=PaymentTerms.objects.get(id=select)
@@ -366,7 +371,7 @@ def company_renew_terms(request):
                status=status 
             )
             newterms.save()
-            messages.success(request,'Successfully requested an extension of payment terms. Please wait for approval.')
+            messages.success(request,'Request sent successfully, Please wait for approval...')
             return redirect('company_profile')
         else:
             return redirect('company_profile')

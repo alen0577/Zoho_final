@@ -246,10 +246,7 @@ def module_updation_details(request, mid):
 
   allmodules = ZohoModules.objects.get(company=data.company, status='Pending')
   old_modules = ZohoModules.objects.get(company=data.company, status='New')
-  print(added_modules)
-  for i in added_modules:
-    print(i)
-
+ 
   context = {
     'data': data,
     'current_modules': current_modules,
@@ -273,8 +270,14 @@ def module_updation_ok(request,mid):
 
   data=ZohoModules.objects.get(company=mid,status='Pending')  
   data.status='New'
+  data.update_action=0
   data.save()
-  data1=ZohoModules.objects.filter(company=mid).update(update_action=0)
+
+  # notification section
+  company=CompanyDetails.objects.get(id=mid)
+  title='Module Update, Approved'
+  message='Congratz..! Your module update request is approved.'
+  notification=Notifications.objects.create(company=company,title=title,message=message)
   return redirect('admin_notification')
 
 @login_required(login_url='login_page')
@@ -286,10 +289,7 @@ def client_paymentterm_updation_details(request,pk):
   end_date = term.company.End_date 
   current_date = date.today()
   difference_in_days = (end_date - current_date).days
-  print(term)
-  print(new_term)
-  print(old_term)
-
+  
   context = {
     'new_term':new_term,
     'old_term':old_term,
@@ -298,44 +298,53 @@ def client_paymentterm_updation_details(request,pk):
   }
   return render(request,'pterm_updation_details.html',context)
 
-def pterm_updation_ok(request,cid):
+def client_paymentterm_updation_ok(request,cid):
+
+  company = CompanyDetails.objects.get(id=cid)
   
-  old_term=PaymentTermsUpdates.objects.get(company=cid,status='New')
+  old_term=PaymentTermsUpdates.objects.get(company=cid,update_action=0,status='New')
+  if old_term.payment_term:
+    plan= f"{old_term.payment_term.payment_terms_number} {old_term.payment_term.payment_terms_value}"
+  else:
+    plan="Trial Period"
+  s_date=company.start_date
+  e_date=company.End_date
+  previous_plan=PreviousPaymentTerms.objects.create(company=company,payment_term=plan,start_date=s_date,end_date=e_date)
   old_term.delete()
 
-  new_term=PaymentTermsUpdates.objects.get(company=cid,status='Pending')  
+  new_term=PaymentTermsUpdates.objects.get(company=cid,update_action=1,status='Pending')  
   new_term.status='New'
   new_term.update_action=0
   new_term.save()
 
   terms = new_term.payment_term
-
-  start_date=date.today()
-  days=int(terms.days)
-    
-  end= date.today() + timedelta(days=days)
+  start_date=company.End_date + timedelta(days=1)
+  days=int(terms.days)  
+  end= start_date + timedelta(days=days)
   End_date=end
   
-  company = CompanyDetails.objects.get(id=cid)
   company.payment_term=terms
   company.start_date=start_date
   company.End_date=End_date
   company.save()
+  
+  # notification section
+  title='New Plan Activated'
+  message=f'Congratz..! Your new plan is activated and ends on {End_date}.'
+  notification=Notifications.objects.create(company=company,title=title,message=message)
+
   return redirect('admin_notification')
 
 @login_required(login_url='login_page')
 def distribtor_paymentterm_updation_details(request,pk):
   term= PaymentTermsUpdates.objects.get(id=pk)
-  new_term= PaymentTermsUpdates.objects.get(distributor=term.distributor,status='Pending')
-  old_term = PaymentTermsUpdates.objects.get(distributor=term.distributor,status='New')
+  new_term= PaymentTermsUpdates.objects.get(distributor=term.distributor,update_action=1,status='Pending')
+  old_term = PaymentTermsUpdates.objects.get(distributor=term.distributor,update_action=0,status='New')
   start_date = term.distributor.start_date
   end_date = term.distributor.End_date 
   current_date = date.today()
   difference_in_days = (end_date - current_date).days
-  print(term)
-  print(new_term)
-  print(old_term)
-
+  
   context = {
     'new_term':new_term,
     'old_term':old_term,
@@ -345,32 +354,40 @@ def distribtor_paymentterm_updation_details(request,pk):
   return render(request,'pterm_updation_details.html',context)
     
 
-
-        
-
-def dist_pterm_updation_ok(request,cid):
+def distributor_paymentterm_updation_ok(request,cid):
   
-  old_term=PaymentTermsUpdates.objects.get(distributor=cid,status='New')
+  distributor = DistributorDetails.objects.get(id=cid)
+
+  old_term=PaymentTermsUpdates.objects.get(distributor=cid,update_action=0,status='New')
+  plan= f"{old_term.payment_term.payment_terms_number} {old_term.payment_term.payment_terms_value}"
+  s_date=distributor.start_date
+  e_date=distributor.End_date
+  previous_plan=PreviousPaymentTerms.objects.create(distributor=distributor,payment_term=plan,start_date=s_date,end_date=e_date)
   old_term.delete()
 
-  new_term=PaymentTermsUpdates.objects.get(distributor=cid,status='Pending')  
+  new_term=PaymentTermsUpdates.objects.get(distributor=cid,update_action=1,status='Pending')  
   new_term.status='New'
   new_term.update_action=0
   new_term.save()
 
-  terms = new_term.payment_term
+  
 
-  start_date=date.today()
-  days=int(terms.days)
-    
-  end= date.today() + timedelta(days=days)
+  terms = new_term.payment_term
+  start_date=distributor.End_date + timedelta(days=1)
+  days=int(terms.days)  
+  end= start_date + timedelta(days=days)
   End_date=end
   
-  distributor = DistributorDetails.objects.get(id=cid)
   distributor.payment_term=terms
   distributor.start_date=start_date
   distributor.End_date=End_date
   distributor.save()
+
+  # notification section
+  title='New Plan Activated'
+  message=f'Congratz..! Your new plan is activated and ends on {End_date_date}.'
+  notification=Notifications.objects.create(distributor=distributor,title=title,message=message)
+
   return redirect('admin_notification')
 
 

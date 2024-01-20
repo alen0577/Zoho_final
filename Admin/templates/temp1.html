@@ -1,148 +1,87 @@
-{% extends 'adminbase.html' %}
-{% load static %}
+
+{% extends 'distributorbase.html' %}
+
 {% block content %}
-
+{% load static %}
 <style>
-  table tr:hover {
-    background-color: rgba(255, 255, 255, 0.025);
-  }
+   
+       @media (max-width:768px) {
+        .row{
+            margin-left: 10px !important;
+            margin-right: 10px !important;
+        }
+        .h4{
+            font-size: 15px !important;
+            margin-left: 5px !important;
+        }
+       }
 </style>
-  
+    <div class="body-wrapper">
+        <div class="container-fluid">
 
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb pt-3">
+                  <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
+                  <li class="breadcrumb-item">Notification</a></li>
+                </ol>
+            </nav>
 
-<div class="body-wrapper">
-  <div class="container-fluid">
+            {% for c in companies %}
+            {% if c.days_remaining <= 20 and c.days_remaining > 0 %}
+            <div class="row p-4 m-5" style="background-color: black;">
+                <h6 class="text-light">{{c.company_name}}</h6>
+                <hr class="text-warning">
+                <h6 class="h6 text-light" ><b style="margin-right: 10px;">Payment terms will overdue in <span class="text-warning">{{c.days_remaining}}</span>  days...</h6>
+            </div>
+            {% endif %}
+            {% if c.days_remaining <= 0 %}
+            <div class="row p-4 m-5" style="background-color: black;">
+                <h6 class="text-light">{{c.company_name}}</h6>
+                <hr class="text-warning">
+                <h6 class="h6 text-danger " ><b style="margin-right: 10px;">Payment terms Overdue..</h6>
+            </div>
+            {% endif %}
+            {% endfor %}
 
-    <nav aria-label="breadcrumb ">
-      <ol class="breadcrumb pt-3">
-        <li class="breadcrumb-item"><a href="{% url 'trial_period_section' %}" class="text-warning-emphasis">Trial Period</a></li>
-        <li class="breadcrumb-item" aria-current="page">Clients under Distributor</li>
-      </ol>
-    </nav>
+            {% if data or pterm_updation or dist_days_remaining <= 20 %}
 
-    <div class="row mt-5">
-        <div class="col-md-4">
-            <h6 class="text-white">Filter by</h6>
-            <select name="distributor-select" id="distributor-select" class="form-select bg-black text-white" style="border: 1px solid rgba(255, 255, 255, 0.3);">
-                <option value="" hidden>Select a distributor</option>
-                {% for d in distributors %}
-                <option value="{{d.login_details.first_name}} {{d.login_details.last_name}}">{{d.login_details.first_name}} {{d.login_details.last_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4 ">
-            <h6 class="text-white mt-1 mt-lg-0">Filter by</h6>
-            <select name="status-select" id="status-select" class="form-select bg-black text-white" style="border: 1px solid rgba(255, 255, 255, 0.3);">
-              <option value="" hidden>Active or Expired Trial Period</option>
-              <option value="Active">Active</option>
-              <option value="Expired">Expired</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="row mt-5">
-        <div style="overflow-x:auto;">  
-            <h4 class="text-white mt-5 mb-3">Details</h4>
-            <table class="table " id="trial-period-table" style="background-color: black;">
-              <thead>
-                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                  <th scope="col" style="color: white;"><b>No</b></th>
-                  <th scope="col" style="color: white;"><b>Distributor</b></th>
-                  <th scope="col" style="color: white;"><b>Company Name</b></th>
-                  <th scope="col" style="color: white;"><b>Trial Period</b></th>
-                  <th scope="col" style="color: white;"><b>Start Date</b></th>
-                  <th scope="col" style="color: white;"><b>End Date</b></th>
-                  <th scope="col" style="color: white;"><b>Interested in Continuing</b></th>
-                  <th scope="col" style="color: white;"><b>Feedbacks</b></th>
-                 
-      
-                </tr>
-              </thead>
-              <tbody>
-                {% for c in clients %}
-                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                  <td class="text-white">{{forloop.counter}}</td>
-                  <td class="text-white">{{c.company.distributor.login_details.first_name}} {{c.company.distributor.login_details.last_name}}</td>
-                  <td> 
-                    {% if a.image %}
-                    <img width="35" height="35" class="rounded-circle" src="{{ c.company.image.url}}" alt="">
-                    {% else %}
-                    <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
+                    {% for d in data %}
+                    {% if d.company.reg_action == 'distributor' %}
+                    <div class="row p-4 m-5" style="background-color: black;">
+                        <h6 class="text-light">Module Updation Request</h6>
+                        <hr class="text-warning">
+                        <h6 class="h6 text-light" style="margin-left: 60px;"><b style="margin-right: 10px;">{{ d.company.company_name }}</b>  is requested module change... <a href="{% url 'dist_module_updation_details' d.id %}" class="text-warning" style="font-size: 15px; color: rgb(242, 154, 23);">View More</a></h6>
+                    </div>
                     {% endif %}
-                    <a href="" class="text-light">{{c.company.company_name}}</a>
-                  </td>
-                  <td class="text-light">
-                    {% if c.is_active %}
-                    <h6 class="text-white mt-1"><span class="badge bg-warning text-black">Active <i class="fa fa-check-circle fa-sm"></i></span> </h6>
-                    {% else %}
-                    <h6 class="text-white mt-1"><span class="badge bg-warning text-black">Expired <i class="fa fa-times-circle fa-sm"></i></span> </h6>
+                    {% endfor %}
+
+                    {% for p in pterm_updation %}
+                    {% if p.company.reg_action == 'distributor' %}
+                    <div class="row p-4 m-5" style="background-color: black;">
+                        <h6 class="text-light">Payment terms Updation Request</h6>
+                        <hr class="text-warning">
+                        <h6 class="h6 text-light" ><b style="margin-right: 10px;">{{ p.company.company_name }}</b>  is requested to extend payment terms... <a href="{% url 'dist_pterm_updation_details' p.id %}"  class="text-warning" style="font-size: 15px; color: rgb(242, 154, 23);">View More</a></h6>
+                    </div>
                     {% endif %}
-                  </td>
-                  <td class="text-light">{{c.start_date}}</td>
-                  <td class="text-light">{{c.end_date}}</td>
-                  <td>
-                    {% if c.interested_in_buying == 0 %}
-                    <h6 class="badge bg-warning mt-1 text-black">Undecided ?</h6>
-                    {% elif c.interested_in_buying == 1 %}
-                    <h6 class="badge bg-warning mt-1 text-black w-50">Yes <i class="fa fa-check-circle fa-sm"></i></h6>
-                    {% else %}
-                    <h6 class="badge bg-warning mt-1 text-black w-50">No <i class="fa fa-times-circle fa-sm"></i></h6>
+                    {% endfor %}
+
+                    {% if dist_days_remaining <= 20 %}
+                    <div class="row p-4 m-5" style="background-color: black;">
+                        <h6 class="text-light">Payment terms overdue  </h6>
+                        <hr class="text-warning">
+                        <h6 class="h6 text-light" ><b style="margin-right: 10px;">{{ distributor_details.login_details.first_name }} {{ distributor_details.login_details.last_name }} :</b>  
+                             Your payment terms will overdue in <span class="text-warning">{{dist_days_remaining}}</span> days... </h6>
+                    </div>
                     {% endif %}
-                  </td>
-                  {% if c.feedback %}
-                  <td class="text-light"><textarea cols="35" rows="3" class="bg-black text-white p-2 lh-lg">{{c.feedback}}</textarea></td>
-                  {% else %}
-                  <td class="text-white-50">No feedbacks given</td>
-                  {% endif %}
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table> 
+
+
+            {% else %}
+                    <div class="row p-4 m-5" style="background-color: black;">
+                        <h6 class="text-light">No other notifications...</h6>
+                        <hr class="text-warning">
+                    </div>
+            {% endif %}
         </div>
-      
-    </div>
+    </div>        
 
-
-  </div>
-</div>
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-$(document).ready(function () {
-    // Add change event to distributor and status dropdowns
-    $('#distributor-select').change(function () {
-        // Clear the status dropdown
-        $('#status-select').val('');
-
-        // Call the filterTable function
-        filterTable();
-    });
-
-    $('#status-select').change(filterTable);
-
-    function filterTable() {
-        var distributorFilter = $('#distributor-select').val();
-        var statusFilter = $('#status-select').val();
-        console.log(distributorFilter, statusFilter);
-
-        $('#trial-period-table tbody tr').each(function () {
-            var distributorCell = $(this).find('td:nth-child(2)').text().trim();
-            var statusCell = $(this).find('td:nth-child(4)').text().trim();
-
-            var distributorMatch = distributorFilter === '' || distributorCell.includes(distributorFilter);
-            var statusMatch = statusFilter === '' || statusCell.toLowerCase() === statusFilter.toLowerCase();
-
-            if (distributorMatch && statusMatch) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    }
-});
-</script>
-
-{% endblock %}
+{% endblock content %}

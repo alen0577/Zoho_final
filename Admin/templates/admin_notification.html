@@ -29,7 +29,7 @@
                 <div class="col">
                   <div class="card h-100 bg-black rounded-4">
                     <div class="card-body">
-                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term ends in <span class="text-warning">{{d.days_remaining}} days</span></span></h4>
+                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term Ends in <span class="text-warning">{{d.days_remaining}} days</span></span></h4>
                         <h4 class="text-light mt-3">{{d.login_details.first_name}} {{d.login_details.last_name}}</h4>
                         <p class="text-white-50">The current plan for {{d.login_details.first_name}} {{d.login_details.last_name}}  (distributor)  is expiring on {{d.End_date}}</p>
                     </div>
@@ -51,7 +51,7 @@
                 <div class="col">
                     <div class="card h-100 bg-black rounded-4">
                         <div class="card-body">
-                            <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Terms <span class="text-warning">overdue</span></span></h4>
+                            <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Terms <span class="text-warning">Overdue</span></span></h4>
                             <h4 class="text-light mt-3">{{d.login_details.first_name}} {{d.login_details.last_name}} </h4>
                             <p class="text-white-50">No active plan for {{d.login_details.first_name}} {{d.login_details.last_name}} (distributor) </p>
                         </div>
@@ -74,7 +74,7 @@
                 <div class="col">
                   <div class="card h-100 bg-black rounded-4">
                     <div class="card-body">
-                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term ends in <span class="text-warning">{{c.days_remaining}} days</span></span></h4>
+                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term Ends in <span class="text-warning">{{c.days_remaining}} days</span></span></h4>
                         <h4 class="text-light mt-3">{{c.company_name}} </h4>
                         <p class="text-white-50">The current payment term  plan for {{c.company_name}} (client) is expiring on {{c.End_date}}</p>
                     </div>
@@ -96,7 +96,7 @@
                 <div class="col">
                     <div class="card h-100 bg-black rounded-4">
                         <div class="card-body">
-                            <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Terms <span class="text-warning">overdue</span></span></h4>
+                            <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Terms <span class="text-warning">Overdue</span></span></h4>
                             <h4 class="text-light mt-3">{{c.company_name}} </h4>
                             <p class="text-white-50">No active plan for {{c.company_name}}  (client)</p>
                         </div>
@@ -161,7 +161,7 @@
                         <div class="card-body">
                             <h4><i class="fa fa-rupee-sign fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term Extension</span></h4>
                             <h4 class="text-white mt-3">{{ p.company.company_name }}</h4>
-                            <p class="text-white-50">{{ p.company.company_name }} want to subscribe a new plan ...</p>
+                            <p class="text-white-50">{{ p.company.company_name }} (client) want to subscribe a new plan ...</p>
                             <a class="text-warning-emphasis" href="{% url 'client_paymentterm_updation_details' p.id %}">View More</a>
                         </div>
                     </div>

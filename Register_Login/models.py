@@ -138,7 +138,8 @@ class ZohoModules(models.Model):
 class Notifications(models.Model):
     distributor = models.ForeignKey(DistributorDetails, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
     company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True,null=True)
+    time=models.TimeField(auto_now_add=True,null=True)
     title = models.CharField(max_length=255)
     message = models.TextField()
     is_read = models.BooleanField(default=0)
@@ -153,3 +154,10 @@ class TrialPeriod(models.Model):
 
     def is_active(self):
         return self.end_date >= timezone.now().date()
+
+class PreviousPaymentTerms(models.Model):
+    distributor = models.ForeignKey(DistributorDetails, on_delete=models.CASCADE, related_name='previous_plans', null=True, blank=True)
+    company = models.ForeignKey(CompanyDetails, on_delete=models.CASCADE, related_name='previous_plans', null=True, blank=True)
+    payment_term = models.CharField(max_length=255,null=True,blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()

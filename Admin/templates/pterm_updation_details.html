@@ -163,14 +163,21 @@
                     <div class="row g-0 mt-2 mt-lg-3">
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <div class="row mt-2">
+                                <h5 class="text-warning-emphasis">Current Plan*</h5>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <p class="text-white">Existing Payment Terms </p>
+                                        <p class="text-white">Payment Terms</p>
     
                                     </div>
+                                    {% if term.company.payment_term %}
                                     <div class="col-md-8">
                                         <h5 class="text-white">: {{term.company.payment_term.payment_terms_number}} {{term.company.payment_term.payment_terms_value}}</h5>
                                     </div>
+                                    {% else %}
+                                    <div class="col-md-8">
+                                        <h5 class="text-white">: Trial Period</h5>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-4">
@@ -187,8 +194,8 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.End_date}}</h5>
-                                        <p class="text-warning">{{difference_in_days}} days remaining</p>
+                                        <h5 class="text-white">: {{term.company.End_date}}<span class="text-white-50 h6 ms-1">({{difference_in_days}} days remaining)</span></h5>
+                                        
                                     </div>
                                 </div>
                                 
@@ -198,13 +205,14 @@
                        
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <div class="row mt-2">
+                                <h5 class="text-warning-emphasis">New Plan*</h5>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <p class="text-white">Updated Payment Terms </p>
+                                        <p class="text-white">Payment Terms </p>
 
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-warning">: {{new_term.payment_term.payment_terms_number}} {{new_term.payment_term.payment_terms_value}}</h5>
+                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{new_term.payment_term.payment_terms_number}} {{new_term.payment_term.payment_terms_value}}</span></h5>
                                     </div>
                                 </div>
                                
@@ -224,7 +232,7 @@
                             <div class="col-md-4">
                                 <div class="d-grid gap-2 d-md-block">
                                     <center>
-                                        <a href="" class="btn btn-outline-warning m-3" >Approve</a>
+                                        <a href="{% url 'client_paymentterm_updation_ok' term.company.id %}" class="btn btn-outline-warning w-50" >Approve</a>
                                     </center>
                                 </div>
                                     
@@ -252,34 +260,7 @@
 
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.login_details.first_name}} {{term.company.login_details.last_name}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Company Code</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.company_code}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Email</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.login_details.email}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Contact</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.contact}}</h5>
+                                        <h5 class="text-white">: {{term.distributor.login_details.first_name}} {{term.distributor.login_details.last_name}}</h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -291,6 +272,34 @@
                                         <h5 class="text-white">: <span class="badge bg-warning text-black">Active <i class="fa fa-check-circle fa-sm"></i></span> </h5>
                                     </div>
                                 </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <p class="text-white">Distributor Code</p>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{term.distributor.distributor_code}}</span></h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <p class="text-white">Email</p>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-white">: {{term.distributor.login_details.email}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-4">
+                                        <p class="text-white">Contact</p>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h5 class="text-white">: {{term.distributor.contact}}</h5>
+                                    </div>
+                                </div>
+                                
                                 
                              
                             </div>
@@ -298,53 +307,7 @@
                         
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Address </p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.address}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">City</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.city}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">State</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.state}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Country</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.country}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Pincode</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.pincode}}</h5>
-                                    </div>
-                                </div>
-                                                            
-                             
+                                
                             </div>
                             
                         </div>
@@ -356,16 +319,17 @@
                             <hr class="text-warning">
                         </div>
                     </div>
-                    <div class="row g-0 mt-2 mt-lg-3">
+                    <div class="row g-0 mt-2 mt-lg-2">
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <div class="row mt-2">
+                                <h5 class="text-warning-emphasis">Current Plan*</h5>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <p class="text-white">Existing Payment Terms </p>
+                                        <p class="text-white">Payment Terms </p>
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.payment_term.payment_terms_number}} {{term.company.payment_term.payment_terms_value}}</h5>
+                                        <h5 class="text-white">: {{term.distributor.payment_term.payment_terms_number}} {{term.distributor.payment_term.payment_terms_value}}</h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -374,7 +338,7 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.start_date}}</h5>
+                                        <h5 class="text-white">: {{term.distributor.start_date}}</h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -383,8 +347,8 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.company.End_date}}</h5>
-                                        <p class="text-warning">{{difference_in_days}} days remaining</p>
+                                        <h5 class="text-white">: {{term.distributor.End_date}} <span class="text-white-50 h6 ms-1">({{difference_in_days}} days remaining)</span></h5>
+                                       
                                     </div>
                                 </div>
                                 
@@ -394,13 +358,14 @@
                        
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <div class="row mt-2">
+                                <h5 class="text-warning-emphasis">New Plan*</h5>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <p class="text-white">Updated Payment Terms </p>
+                                        <p class="text-white">Payment Terms </p>
 
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-warning">: {{new_term.payment_term.payment_terms_number}} {{new_term.payment_term.payment_terms_value}}</h5>
+                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{new_term.payment_term.payment_terms_number}} {{new_term.payment_term.payment_terms_value}}</span></h5>
                                     </div>
                                 </div>
                                
@@ -415,12 +380,12 @@
                  
 
                     <div class="container">
-                        <div class="row mb-4">
+                        <div class="row mb-4 mt-3">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
                                 <div class="d-grid gap-2 d-md-block">
                                     <center>
-                                        <a href="" class="btn btn-outline-warning m-3" >Approve</a>
+                                        <a href="{% url 'distributor_paymentterm_updation_ok' term.distributor.id %}" class="btn btn-outline-warning w-50">Approve</a>
                                     </center>
                                 </div>
                                     
