@@ -164,6 +164,7 @@ def distributor_notification(request):
             return redirect('/') 
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
+        notifications = distributor_det.notifications.filter(is_read=0)
 
         end_date = distributor_det.End_date
         dist_days_remaining = (end_date - date.today()).days
@@ -180,7 +181,8 @@ def distributor_notification(request):
                   'pterm_updation':pterm_updation,
                   'distributor_details':distributor_det,
                   'companies':companies,
-                  'dist_days_remaining':dist_days_remaining
+                  'dist_days_remaining':dist_days_remaining,
+                  'notifications':notifications
                   }
         
         return render(request,'distributor_notification.html',context)
@@ -248,13 +250,13 @@ def dist_module_updation_ok(request,mid):
   # notification section
   company=CompanyDetails.objects.get(id=mid)
   title='Module Update, Approved'
-  message='Congratz..! Your module update request is approved.'
+  message='Congratz..! Your module update request is approved'
   notification=Notifications.objects.create(company=company,title=title,message=message)
   
   return redirect('distributor_notification')
 
 def paymentterm_updation_details(request,pid):
-   if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
@@ -275,31 +277,41 @@ def paymentterm_updation_details(request,pid):
             'difference_in_days':difference_in_days,
             'distributor_details':distributor_det
             }
-        return render(request,'dist_pterm_updation_details.html',context)
+        return render(request,'client_pterm_updation_details.html',context)
 
 def paymentterm_updation_ok(request,cid):
+  company = CompanyDetails.objects.get(id=cid)
   
-  old_term=PaymentTermsUpdates.objects.get(company=cid,status='New')
+  old_term=PaymentTermsUpdates.objects.get(company=cid,update_action=0,status='New')
+  if old_term.payment_term:
+    plan= f"{old_term.payment_term.payment_terms_number} {old_term.payment_term.payment_terms_value}"
+  else:
+    plan="Trial Period"
+  s_date=company.start_date
+  e_date=company.End_date
+  previous_plan=PreviousPaymentTerms.objects.create(company=company,payment_term=plan,start_date=s_date,end_date=e_date)
   old_term.delete()
 
-  new_term=PaymentTermsUpdates.objects.get(company=cid,status='Pending')  
+  new_term=PaymentTermsUpdates.objects.get(company=cid,update_action=1,status='Pending')  
   new_term.status='New'
   new_term.update_action=0
   new_term.save()
 
   terms = new_term.payment_term
-
-  start_date=date.today()
-  days=int(terms.days)
-    
-  end= date.today() + timedelta(days=days)
+  start_date=company.End_date + timedelta(days=1)
+  days=int(terms.days)  
+  end= start_date + timedelta(days=days)
   End_date=end
   
-  company = CompanyDetails.objects.get(id=cid)
   company.payment_term=terms
   company.start_date=start_date
   company.End_date=End_date
   company.save()
+
+  # notification section
+  title='Congratz..! New Plan Activated'
+  message=f'Your new plan is activated and ends on {End_date}'
+  notification=Notifications.objects.create(company=company,title=title,message=message)
   return redirect('distributor_notification')
 
 
@@ -314,7 +326,7 @@ def dist_term_update_request(request):
         # Check for any previous  extension request
         if PaymentTermsUpdates.objects.filter(distributor=distributor_det,update_action=1,status='Pending').exists():
             messages.warning(request,'You have a pending request, wait for approval or contact our support team for any help..?')
-            return redirect('company_profile')
+            return redirect('distributor_profile')
         if request.method == 'POST':
             select=request.POST['select']
             terms=PaymentTerms.objects.get(id=select)
@@ -330,3 +342,22 @@ def dist_term_update_request(request):
         messages.success(request, 'Request has been sent successfully.')
         return redirect('distributor_profile')
     
+# ----Trial period section------
+
+def trial_periodclients(request):
+
+    if 'login_id' in request.session:
+        login_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/') 
+        log_det = LoginDetails.objects.get(id=login_id)
+        distributor_det = DistributorDetails.objects.get(login_details=log_det)
+
+        clients=TrialPeriod.objects.filter(company__distributor=distributor_det).order_by('-id')
+        context={
+            'clients':clients,
+
+        }
+        return render(request,'trial_period_client.html', context)
+    else:
+        return redirect('/')

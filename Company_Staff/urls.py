@@ -17,11 +17,8 @@ urlpatterns = [
     path('Company/Module-Editpage',views.company_module_editpage,name='company_module_editpage'),
     path('Company/Module-Edit',views.company_module_edit,name='company_module_edit'),
     path('Company/Renew/Payment_terms',views.company_renew_terms,name='company_renew_terms'),
-
-
-
-
-
+    path('Company/Notifications',views.company_notifications,name='company_notifications'),
+    path('company/messages/read/<int:pk>',views.company_message_read,name='company_message_read'),
 
 
     # -------------------------------Staff section--------------------------------

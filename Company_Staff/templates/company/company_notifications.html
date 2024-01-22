@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="body-wrapper">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'company_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
+                <li class="breadcrumb-item" area-current="page">Notifications</li>
+            </ol>
+        </nav>
+
+        <div class="row row-cols-1 row-cols-md-1 g-4 mt-3">
+            <!-- notifications -->
+            {% for n in notifications %}
+            <div class="col">
+              <div class="card h-100 bg-black rounded-4 mb-0">
+                
+                <div class="card-body">
+                    <h4><i class="fas fa-bell fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white font-monospace">{{n.title}}</span></h4>
+                    <p class="card-text text-white-50 mt-1 font-monospace">
+                        {{n.message}}
+                        <span class=" ms-2 text-warning-emphasis"><a href="{% url 'company_message_read' n.id %}" class="text-warning-emphasis">remove</a></span>
+
+                    </p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        
+
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

@@ -275,8 +275,8 @@ def module_updation_ok(request,mid):
 
   # notification section
   company=CompanyDetails.objects.get(id=mid)
-  title='Module Update, Approved'
-  message='Congratz..! Your module update request is approved.'
+  title='Congratz..! Modules Updated'
+  message='Your module update request is approved'
   notification=Notifications.objects.create(company=company,title=title,message=message)
   return redirect('admin_notification')
 
@@ -329,8 +329,8 @@ def client_paymentterm_updation_ok(request,cid):
   company.save()
   
   # notification section
-  title='New Plan Activated'
-  message=f'Congratz..! Your new plan is activated and ends on {End_date}.'
+  title='Congratz..! New Plan Activated'
+  message=f'Your new plan is activated and ends on {End_date}'
   notification=Notifications.objects.create(company=company,title=title,message=message)
 
   return redirect('admin_notification')
@@ -384,8 +384,8 @@ def distributor_paymentterm_updation_ok(request,cid):
   distributor.save()
 
   # notification section
-  title='New Plan Activated'
-  message=f'Congratz..! Your new plan is activated and ends on {End_date_date}.'
+  title='Congratz..! New Plan Activated'
+  message=f'Your new plan is activated and ends on {End_date}'
   notification=Notifications.objects.create(distributor=distributor,title=title,message=message)
 
   return redirect('admin_notification')

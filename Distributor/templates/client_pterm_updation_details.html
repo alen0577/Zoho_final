@@ -1,4 +1,4 @@
-{% extends 'adminbase.html' %}
+{% extends 'distributorbase.html' %}
 {% block content %}
 {% load static %}
 
@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb pt-3">
-                <li class="breadcrumb-item"><a href="{% url 'admindash' %}" class="text-warning-emphasis">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{% url 'admin_notification' %}" class="text-warning-emphasis">Notifications</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'distributor_dashboard' %}" class="text-warning-emphasis">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'distributor_notification' %}" class="text-warning-emphasis">Notifications</a></li>
                 <li class="breadcrumb-item" area-current="page">Payment Term Extention</li>
             </ol>
         </nav>
@@ -205,7 +205,7 @@
                        
                         <div class="col-md-6">
                             <div class="card-body ">
-                                <h5 class="text-warning-emphasis">New Plan*</h5>
+                                <h5 class="text-warning-emphasis">New Plan1*</h5>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
                                         <p class="text-white">Payment Terms </p>
@@ -232,160 +232,7 @@
                             <div class="col-md-4">
                                 <div class="d-grid gap-2 d-md-block">
                                     <center>
-                                        <a href="{% url 'client_paymentterm_updation_ok' term.company.id %}" class="btn btn-outline-warning w-50" >Approve</a>
-                                    </center>
-                                </div>
-                                    
-                            </div>
-                            <div class="col-md-4"></div>
-                            
-                        </div>
-                        
-                    </div>
-
-                    {% elif term.distributor %}
-
-                    <div class="row mt-3">
-                        <div class="container">
-                            <h4 class="text-white ms-4">Distributor Details</h4>
-                            <hr class="text-warning">
-                        </div>
-                    </div>
-                    <div class="row g-0 mt-2 mt-lg-3">
-                        <div class="col-md-6">
-                            <div class="card-body ">
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Owner </p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.login_details.first_name}} {{term.distributor.login_details.last_name}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Account</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: <span class="badge bg-warning text-black">Active <i class="fa fa-check-circle fa-sm"></i></span> </h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Distributor Code</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{term.distributor.distributor_code}}</span></h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Email</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.login_details.email}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Contact</p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.contact}}</h5>
-                                    </div>
-                                </div>
-                                
-                                
-                             
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="card-body ">
-                                
-                            </div>
-                            
-                        </div>
-                      
-                    </div>
-                    <div class="row mt-3">
-                        <div class="container">
-                            <h4 class="text-white ms-4">Contract Details</h4>
-                            <hr class="text-warning">
-                        </div>
-                    </div>
-                    <div class="row g-0 mt-2 mt-lg-2">
-                        <div class="col-md-6">
-                            <div class="card-body ">
-                                <h5 class="text-warning-emphasis">Current Plan*</h5>
-                                <div class="row mt-4">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Payment Terms </p>
-    
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.payment_term.payment_terms_number}} {{term.distributor.payment_term.payment_terms_value}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Start Date</p>
-    
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.start_date}}</h5>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-4">
-                                        <p class="text-white">End Date</p>
-    
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: {{term.distributor.End_date}} <span class="text-white-50 h6 ms-1">({{difference_in_days}} days remaining)</span></h5>
-                                       
-                                    </div>
-                                </div>
-                                
-                               
-                            </div>
-                        </div>
-                       
-                        <div class="col-md-6">
-                            <div class="card-body ">
-                                <h5 class="text-warning-emphasis">New Plan*</h5>
-                                <div class="row mt-4">
-                                    <div class="col-md-4">
-                                        <p class="text-white">Payment Terms </p>
-
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{new_term.payment_term.payment_terms_number}} {{new_term.payment_term.payment_terms_value}}</span></h5>
-                                    </div>
-                                </div>
-                               
-                                                             
-                             
-                            </div>
-                            
-                        </div>
-
-                      
-                    </div>
-                 
-
-                    <div class="container">
-                        <div class="row mb-4 mt-3">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
-                                <div class="d-grid gap-2 d-md-block">
-                                    <center>
-                                        <a href="{% url 'distributor_paymentterm_updation_ok' term.distributor.id %}" class="btn btn-outline-warning w-50">Approve</a>
+                                        <a href="{% url 'paymentterm_updation_details' term.company.id %}" class="btn btn-outline-warning w-50" >Approve</a>
                                     </center>
                                 </div>
                                     
@@ -397,7 +244,6 @@
                     </div>
 
                     {% endif %}
-
 
                 </div>
             </div>

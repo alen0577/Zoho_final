@@ -379,8 +379,39 @@ def company_renew_terms(request):
         return redirect('/')
 
 
+# company notifications and messages
+def company_notifications(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+        allmodules= ZohoModules.objects.get(company=dash_details,status='New')
+        notifications = dash_details.notifications.filter(is_read=0)
+        print(notifications)
 
+        context = {
+            'details': dash_details,
+            'allmodules': allmodules,
+            'notifications':notifications
+        }
 
+        return render(request,'company/company_notifications.html',context)
+        
+    else:
+        return redirect('/')
+
+def company_message_read(request,pk):
+    '''
+    message read functions set the is_read to 1, 
+    by default it is 0 means not seen by user.
+
+    '''
+    notification=Notifications.objects.get(id=pk)
+    notification.is_read=1
+    notification.save()
+    return redirect('company_notifications')
 
 
 

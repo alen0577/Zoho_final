@@ -19,17 +19,16 @@ urlpatterns = [
     path('Update_Distributor_Profile/<int:id>',views.update_distributor_profile,name='update_distributor_profile'),
     path('Distributor/Password_Change',views.distributor_password_change,name='distributor_password_change'),
 
-
     # notifications------------------------------------
 
     path('Distributor_Notification',views.distributor_notification,name='distributor_notification'),
     path('Dist_Module_Updation_Details/<int:mid>',views.dist_module_updation_details,name='dist_module_updation_details'),
     path('Dist_Module_Updation_Ok/<int:mid>',views.dist_module_updation_ok,name='dist_module_updation_ok'),
-
     path('Paymentterms/Updation_Details/<int:pid>',views.paymentterm_updation_details,name='paymentterm_updation_details'),
     path('Paymentterm/Updation_Ok/<int:cid>',views.paymentterm_updation_ok,name='paymentterm_updation_ok'),
-
     path('Dist_Term_Update_Request',views.dist_term_update_request,name='dist_term_update_request'),
+    path('Client/Trial_Period/Details',views.trial_periodclients,name='trial_periodclients')
+
 
    
   

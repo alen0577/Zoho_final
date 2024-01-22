@@ -93,6 +93,23 @@
                 {% endif %}
 
                 {% endfor %}
+
+                <!-- distributor notifications -->
+                {% for n in notifications %}
+                <div class="col">
+                <div class="card h-100 bg-black rounded-4 mb-0">
+                    
+                    <div class="card-body">
+                        <h4><i class="fas fa-bell fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white font-monospace">{{n.title}}</span></h4>
+                        <p class="card-text text-white-50 mt-1 font-monospace">
+                            {{n.message}}
+                            <span class=" ms-2 text-warning-emphasis"><a href="{% url 'company_message_read' n.id %}" class="text-warning-emphasis">remove</a></span>
+
+                        </p>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
             </div>
             
             <div class="row row-cols-1 row-cols-md-3 g-3">
@@ -108,7 +125,7 @@
                             <h4><i class="fa fa-rupee-sign fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50">Payment Term Extension</span></h4>
                             <h4 class="text-white mt-3">{{ p.company.company_name }}</h4>
                             <p class="text-white-50">{{ p.company.company_name }} (client) want to subscribe a new plan ...</p>
-                            <a class="text-warning-emphasis" href="{% url 'client_paymentterm_updation_details' p.id %}">View More</a>
+                            <a class="text-warning-emphasis" href="{% url 'paymentterm_updation_details' p.id %}">View More</a>
                         </div>
                     </div>
                 </div>
