@@ -27,7 +27,8 @@ urlpatterns = [
     path('Paymentterms/Updation_Details/<int:pid>',views.paymentterm_updation_details,name='paymentterm_updation_details'),
     path('Paymentterm/Updation_Ok/<int:cid>',views.paymentterm_updation_ok,name='paymentterm_updation_ok'),
     path('Dist_Term_Update_Request',views.dist_term_update_request,name='dist_term_update_request'),
-    path('Client/Trial_Period/Details',views.trial_periodclients,name='trial_periodclients')
+    path('Client/Trial_Period/Details',views.trial_periodclients,name='trial_periodclients'),
+    path('Distributor/messages/read/<int:pk>',views.distributor_message_read,name='distributor_message_read'),
 
 
    

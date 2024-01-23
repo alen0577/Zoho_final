@@ -13,9 +13,19 @@ def distributor_dashboard(request):
             return redirect('/') 
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
+
+        # Calculate the date 20 days before the end date for payment term renew
+        reminder_date = distributor_det.End_date - timedelta(days=20)
+        current_date = date.today()
+        alert_message = current_date >= reminder_date
+
+        # Calculate the number of days between the reminder date and end date
+        days_left = (distributor_det.End_date - current_date).days
     
     context = {
-        'distributor_details': distributor_det
+        'distributor_details': distributor_det,
+        'alert_message':alert_message,
+        'days_left':days_left,
     }
     return render(request, 'distributor_dash.html', context)
 
@@ -361,3 +371,14 @@ def trial_periodclients(request):
         return render(request,'trial_period_client.html', context)
     else:
         return redirect('/')
+
+def distributor_message_read(request,pk):
+    '''
+    message read functions set the is_read to 1, 
+    by default it is 0 means not seen by user.
+
+    '''
+    notification=Notifications.objects.get(id=pk)
+    notification.is_read=1
+    notification.save()
+    return redirect('distributor_notification')

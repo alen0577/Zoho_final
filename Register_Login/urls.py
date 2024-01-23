@@ -29,6 +29,7 @@ urlpatterns = [
 
     # login section
     path('Login_Page',views.login_page,name='login_page'),
+    path('Plan/Expired',views.plan_expired,name='plan_expired'),
     path('Login',views.login,name='login'),
 
     # logout section

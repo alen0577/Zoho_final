@@ -404,7 +404,8 @@ def choose_modules(request, pk):
 def login_page(request):
   return render(request, 'login.html')
 
-
+def plan_expired(request):
+  return render(request,'plan_inactive.html')
 
 def login(request):
   if request.method == 'POST':
@@ -439,8 +440,7 @@ def login(request):
       try:
         dash_details = DistributorDetails.objects.get(login_details=distributor, superadmin_approval=1)
         if current_date > dash_details.End_date:
-          messages.success(request,'Payment Terms validity expired')
-          return redirect('login_page')
+          return redirect('plan_expired')
         else:
           return redirect('distributor_dashboard')
       except DistributorDetails.DoesNotExist:
@@ -469,8 +469,7 @@ def login(request):
           Distributor_approval=1,
         )
         if current_date > dash_details.End_date:
-          messages.success(request,'Payment Terms validity expired')
-          return redirect('login_page')
+          return redirect('plan_expired')
         else:
           return redirect('company_dashboard')
       except CompanyDetails.DoesNotExist:
@@ -487,12 +486,16 @@ def login(request):
 
       try:
         staff = LoginDetails.objects.get(id=staff_id)
+        current_date=date.today()
       except LoginDetails.DoesNotExist:
         return redirect('login_page')
 
       try:
         dash_details = StaffDetails.objects.get(login_details=staff, company_approval=1)
-        return redirect('staff_dashboard')
+        if current_date > dash_details.company.End_date:
+          return redirect('plan_expired')
+        else:
+          return redirect('staff_dashboard')
       except StaffDetails.DoesNotExist:
         messages.error(request, 'Approval is Pending..')
         return redirect('login_page')

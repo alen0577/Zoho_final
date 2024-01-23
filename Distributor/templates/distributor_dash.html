@@ -13,38 +13,75 @@
         </ol>
       </nav>
     
-     <div class="row mt-5">
-       <div class="col-md-4">
-         <div class="card bg-black"  >
+      <div class="row mt-5">
+        <div class="col-md-4">
+          <div class="card bg-black"  >
            <div class="card-body">
- 
- 
-             
- 
-             <div class="row">
-               <div class="col-md-9 ">
-                 <a href="{% url 'dist_clients' %}">
-                 <h5 class="card-title mb-9  text-light">Clients</h5>
-               </a>
-                 
- 
-               </div>
-               <div class="col">
-                 <a href="">
-                 <i class="fa fa-users text-warning" style="font-size: 2em;"></i>
-               </a>
-                 
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>      
+
+            <div class="row">
+              <div class="col-md-9 ">
+                <a href="{% url 'dist_clients' %}">
+                <h5 class="card-title mb-9  text-light">Clients</h5>
+              </a>
+                
+
+              </div>
+              <div class="col">
+                <a href="">
+                <i class="fa fa-users text-warning" style="font-size: 2em;"></i>
+              </a>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
        
        
-     </div>
+    </div>
+  </div>
      
 </section>
 
+<!-- Include your modal HTML structure here (hidden by default) -->
+
+<div class="modal" id="myModal"  {% if alert_message %} style="display: block;"{% endif %}>
+  <div class="modal-dialog" >
+    <div class="modal-content" style="background-color: rgb(30,30,30);border: 1px solid rgba(255, 255, 255, 0.3);">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i></h1>
+        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-warning">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Include your JavaScript file or script here -->
+ <script>
+  // Function to close the modal
+  function closeModal() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'none';
+  }
+
+  // Add event listener to close the modal when the close button is clicked
+  document.querySelector('.close').addEventListener('click', closeModal);
+
+  // Add event listener to close the modal when clicking outside the modal
+  window.addEventListener('click', function(event) {
+    var modal = document.getElementById('myModal');
+    if (event.target == modal) {
+        closeModal();
+    }
+  });
+</script>
 
 
 <script src="http://www.w3.org/2000/svg" src="https://www.gstatic.com/charts/loader.js">
