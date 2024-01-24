@@ -178,8 +178,12 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        {% if company.payment_term %}
-                                        <h5 class="text-white">: {{company.payment_term.payment_terms_number}} {{company.payment_term.payment_terms_value}}</h5>
+                                        {% if details.payment_term %}
+                                        <h5 class="text-white">: {{details.payment_term.payment_terms_number}} {{details.payment_term.payment_terms_value}}
+                                            {% if payment_history %}
+                                            <a class="text-warning-emphasis ms-1" href="{% url 'company_payment_history' %}">(History)</a>
+                                            {% endif %}
+                                        </h5>
                                         {% else %}
                                         <h5 class="text-white">: Trial Period</h5>
                                         {% endif %}
@@ -206,10 +210,10 @@
                                 {% if renew_button %}
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <p class="text-white mt-2">Renew Payment Terms</p>
+                                        <p class="text-white mt-2">Renew Payment Terms *</p>
                                     </div>
                                     <div class="col-md-8">
-                                        <span class="text-white">:</span> <a class="btn btn-warning text-black mt-2 ms-1" data-bs-toggle="modal" data-bs-target="#renewbutton"><i class="fas fa-sync-alt"></i> Renew</a>
+                                        <span class="text-white">:</span> <a class="btn btn-sm btn-warning text-black mt-2 ms-1" data-bs-toggle="modal" data-bs-target="#renewbutton"><i class="fas fa-sync-alt"></i> Renew</a>
                                     </div>
                                 </div>
                                {% endif %}

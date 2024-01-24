@@ -29,6 +29,7 @@ urlpatterns = [
     path('Dist_Term_Update_Request',views.dist_term_update_request,name='dist_term_update_request'),
     path('Client/Trial_Period/Details',views.trial_periodclients,name='trial_periodclients'),
     path('Distributor/messages/read/<int:pk>',views.distributor_message_read,name='distributor_message_read'),
+    path('Distributor/Payment_history',views.distributor_payment_history,name='distributor_payment_history'),
 
 
    

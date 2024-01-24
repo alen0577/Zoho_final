@@ -2,8 +2,6 @@
 {% block content %}
 {% load static %}
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="..." crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="..." crossorigin="anonymous"></script>
 
 <div class="body-wrapper">
     <div class="container-fluid">
@@ -78,7 +76,7 @@
     
                                     </div>
                                     <div class="col-md-8">
-                                        <h5 class="text-warning-emphasis">: {{distributor_details.distributor_code}} </h5>
+                                        <h5 class="text-white">: <span class="text-warning-emphasis">{{distributor_details.distributor_code}}</span> </h5>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -121,10 +119,10 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h5 class="text-light">
-                                            {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}} &nbsp;
-                                            <button type="button" class="btn btn-sm btn-warning text-dark" data-toggle="modal" data-target="#editPaymentModal">
-                                                Renew <i class="fas fa-sync-alt"></i>
-                                            </button>
+                                            {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}
+                                            {% if payment_history %}
+                                            <a class="text-warning-emphasis ms-1" href="{% url 'distributor_payment_history' %}">(History)</a>
+                                            {% endif %}
                                         </h5>
                                     </div>
                                 </div>
@@ -146,6 +144,17 @@
                                         <h5 class="text-light">: {{distributor_details.End_date}} </h5>
                                     </div>
                                 </div>
+                                {% if renew_button %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p class="text-white mt-2">Renew Payment Terms *</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="text-white">:</span> <a class="btn btn-sm btn-warning text-black mt-2 ms-1" data-toggle="modal" data-target="#editPaymentModal"><i class="fas fa-sync-alt"></i> Renew</a>
+                                    </div>
+                                </div>
+                               {% endif %}
+                               
                             </div>
                         </div>
                       
@@ -172,7 +181,10 @@
         </div>
 
     </div>
-</div>        
+</div>   
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="..." crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="..." crossorigin="anonymous"></script>
 
 <!-- Modal for editing payment terms -->
 <div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="editPaymentModalLabel" aria-hidden="true">
@@ -189,7 +201,7 @@
             <form action="{% url 'dist_term_update_request' %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <p class="text-warning pb-4">If you want to extend your payment terms, you can request here...</p>
+                    <p class="text-warning-emphasis pb-4">If you want to renew your payment terms, you can request here...</p>
     
                     <div class="row mt-2">
                         <div class="col-md-4">

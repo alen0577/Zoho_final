@@ -59,7 +59,7 @@ def dist_client_reject(request,id):
   return redirect('dist_client_requests')
 
 def dist_client_request_overview(request,id):
-  if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
@@ -70,7 +70,7 @@ def dist_client_request_overview(request,id):
         return render(request,'dist_client_request_overview.html',{'company':data,'allmodules':allmodules,'distributor_details':distributor_det})
 
 def dist_all_clients(request):
-  if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
@@ -81,7 +81,7 @@ def dist_all_clients(request):
         return render(request,'dist_all_clients.html',{'clients':clients,'distributor_details':distributor_det})
 
 def dist_client_details(request,id):
-  if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/')   
@@ -92,15 +92,26 @@ def dist_client_details(request,id):
         return render(request,'dist_client_details.html',{'company':data,'allmodules':allmodules,'distributor_details':distributor_det})
 
 def distributor_profile(request):
-   if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
         log_det = LoginDetails.objects.get(id=login_id)
         distributor= DistributorDetails.objects.get(login_details=log_det)
         terms=PaymentTerms.objects.all()
+        payment_history=distributor.previous_plans.all()
+        # Calculate the date 20 days before the end date
+        reminder_date = distributor.End_date - timedelta(days=20)
+        current_date = date.today()
+        renew_button = current_date >= reminder_date
+        context={
+            'distributor_details':distributor,
+            'terms':terms,
+            'renew_button':renew_button,
+            'payment_history':payment_history
+        }
   
-   return render(request,'distributor_profile.html',{'distributor_details':distributor,'terms':terms})
+    return render(request,'distributor_profile.html',context)
 
 def dist_edit_profilePage(request,id):
   
@@ -168,7 +179,7 @@ def distributor_password_change(request):
 # notifications------------------------------------
 
 def distributor_notification(request):
-  if 'login_id' in request.session:
+    if 'login_id' in request.session:
         login_id = request.session['login_id']
         if 'login_id' not in request.session:
             return redirect('/') 
@@ -365,6 +376,7 @@ def trial_periodclients(request):
 
         clients=TrialPeriod.objects.filter(company__distributor=distributor_det).order_by('-id')
         context={
+            'distributor_details': distributor_det,
             'clients':clients,
 
         }
@@ -382,3 +394,23 @@ def distributor_message_read(request,pk):
     notification.is_read=1
     notification.save()
     return redirect('distributor_notification')
+
+
+def distributor_payment_history(request):
+    if 'login_id' in request.session:
+        login_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/') 
+        log_det = LoginDetails.objects.get(id=login_id)
+        distributor_det = DistributorDetails.objects.get(login_details=log_det)
+
+        payment_history=distributor_det.previous_plans.all()
+        
+        context={
+            'distributor_details': distributor_det,
+            'payment_history':payment_history,
+
+        }
+        return render(request,'distributor_payment_history.html', context)
+    else:
+        return redirect('/')

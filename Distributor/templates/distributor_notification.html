@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Term Ends in <span class="text-warning">{{dist_days_remaining}} days</span></span></h4>
                         
-                        <h5 class="text-white mt-1 font-monospace">Your  current plan is expiring on {{distributor_details.End_date}}</h5>
+                        <h5 class="text-white mt-1 font-monospace">Your  current plan is expiring on {{distributor_details.End_date}} <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
                     </div>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Term Ends <span class="text-warning">Today</span></span></h4>
                            
-                            <h5 class="text-white mt-1 font-monospace">Your current plan is expiring Today</h5>
+                            <h5 class="text-white mt-1 font-monospace">Your current plan is expiring Today <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Terms <span class="text-warning">Overdue</span></span></h4>
                     
-                            <h5 class="text-white mt-1 font-monospace">No active plan for your account</h5>
+                            <h5 class="text-white mt-1 font-monospace">No active plan for your account <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
                         </div>
                     </div>
                 </div>

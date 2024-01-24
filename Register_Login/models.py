@@ -71,7 +71,6 @@ class PaymentTermsUpdates(models.Model):
     distributor = models.ForeignKey(DistributorDetails, on_delete=models.CASCADE,null=True,blank=True) 
     payment_term = models.ForeignKey(PaymentTerms, on_delete=models.CASCADE,null=True,blank=True)
     update_action = models.IntegerField(null=True,default=0) 
-    interested_to_continue = models.BooleanField(default=0)
     status = models.CharField(max_length=100,null=True,default='New')
 
 class ZohoModules(models.Model):

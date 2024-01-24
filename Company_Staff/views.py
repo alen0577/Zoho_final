@@ -118,6 +118,7 @@ def company_profile(request):
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
         allmodules= ZohoModules.objects.get(company=dash_details,status='New')
         terms=PaymentTerms.objects.all()
+        payment_history=dash_details.previous_plans.all()
 
         # Calculate the date 20 days before the end date
         reminder_date = dash_details.End_date - timedelta(days=20)
@@ -129,6 +130,7 @@ def company_profile(request):
             'allmodules': allmodules,
             'renew_button': renew_button,
             'terms':terms,
+            'payment_history':payment_history,
         }
         return render(request, 'company/company_profile.html', context)
     else:
@@ -389,12 +391,15 @@ def company_notifications(request):
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
         allmodules= ZohoModules.objects.get(company=dash_details,status='New')
         notifications = dash_details.notifications.filter(is_read=0)
+        end_date = dash_details.End_date
+        company_days_remaining = (end_date - date.today()).days
         print(notifications)
 
         context = {
             'details': dash_details,
             'allmodules': allmodules,
-            'notifications':notifications
+            'notifications':notifications,
+            'days_remaining':company_days_remaining,
         }
 
         return render(request,'company/company_notifications.html',context)
@@ -413,6 +418,26 @@ def company_message_read(request,pk):
     notification.save()
     return redirect('company_notifications')
 
+
+def company_payment_history(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/') 
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+        allmodules= ZohoModules.objects.get(company=dash_details,status='New')
+        payment_history=dash_details.previous_plans.all()
+
+        context = {
+            'details': dash_details,
+            'allmodules': allmodules,
+            'payment_history':payment_history,
+            
+        }
+        return render(request,'company/company_payment_history.html', context)
+    else:
+        return redirect('/')
 
 
 
