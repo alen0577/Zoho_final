@@ -50,7 +50,7 @@
               {% else %}
               <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
               {% endif %}
-              <a href="{% url 'client_details' a.id %}" class="text-light">{{a.login_details.first_name}} </a>
+              <a href="{% url 'client_details' a.id %}" class="text-light">{{a.login_details.first_name}} {{a.login_details.last_name}}</a>
             </td>
             <td class="text-light">{{a.login_details.email}}</td>
             <td class="text-light">{{a.contact}}</td>

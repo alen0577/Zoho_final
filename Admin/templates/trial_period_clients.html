@@ -57,8 +57,8 @@
                 <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
                   <td class="text-white">{{forloop.counter}}</td>
                   <td> 
-                    {% if a.image %}
-                    <img width="35" height="35" class="rounded-circle" src="{{ c.company.image.url}}" alt="">
+                    {% if c.company.profile_pic %}
+                    <img width="35" height="35" class="rounded-circle" src="{{ c.company.profile_pic.url }}" alt="">
                     {% else %}
                     <img src="{% static 'registration_login/images/default.png' %}" alt="" width="35" height="35" class="rounded-circle">
                     {% endif %}
@@ -83,7 +83,7 @@
                     {% endif %}
                   </td>
                   {% if c.feedback %}
-                  <td class="text-light"><textarea cols="35" rows="3" class="bg-black text-white p-2 lh-lg">{{c.feedback}}</textarea></td>
+                  <td class="text-light"><textarea cols="30" rows="2" class="bg-black text-white p-2 lh-lg" readonly>{{c.feedback}}</textarea></td>
                   {% else %}
                   <td class="text-white-50">No feedbacks given</td>
                   {% endif %}

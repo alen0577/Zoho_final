@@ -22,14 +22,16 @@
                 <!-- overdue notification of payment terms, trial period -->
 
                 <!-- Payment term overdue  of distributors-->
-                
+                {% if payment_request == False %}
                 {% if dist_days_remaining <= 20 and dist_days_remaining > 0 %}
                 <div class="col">
                   <div class="card h-100 bg-black rounded-4 mb-0">
                     <div class="card-body">
                         <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Term Ends in <span class="text-warning">{{dist_days_remaining}} days</span></span></h4>
                         
-                        <h5 class="text-white mt-1 font-monospace">Your  current plan is expiring on {{distributor_details.End_date}} <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
+                        <h4 class="text-white mt-3 font-monospace">Your Plan is Expiring</h4>
+                        <p class="text-white-50 font-monospace">Your current  plan  is expiring on {{distributor_details.End_date}} <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}">click to renew</a></p>
+                        
                     </div>
                   </div>
                 </div>
@@ -39,8 +41,8 @@
                     <div class="card h-100 bg-black rounded-4 mb-0">
                         <div class="card-body">
                             <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Term Ends <span class="text-warning">Today</span></span></h4>
-                           
-                            <h5 class="text-white mt-1 font-monospace">Your current plan is expiring Today <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
+                            <h4 class="text-white mt-3 font-monospace">Your Plan is Expiring</h4>
+                            <p class="text-white-50 font-monospace">Your current  plan  is expiring on today <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}">click to renew</a></p>
                         </div>
                     </div>
                 </div>
@@ -50,13 +52,13 @@
                     <div class="card h-100 bg-black rounded-4 mb-0">
                         <div class="card-body">
                             <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Terms <span class="text-warning">Overdue</span></span></h4>
-                    
-                            <h5 class="text-white mt-1 font-monospace">No active plan for your account <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}"><small>click to renew</small></a></h5>
+                            <h4 class="text-white mt-3 font-monospace">Your Plan is Expired</h4>
+                            <p class="text-white-50 font-monospace">You have no active plan <a class="text-warning-emphasis ms-2" href="{% url 'distributor_profile' %}">click to renew</a></p>
                         </div>
                     </div>
                 </div>
                 {% endif %}
-            
+                {% endif %}
 
                 {% for c in companies %} 
 
@@ -104,8 +106,8 @@
                 <div class="col">
                   <div class="card h-100 bg-black rounded-4 mb-0">
                     <div class="card-body">
-                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i><span class="h5 ms-2 text-white-50">Trial Period Ends in <span class="text-warning ms-1">{{c.days_remaining}} days</span></span></h4>
-                        <h4 class="text-light mt-3">{{c.company_name}} </h4>
+                        <h4><i class="fas fa-exclamation-triangle fa-lg text-warning  ms-1"></i><span class="h5 ms-2 text-white-50 font-monospace">Trial Period Ends in <span class="text-warning ms-1">{{c.days_remaining}} days</span></span></h4>
+                        <h4 class="text-light mt-3 font-monospace">{{c.company_name}} </h4>
                         <p class="text-white-50 font-monospace">The Trial period of {{c.company_name}}  (client) is expiring on {{c.End_date}} </p>
                     </div>
                   </div>
@@ -159,7 +161,7 @@
                         <div class="card-body">
                             <h4><i class="fa fa-rupee-sign fa-lg text-warning  ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Payment Term Extension</span></h4>
                             <h4 class="text-white mt-3 font-monospace">{{ p.company.company_name }}</h4>
-                            <p class="text-white-50 font-monospace">{{ p.company.company_name }} (client) want to subscribe a new plan ...</p>
+                            <p class="text-white-50 font-monospace">{{ p.company.company_name }} (client) want to subscribe a new plan.</p>
                             <a class="text-warning-emphasis" href="{% url 'paymentterm_updation_details' p.id %}">View More</a>
                         </div>
                     </div>
@@ -177,7 +179,7 @@
                     <div class="card-body">
                         <h4><i class="fas fa-cogs fa-lg text-warning ms-1"></i> <span class="h5 ms-2 text-white-50 font-monospace">Module Updation</span></h4>
                         <h4 class="text-white mt-3 font-monospace">{{ d.company.company_name }}</h4>
-                        <p class="text-white-50 font-monospace">{{ d.company.company_name }} want to update current modules ...</p>
+                        <p class="text-white-50 font-monospace">{{ d.company.company_name }} want to update current modules.</p>
                         <a class="text-warning-emphasis" href="{% url 'dist_module_updation_details' d.id %}">View More</a>
                     </div>
                 </div>

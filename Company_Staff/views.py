@@ -26,6 +26,8 @@ def company_dashboard(request):
         reminder_date = dash_details.End_date - timedelta(days=20)
         current_date = date.today()
         alert_message = current_date >= reminder_date
+        
+        payment_request = True if PaymentTermsUpdates.objects.filter(company=dash_details,update_action=1,status='Pending').exists() else False
 
         # Calculate the number of days between the reminder date and end date
         days_left = (dash_details.End_date - current_date).days
@@ -34,6 +36,7 @@ def company_dashboard(request):
             'allmodules': allmodules,
             'alert_message':alert_message,
             'days_left':days_left,
+            'payment_request':payment_request,
         }
         return render(request, 'company/company_dash.html', context)
     else:
@@ -390,16 +393,18 @@ def company_notifications(request):
         log_details= LoginDetails.objects.get(id=log_id)
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
         allmodules= ZohoModules.objects.get(company=dash_details,status='New')
-        notifications = dash_details.notifications.filter(is_read=0)
+        notifications = dash_details.notifications.filter(is_read=0).order_by('-date_created','-time')
         end_date = dash_details.End_date
         company_days_remaining = (end_date - date.today()).days
-        print(notifications)
-
+        payment_request = True if PaymentTermsUpdates.objects.filter(company=dash_details,update_action=1,status='Pending').exists() else False
+        
+        
         context = {
             'details': dash_details,
             'allmodules': allmodules,
             'notifications':notifications,
             'days_remaining':company_days_remaining,
+            'payment_request':payment_request,
         }
 
         return render(request,'company/company_notifications.html',context)
@@ -440,6 +445,30 @@ def company_payment_history(request):
         return redirect('/')
 
 
+def company_trial_feedback(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/') 
+        log_details= LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+        trial_instance = TrialPeriod.objects.get(company=dash_details)
+        if request.method == 'POST':
+            interested = request.POST.get('interested')
+            feedback=request.POST.get('feedback') 
+            
+            trial_instance.interested_in_buying=1 if interested =='yes' else 2
+            trial_instance.feedback=feedback
+            trial_instance.save()
+
+            if interested =='yes':
+                return redirect('company_profile')
+            else:
+                return redirect('company_dashboard')
+        else:
+            return redirect('company_dashboard')
+    else:
+        return redirect('/')
 
 
 # -------------------------------Staff section--------------------------------

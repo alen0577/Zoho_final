@@ -20,6 +20,8 @@ urlpatterns = [
     path('Company/Notifications',views.company_notifications,name='company_notifications'),
     path('company/messages/read/<int:pk>',views.company_message_read,name='company_message_read'),
     path('Company/Payment_History',views.company_payment_history,name='company_payment_history'),
+    path('Company/Trial/Review',views.company_trial_feedback,name='company_trial_feedback'),
+
 
 
     # -------------------------------Staff section--------------------------------

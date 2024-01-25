@@ -14,7 +14,10 @@
         <div class="row row-cols-1 row-cols-md-1 g-4 mt-3">
 
             <!-- Payment term overdue  of company-->
-            {% if details.payment_term %}   
+            {% if payment_request == False %}
+
+            {% if details.payment_term %} 
+              
             {% if days_remaining <= 20 and days_remaining > 0 %}
             <div class="col">
               <div class="card h-100 bg-black rounded-4 mb-0">
@@ -63,7 +66,7 @@
             <!-- trial period overdue  of company-->
             {% else %}
             
-            {% if days_remaining <= 10 and days_remaining > 0 %}
+            {% if days_remaining <= 10  and  days_remaining > 0 %}
             <div class="col">
               <div class="card h-100 bg-black rounded-4 mb-0">
                 <div class="card-body">
@@ -106,6 +109,8 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+
             {% endif %}
 
             {% endif %}

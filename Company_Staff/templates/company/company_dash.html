@@ -31,6 +31,7 @@
 
 
 <!-- Include your modal HTML structure here (hidden by default) -->
+{% if payment_request == False %}
 {% if alert_message %}
 <div class="modal" id="alertModal">
   <div class="modal-dialog " >
@@ -59,24 +60,28 @@
             <div class="col-md-4"></div>
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <a class="text-warning-emphasis ms-5" href="{% url 'company_profile' %}"><small>click to renew</small></a>
+                <a class="text-warning ms-5" href="{% url 'company_profile' %}"><small>click to renew</small></a>
             </div>
         </div>
 
       </div>
       {% else %}
       <div class="modal-body">
-        <form action="">
+        <form action="{% url 'company_trial_feedback' %}" method="post">
+          {% csrf_token %}
           <p class="text-white">Do you want to continue with our services ?</p>
           <div class="form-check form-check-inline">
-            <input class="form-check-input bg-warning" type="radio" name="option1" id="inlineRadio1" value="yes">
+            <input class="form-check-input bg-warning" type="radio" name="interested" id="inlineRadio1" value="yes" required>
             <label class="form-check-label text-white" for="inlineRadio1">Yes</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input bg-warning" type="radio" name="option2" id="inlineRadio2" value="no">
+            <input class="form-check-input bg-warning" type="radio" name="interested" id="inlineRadio2" value="no" required>
             <label class="form-check-label text-white" for="inlineRadio2">No</label>
           </div>
-          <textarea class="bg-black mt-3 rounded text-white" name="" id="" cols="62" rows="3" placeholder=" please give a feedback..."></textarea>
+          <textarea class="bg-black mt-3 rounded text-white" name="feedback" cols="62" rows="3" placeholder=" please give a feedback..."></textarea>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-warning btn-sm">Submit</button>
+          </div>
         </form>
       </div>
       {% endif %}
@@ -84,6 +89,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 {% endif %}
 
 <!-- Include your JavaScript file or script here -->

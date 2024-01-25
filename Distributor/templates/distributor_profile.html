@@ -119,9 +119,9 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h5 class="text-light">
-                                            {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}
+                                            : {{distributor_details.payment_term.payment_terms_number}} {{distributor_details.payment_term.payment_terms_value}}
                                             {% if payment_history %}
-                                            <a class="text-warning-emphasis ms-1" href="{% url 'distributor_payment_history' %}">(History)</a>
+                                            <a class="text-warning-emphasis ms-1" href="{% url 'distributor_payment_history' %}">(Previous Plans)</a>
                                             {% endif %}
                                         </h5>
                                     </div>

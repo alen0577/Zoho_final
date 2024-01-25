@@ -58,7 +58,7 @@ def register(request):
     
     if password == confirm_pass:
       if LoginDetails.objects.filter(username = username).exists():
-        messages.info(request, 'Sorry, Username already exists')
+        messages.warning(request, 'Sorry, Username already exists')
         return redirect('distributor_register_page')
       
 
@@ -124,7 +124,7 @@ def company_registration_save1(request):
       if DistributorDetails.objects.filter(distributor_code=distributor_id).exists():
         distributor_id=distributor_id
       else :
-        messages.info(request, 'Sorry, Distributor id does not exists')
+        messages.success(request, 'Sorry, Distributor id does not exists')
         return redirect('company_register_page1')
 
     if password == cpassword:
