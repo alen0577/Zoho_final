@@ -14,6 +14,7 @@ urlpatterns = [
     path('Company/Profile/Edit/Basicdetails',views.company_profile_basicdetails_edit,name='company_profile_basicdetails_edit'),
     path('Company/Password_Change',views.company_password_change,name='company_password_change'),
     path('Company/Profile/Edit/Companydetails',views.company_profile_companydetails_edit,name='company_profile_companydetails_edit'),
+    path('Company/Profile/Edit/gsttype',views.company_gsttype_change,name='company_gsttype_change'),
     path('Company/Module-Editpage',views.company_module_editpage,name='company_module_editpage'),
     path('Company/Module-Edit',views.company_module_edit,name='company_module_edit'),
     path('Company/Renew/Payment_terms',views.company_renew_terms,name='company_renew_terms'),

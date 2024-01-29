@@ -87,7 +87,7 @@
                                             <p class="text-white">Email</p>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" id="eid" name="eid" class="form-control text-white" value="{{details.login_details.email}}" required>                                       
+                                            <input type="email" id="eid" name="eid" class="form-control text-white" value="{{details.login_details.email}}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>                                       
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -95,7 +95,7 @@
                                             <p class="text-white">Contact</p>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" id="phone" name="phone" class="form-control text-white" value="{{details.contact}}" required>                                      
+                                            <input type="text" id="phone" name="phone" class="form-control text-white" value="{{details.contact}}" pattern="[7896][0-9]{9}" title="Mobile number should contain 10 digits and start with 7,8,9 or 6." required>                                      
                                         </div>
                                     </div>
                                     <div class="row mt-2">

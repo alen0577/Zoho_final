@@ -241,7 +241,44 @@ def company_profile_companydetails_edit(request):
         else:
             return redirect('company_profile_editpage')
     else:
-        return redirect('/')    
+        return redirect('/') 
+
+# company gst type change
+def company_gsttype_change(request):
+    if 'login_id' in request.session:
+        log_id = request.session['login_id']
+        if 'login_id' not in request.session:
+            return redirect('/')
+
+        log_details = LoginDetails.objects.get(id=log_id)
+        dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
+
+        if request.method == 'POST':
+            # Get data from the form
+            
+            gstno = request.POST.get('gstno')
+            gsttype = request.POST.get('gsttype')
+
+            # Check if gsttype is one of the specified values
+            if gsttype in ['unregistered Business', 'Overseas', 'Consumer']:
+                dash_details.gst_no = None
+            else:
+                if gstno:
+                    dash_details.gst_no = gstno
+                else:
+                    messages.error(request,'GST Number is not entered*')
+                    return redirect('company_profile_editpage')
+
+
+            dash_details.gst_type = gsttype
+
+            dash_details.save()
+            messages.success(request,'GST Type changed')
+            return redirect('company_profile_editpage')
+        else:
+            return redirect('company_profile_editpage')
+    else:
+        return redirect('/')  
 
 # company modules editpage
 def company_module_editpage(request):
