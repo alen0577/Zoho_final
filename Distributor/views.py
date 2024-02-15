@@ -399,7 +399,7 @@ def trial_periodclients(request):
         log_det = LoginDetails.objects.get(id=login_id)
         distributor_det = DistributorDetails.objects.get(login_details=log_det)
 
-        clients=TrialPeriod.objects.filter(company__distributor=distributor_det).order_by('-id')
+        clients=TrialPeriod.objects.filter(company__distributor=distributor_det,company__superadmin_approval=1,company__Distributor_approval=1).order_by('-id')
         context={
             'distributor_details': distributor_det,
             'clients':clients,

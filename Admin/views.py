@@ -400,7 +400,7 @@ def trial_period_section(request):
 
 @login_required(login_url='login_page')
 def trial_period_clients(request):
-  clients=TrialPeriod.objects.filter(company__reg_action='self').order_by('-id')
+  clients=TrialPeriod.objects.filter(company__reg_action='self',company__superadmin_approval=1,company__Distributor_approval=1).order_by('-id')
   context={
     'clients':clients,
   }
@@ -409,7 +409,7 @@ def trial_period_clients(request):
 @login_required(login_url='login_page')
 def trial_period_distributor_clients(request):
   distributors=DistributorDetails.objects.filter(superadmin_approval=1)
-  clients=TrialPeriod.objects.filter(company__reg_action='distributor').order_by('-id')
+  clients=TrialPeriod.objects.filter(company__reg_action='distributor',company__superadmin_approval=1,company__Distributor_approval=1).order_by('-id')
   context={
     'clients':clients,
     'distributors':distributors

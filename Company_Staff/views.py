@@ -22,8 +22,11 @@ def company_dashboard(request):
         dash_details = CompanyDetails.objects.get(login_details=log_details,superadmin_approval=1,Distributor_approval=1)
         allmodules= ZohoModules.objects.get(company=dash_details,status='New')
 
-        # Calculate the date 20 days before the end date for payment term renew
-        reminder_date = dash_details.End_date - timedelta(days=20)
+        # Calculate the date 20 days before the end date for payment term renew and 10 days before for trial period renew
+        if dash_details.payment_term:
+            reminder_date = dash_details.End_date - timedelta(days=20)
+        else:
+            reminder_date = dash_details.End_date - timedelta(days=10)
         current_date = date.today()
         alert_message = current_date >= reminder_date
         
